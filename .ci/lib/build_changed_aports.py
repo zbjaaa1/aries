@@ -17,6 +17,8 @@ from pmb.core.context import get_context
 
 def build_strict(packages, arch):
     common.run_pmbootstrap(["build_init"])
+    common.run_pmbootstrap(["config", "mirrors.pmaports",
+                            "http://mirror.postmarketos.org/postmarketos/staging/systemd/"])
     common.run_pmbootstrap(["--details-to-stdout", "--no-ccache", "build",
                             "--strict", "--force",
                             "--arch", arch, ] + list(packages))
@@ -46,6 +48,7 @@ if __name__ == "__main__":
         sys.exit(1)
     arch = sys.argv[1]
 
+    common.run_pmbootstrap(["config", "systemd", "always"])
     # Get and print modified packages
     common.add_upstream_git_remote()
     packages = common.get_changed_packages()

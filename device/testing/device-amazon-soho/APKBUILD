@@ -1,7 +1,7 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-amazon-soho
 pkgdesc="Amazon Kindle Fire HD (3rd Generation)"
-pkgver=1
+pkgver=2
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -13,7 +13,6 @@ subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
 source="
 	deviceinfo
 	initfs-hook.sh
-	amazon-omap-boot-hack.sh
 	modules-load.conf
 "
 
@@ -23,7 +22,6 @@ build() {
 
 package() {
 	devicepkg_package $startdir $pkgname
-	install -Dm755 "$srcdir/amazon-omap-boot-hack.sh" "$pkgdir/usr/share/mkinitfs/amazon-omap-boot-hack.sh"
 }
 
 nonfree_firmware() {
@@ -33,8 +31,7 @@ nonfree_firmware() {
 }
 
 sha512sums="
-8b965e229cef643c03f86f53575176cc38537afcfb5199725a9e085a5ba88e2e0803e7522667d5f7a0085bea363b829779162f326a503e5d1a14718fdfbe8fde  deviceinfo
+975b5c0d4b28ed8e303de0300e8e1d742b7fa99e5eb4381101da601727fc4d7e4dacfa7edf782f88168ec7cfb4d499bffc6ebe0a35ee79cd8965dadf35b0b716  deviceinfo
 1aca985770246b9ca140996a498815b5c9ca3458a6cb84db85825344f01deda8b1de7c88e2e0c610df636ad2179faac7fd90d9992add51186a6449f2d43a3f71  initfs-hook.sh
-b031a2bd8e0e206196df9bfa5299c7172ce5d185c77a148422269e2c8a556769b5f6e29dcfe3f4e50968f8a860a8f927a6fcab2021d48e8912c3d5e76b50d61b  amazon-omap-boot-hack.sh
 61e8becbf6fa7c1c6c42e481083f5981ae7af33a48cbc53e817d8ac2c6a8e4f67a54b32ae3b8f5f25f7b412165a849dc93a629110dc47b0d16927bf2a12eb7e1  modules-load.conf
 "

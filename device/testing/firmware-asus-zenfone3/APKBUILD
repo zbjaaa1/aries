@@ -1,0 +1,27 @@
+# Maintainer: Antony Kurniawan S. <postmarketos@smankusors.com>
+pkgname=firmware-asus-zenfone3
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for Asus Zenfone 3 ZE520KL/ZE552KL"
+url="https://gitlab.com/Smankusors/firmware-asus-zenfone3"
+arch="aarch64"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps pmb:cross-native"
+_commit="f1439210719b2a1597f6390f34ae93cb1470ddf4"
+builddir="$srcdir/$pkgname-$_commit/"
+source="
+	$url/-/archive/$_commit/$pkgname-$_commit.tar.gz
+	firmware.files
+"
+_fwdir="/lib/firmware/postmarketos"
+
+package() {
+	while IFS="" read -r fw; do
+		install -Dm644 "$fw" "$pkgdir/$_fwdir/$fw"
+	done < "$srcdir"/firmware.files
+}
+
+sha512sums="
+a9980ae2ab0868d7e8e2d054e72525c030fe75d66aec6eebd2e17619d5d24455de2a158ea7ed0eb0db2f7a2f4bc07701672de217f8c7274599cd92c00cb2d04e  firmware-asus-zenfone3-f1439210719b2a1597f6390f34ae93cb1470ddf4.tar.gz
+e2184a4cd1a06ef823ebcfd836b02363253683bf86d2d8fe24e163102fbd21244dc54c45ef544107a53f2daaa9c3db3d591a98c737c800e9767af0b84d140516  firmware.files
+"

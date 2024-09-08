@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kpty
-pkgver=9999_git20240809
+pkgver=9999_git20240906
 pkgrel=0
-_commit="2da1ad2259607255796affb9a8fb3cee1d1e88f6"
+_commit="3101401fc129badc5e39ab3ce0d2e028e4d559cf"
 pkgdesc="Pty abstraction"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -24,7 +24,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kpty.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-06/kpty-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-07/kpty-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 options="!check" # The one test it has fails: "Can't open a pseudo teletype"
 
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-29aeae76f1a494da2423bbeb4934724b415db13195dbef020d36f493a297c4fdef2d7fbe5c7d326c7aae7de72949b145c1f1c57234aafdae4c58965db58e0d49  kpty-2da1ad2259607255796affb9a8fb3cee1d1e88f6.tar.xz
+7844dfffcf3975eb85c318478e04838f378002d030ad3d401c2944aeb25048276e13550bf3dab86f7507e7beb42062ed7ec5a6a7dd29c1e120609eb9fbc84fca  kpty-3101401fc129badc5e39ab3ce0d2e028e4d559cf.tar.xz
 "

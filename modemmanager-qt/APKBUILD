@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=modemmanager-qt
-pkgver=9999_git20240818
+pkgver=9999_git20240906
 pkgrel=0
-_commit="26598c998a3019e985aefeaaf499de5e4dd1fbad"
+_commit="90120ba6203c598da33467013a953a408039b692"
 pkgdesc="Qt wrapper for ModemManager DBus API"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -26,7 +26,7 @@ makedepends="$depends_dev
 subpackages="$pkgname-dev $pkgname-doc"
 checkdepends="dbus"
 _repo_url="https://invent.kde.org/frameworks/modemmanager-qt.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-06/modemmanager-qt-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-07/modemmanager-qt-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/modemmanager-qt-$_commit"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-61b1e603c5308847841b6ebb62ca833e36ee0c8f6b3a7c5acff05adf3b10cc8de574cf7b9d78eaab84d3223d42cc2d1e33215e527a9e7bb5e52ce6a7f82535ad  modemmanager-qt-26598c998a3019e985aefeaaf499de5e4dd1fbad.tar.xz
+d6d6b784fed3b0b570929e21e7e31598b5bb20b97f0e0a1e51aceb471cad6c88a50c737b1af0b5b5af1b52eddef6e4889e38f15000e7fedfcc17438c12b77845  modemmanager-qt-90120ba6203c598da33467013a953a408039b692.tar.xz
 "

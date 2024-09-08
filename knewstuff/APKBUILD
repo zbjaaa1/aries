@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=knewstuff
-pkgver=9999_git20240827
+pkgver=9999_git20240906
 pkgrel=0
-_commit="280edadfd9b2fd7e683924462b1565f8a1fbacc8"
+_commit="692857a5d87136eef1111ee3843f8ce24caf6e97"
 pkgdesc="Framework for downloading and sharing additional application data"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -38,7 +38,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/knewstuff.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-06/knewstuff-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-07/knewstuff-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 case "$CARCH" in
@@ -70,5 +70,5 @@ package() {
 }
 
 sha512sums="
-f38024a8fc3b3908a63d203255fe0ccfd3ca5c793368fb1dd7d91888d51d831b971b414f527bba41baef1a6ba1f4b71177ec98a206bd1f999e8afb9e291add88  knewstuff-280edadfd9b2fd7e683924462b1565f8a1fbacc8.tar.xz
+5c4ee99f9d48add04c843d422e33264a749ca579c1111df2e3365865df222671d75582e4ebd133f0869ea204bf4a0abb75337e021eae7ef93bf7cf892193c807  knewstuff-692857a5d87136eef1111ee3843f8ce24caf6e97.tar.xz
 "

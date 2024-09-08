@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=kdiagram
-pkgver=9999_git20240814
+pkgver=9999_git20240906
 pkgrel=0
-_commit="c0b939a9b87c66ce9f92226272984f33f832da84"
+_commit="b85db736da493f3c9134cd8d115b089042e26b47"
 pkgdesc="Powerful libraries (KChart, KGantt) for creating business diagrams"
 arch="all !armhf"
 url="https://kontact.kde.org/"
@@ -23,7 +23,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/graphics/kdiagram.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-06/kdiagram-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-07/kdiagram-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-4bd9b6871e805d1dbdb5597cfc80ce0b6fcd55d113023f942084735a24a69cd6e3c482235ccbcb07fd19ea783a4628a615e1d5cd97f17d899784d9a1ef53cd55  kdiagram-c0b939a9b87c66ce9f92226272984f33f832da84.tar.xz
+ded456e7b8b59ebfd4af6757e7fc2b90dbc7f4b900eb8b6791c65d4adeb1963ec9abe188e57e69e4d0991d9c797c6723a55b286a5b3033ec491c971fcb18275c  kdiagram-b85db736da493f3c9134cd8d115b089042e26b47.tar.xz
 "

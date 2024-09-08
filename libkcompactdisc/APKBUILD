@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=libkcompactdisc
-pkgver=9999_git20240726
+pkgver=9999_git20240907
 pkgrel=0
-_commit="b0bdbfa555b577a36f8877f15dfbc5f1404dc26e"
+_commit="7b5210c7c7918aee7343fa08f77654c3006e1015"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://www.kde.org/applications/multimedia/"
@@ -22,7 +22,7 @@ makedepends="
 	solid-dev
 	"
 _repo_url="https://invent.kde.org/multimedia/libkcompactdisc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-06/libkcompactdisc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-07/libkcompactdisc-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="!check" # No tests
 
@@ -46,5 +46,5 @@ package() {
 }
 
 sha512sums="
-ad45cf908308fd022f75bcf2bc93f44dd019b2be8222e77b911b38cd694d67480fba1b1b24df56de1a33b18640274eb5cad89885a525d08ddda31b9dbb3681f1  libkcompactdisc-b0bdbfa555b577a36f8877f15dfbc5f1404dc26e.tar.xz
+8592af2b9a035c07d8f8e49907f2aa63ca312cf5f648e4a757776dc1a1cd7b4d80474dae6d866079c33c40e668d3e59b214644097bc3140f4c0c81b85855ad8c  libkcompactdisc-7b5210c7c7918aee7343fa08f77654c3006e1015.tar.xz
 "

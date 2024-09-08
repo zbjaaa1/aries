@@ -1,0 +1,53 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: Bart Ribbers <bribbers@disroot.org>
+
+# group=3rdparty
+pkgname=libquotient
+pkgver=9999_git20240906
+pkgrel=0
+_commit="b778efeafe4e5983b11364441a4f53b851e0a297"
+pkgdesc="Qt library for cross-platform clients for Matrix"
+url="https://github.com/quotient-im/libQuotient"
+arch="all !armhf" # blocked by qt5-qtmultimedia
+license="LGPL-2.1-or-later"
+depends_dev="
+	olm-dev
+	qt6-qtbase-dev
+	qtkeychain-dev
+	"
+makedepends="$depends_dev
+	cmake
+	samurai
+	"
+subpackages="$pkgname-dev"
+_repo_url="https://github.com/quotient-im/libQuotient.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-08/libQuotient-$_commit.tar.xz"
+
+options="!check"
+builddir="$srcdir/libQuotient-$_commit"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_SHARED_LIBS=True \
+		-DBUILD_TESTING=True \
+		-DQuotient_INSTALL_TESTS=False
+	cmake --build build
+}
+
+check() {
+	# testolmaccount requires a running Matrix homeserver
+	ctest --test-dir build --output-on-failure -E "testolmaccount"
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+	# android only
+	rm -r "$pkgdir"/usr/share/ndk-modules
+}
+
+sha512sums="
+040ab9bf8a08949efa6ab6fcac1d8236ee7bdbf8d09f42043440a8920083391443189497a020187d650aa12f28153ec26247bc09392e4c2cf13dffa9f802e697  libQuotient-b778efeafe4e5983b11364441a4f53b851e0a297.tar.xz
+"

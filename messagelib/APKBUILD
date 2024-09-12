@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=messagelib
-pkgver=9999_git20240908
+pkgver=9999_git20240909
 pkgrel=0
-_commit="693014ff0f9ee89f6f2868607a039c7c4c413290"
+_commit="7a4fb585c24d611e5b3bdff75cab1639e1f00842"
 pkgdesc="KDE PIM messaging library"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
@@ -61,7 +61,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/messagelib.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-08/messagelib-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-10/messagelib-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="!check" # Requires OpenGL and running dbus server
 
@@ -85,5 +85,5 @@ package() {
 }
 
 sha512sums="
-9269c96ce275567b617f5d767bd4d6500b6f1ec2486af9299155b503a2d33c913ada01a9135874ed3a5341a9942b325123175ae337c5bf4941082740bdfa99a9  messagelib-693014ff0f9ee89f6f2868607a039c7c4c413290.tar.xz
+00ef6868697b1c27afe553dc3919a14f5b620a1b60feb8987cc47474538a73a14b27daa1e6a4edb83897e6633f13e4729ed283f612392cabbbb169bdaa9bae27  messagelib-7a4fb585c24d611e5b3bdff75cab1639e1f00842.tar.xz
 "

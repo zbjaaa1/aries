@@ -3,14 +3,14 @@ Description=Open-source user interface for phones, based on Plasma technologies
 Documentation=https://invent.kde.org/plasma-mobile
 
 # replaces the getty
-Conflicts=getty@tty1.service
-After=getty@tty1.service
+Conflicts=getty@tty7.service
+After=getty@tty7.service
 
 # Needs all the dependencies of the services it's replacing
 # (currently getty@tty1.service):
 After=rc-local.service plymouth-quit-wait.service systemd-user-sessions.service
 
-OnFailure=getty@tty1.service
+OnFailure=getty@tty7.service
 
 # D-Bus is necessary for contacting logind. Logind is required.
 Wants=dbus.socket
@@ -31,6 +31,8 @@ ConditionPathExists=/dev/tty0
 
 [Service]
 Environment=LANG=C.UTF-8
+Environment=XDG_SEAT=seat0
+Environment=XDG_VTNR=tty7
 ExecStart=/usr/bin/startplasmamobile
 TimeoutStartSec=30
 User=10000
@@ -55,4 +57,4 @@ UtmpIdentifier=tty7
 UtmpMode=user
 
 [Install]
-WantedBy=graphical.target
+Alias=display-manager.service

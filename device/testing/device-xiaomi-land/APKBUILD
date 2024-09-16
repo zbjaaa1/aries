@@ -1,0 +1,33 @@
+# Maintainer: Barnabas Czeman <trabarni@gmail.com>
+# Reference: <https://postmarketos.org/devicepkg>
+
+pkgname=device-xiaomi-land
+pkgdesc="Xiaomi Redmi 3S"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	firmware-qcom-adreno-a530
+	linux-postmarketos-qcom-msm89x7
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="deviceinfo modules-initfs"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+105bca44e357327a3e7a4c08205995df148aa9ed482054ab4534c791284ae70610605d7162aa619b6356f5759015ccdad28a4cf77e40890476fe440b11a80d44  deviceinfo
+c8aa71e1f102e37b7840221304b4a0d5266758e0e7452e5c9f10e9af508ccf3a4e8edd7136055c6efd05749c403935c3b5663cac702c49bae9df0c8fc95a435c  modules-initfs
+"

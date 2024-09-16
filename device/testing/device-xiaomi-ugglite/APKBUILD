@@ -1,0 +1,33 @@
+# Maintainer: Barnabas Czeman <trabarni@gmail.com>
+# Reference: <https://postmarketos.org/devicepkg>
+
+pkgname=device-xiaomi-ugglite
+pkgdesc="Xiaomi Redmi 5A"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	firmware-qcom-adreno-a300
+	linux-postmarketos-qcom-msm89x7
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="deviceinfo modules-initfs"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+0b46f8cb2a58a7f71e578f2d125f270e9df11c8f9b4ea0d1d6a431e0ef0df1b3a099ef9341c4ff706617cb62ed43f32a716116a5ab7ed34e0bb5a7b92504759c  deviceinfo
+7dc28950b195565221eae44bf808c107c04ec2be612136436062e79f6183bff1ae3f44e57f7278144c3192d507a75649fb4b56901ff696cf2ed187dd83e319ec  modules-initfs
+"

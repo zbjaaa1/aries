@@ -1,0 +1,33 @@
+# Maintainer: Barnabas Czeman <trabarni@gmail.com>
+# Reference: <https://postmarketos.org/devicepkg>
+
+pkgname=device-xiaomi-ugg
+pkgdesc="Xiaomi Redmi Note 5A Prime"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	firmware-qcom-adreno-a530
+	linux-postmarketos-qcom-msm89x7
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="deviceinfo modules-initfs"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+4e87579825c65969e0189e900f83ad3bd75bf39eb65b69bf24d4d8dd96b0912892e11aef454df71fe6683af8e8359d503157a9edf7ec3bf41ad7d4aa57ccf1ef  deviceinfo
+df25de9e5d358deeeb24f7c8f4b77d945a0b506654525a3fa0d9930ae9335c8c034173e6fde81b7aaee9fbb2a8bc5793719aba5be52aafad81415327c322684d  modules-initfs
+"

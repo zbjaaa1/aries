@@ -1,0 +1,61 @@
+_flavor="postmarketos-qcom-msm89x7"
+pkgname=linux-postmarketos-qcom-msm89x7
+pkgver=6.10
+pkgrel=0
+pkgdesc="Mainline kernel fork for Qualcomm QM215/MSM8917/MSM8937/MSM8940 devices"
+arch="aarch64"
+_carch="arm64"
+url="https://github.com/msm89x7-mainline/linux"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps
+	pmb:cross-native
+	pmb:kconfigcheck-nftables
+	"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+	postmarketos-installkernel
+	python3
+	"
+_commit="01a794b0ae1f6237ed29177dd8838d322cfe90db"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/msm89x7-mainline/linux/archive/$_commit/linux-$_commit.tar.gz
+	$_config
+"
+builddir="$srcdir/linux-$_commit"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/config-$_flavor.$arch" .config
+}
+
+build() {
+	unset LDFLAGS
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	mkdir -p "$pkgdir"/boot
+	make zinstall modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+}
+sha512sums="
+9cbb10fd77bde0c7cf93db9fdfdd4a4ba965b3e9f07cf2c591974675863be6c1740b30b49828e0420b5e5bef57e0ef335f8621e22ecbc9ca83b35d609d8316b1  linux-postmarketos-qcom-msm89x7-01a794b0ae1f6237ed29177dd8838d322cfe90db.tar.gz
+4bf99a5108b762b725c4ae97d323d3a87e0a86cc636fcf90d0dfb5867ac69290d7393ac63987e9164ca2a019614bebe03cc675e4a00d074da8edb746b9cd67cc  config-postmarketos-qcom-msm89x7.aarch64
+"

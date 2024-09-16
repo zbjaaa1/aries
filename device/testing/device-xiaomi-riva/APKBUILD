@@ -1,21 +1,23 @@
 # Maintainer: Barnabas Czeman <trabarni@gmail.com>
 # Reference: <https://postmarketos.org/devicepkg>
+
 pkgname=device-xiaomi-riva
 pkgdesc="Xiaomi Redmi 5A"
-pkgver=1
+pkgver=2
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
-depends="postmarketos-base linux-xiaomi-riva mkbootimg mdss-fb-init-hack msm-fb-refresher"
+depends="
+	firmware-qcom-adreno-a300
+	linux-postmarketos-qcom-msm89x7
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+"
 makedepends="devicepkg-dev"
-source="
-	deviceinfo
-	directfbrc
-	fb.modes
-	"
-subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
+source="deviceinfo modules-initfs"
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -23,20 +25,9 @@ build() {
 
 package() {
 	devicepkg_package $startdir $pkgname
-	install -Dm644 "$srcdir"/fb.modes "$pkgdir"/etc/fb.modes
-	install -Dm644 "$srcdir"/directfbrc "$pkgdir"/etc/directfbrc
-
 }
-
-nonfree_firmware() {
-	pkgdesc="Wifi firmware"
-	depends="firmware-xiaomi-riva wcnss-wlan"
-	mkdir "$subpkgdir"
-}
-
 
 sha512sums="
-1db2d85434b41671c204383f90fe6d6dd1e3c7e874f1bb8d5ba6c7cfc61f91866f641bfa8a8d537ae20b7c8cfdbe4975fe98f40f512c50dc7c0b6c767c2dec43  deviceinfo
-3db3ec596e159be926ea2b5b2496c18e9bc7be24a64a232a56c89a0c9ee710aa2efb2b6fa9fc08efa34759e8242e6c629d08a4ce688ec8aa125830717c191515  directfbrc
-2ed1dca5a0799f650dacde4babfb4d9139614bbfbfc46c16b5e0533093928ca0db02756e3afd0554a4a037e1f2860d172e7f03cf7ad7ddeec1406cfb7417e0f4  fb.modes
+7413f4db258823e87618752460e53579807053781a7d22f27e74ffbd29778d80dd72cd140bfcb73b920d1c129f938ba2c281328a0485a534b68b807a47911bcb  deviceinfo
+7f24db9a024f8a3c8855bcae1a0c845fe20027808e08b4befa7d720d29702c999b6f9a480a5a1d8e478f58244e50890d663a4ea3b1eb593af5a301a68693bea5  modules-initfs
 "

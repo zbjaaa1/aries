@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=breeze-gtk
-pkgver=9999_git20240902
+pkgver=9999_git20240912
 pkgrel=0
-_commit="7c486f1e4ed8742cec7897849987ba318c493dfb"
+_commit="5d858acf7cb3f61299a946fa7fb30f490a970b21"
 pkgdesc="A GTK Theme Built to Match KDE's Breeze"
 # armhf blocked by extra-cmake-modules
 arch="noarch !armhf"
@@ -27,7 +27,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/breeze-gtk.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-10/breeze-gtk-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-13/breeze-gtk-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/breeze-gtk-$_commit"
@@ -48,5 +48,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-a0a8a619e62b94dd62448142a89d5f0e74e8764e48262d7ce98c2210e6a82efd2cade81b40a05fb50ebb2db1ea73cecc4804ac7ad441e4f22bebd65cc6da2317  breeze-gtk-7c486f1e4ed8742cec7897849987ba318c493dfb.tar.xz
+6c910c69338f86ab23d038f5887f960f0e24e89a841808e2eb0b980618e15299a57fd77d35021dad447f67db5d55377914761eb5fabf950bc32e567aa88de2f9  breeze-gtk-5d858acf7cb3f61299a946fa7fb30f490a970b21.tar.xz
 "

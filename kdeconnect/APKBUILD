@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kdeconnect
-pkgver=9999_git20240910
+pkgver=9999_git20240913
 pkgrel=0
-_commit="04865224cdde5563509562cdba95809cc60a7fd1"
+_commit="87660747b5b27f50fc515edfe89459c887da5540"
 pkgdesc="Adds communication between KDE and your smartphone"
 url="https://community.kde.org/KDEConnect"
 # armhf blocked by extra-cmake-modules
@@ -46,7 +46,7 @@ makedepends="
 checkdepends="xvfb-run"
 subpackages="$pkgname-doc $pkgname-lang $pkgname-nftables::noarch $pkgname-zsh-completion"
 _repo_url="https://invent.kde.org/network/kdeconnect-kde.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-10/kdeconnect-kde-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-13/kdeconnect-kde-$_commit.tar.xz
 	60_kdeconnect.nft
 	"
 builddir="$srcdir/$pkgname-kde-$pkgver"
@@ -84,6 +84,6 @@ nftables() {
 }
 
 sha512sums="
-c3484a7bdb70e96d1c9416e6d4bbf3f4db0c3662943d00ab31b6ecbb508e2f92f1e2124d054810483c1891927c0b3f0526c0b76223763b510e265b544d50d109  kdeconnect-kde-04865224cdde5563509562cdba95809cc60a7fd1.tar.xz
+b4914ed4f25cce69a0fe9a271ffc2a32033f55c27e497cfdc38be144a1c8e5e061496431de4135c9d48da34d6096d3d75594416307cf7cf6e55e346f4837cfbe  kdeconnect-kde-87660747b5b27f50fc515edfe89459c887da5540.tar.xz
 0ccc2cb0ffd3892698b45bcf723cfdd23ad98f0e2b0436cd0a91d9ed13c6992853e2c4092ee8a0edc6216f1f262151e99e344b8f16c52237e9ff8de62fd37cae  60_kdeconnect.nft
 "

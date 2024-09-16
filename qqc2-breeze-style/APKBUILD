@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=qqc2-breeze-style
-pkgver=9999_git20240818
+pkgver=9999_git20240912
 pkgrel=0
-_commit="7d347454686aabd158b2c74cf7aa684978f5becd"
+_commit="229225de042faabc6f75b20e4bbe13727e603811"
 pkgdesc="Breeze inspired QQC2 style"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -31,7 +31,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/qqc2-breeze-style.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-10/qqc2-breeze-style-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-13/qqc2-breeze-style-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 options="!check" # No tests
 
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-bb72c372ea3d2a3c1e7739bd65989d849edafdd3d6f1398b187a544296cff3ee5d157e07dafdb72654a863ff4e01debc1058aa4cbc16907aa6c411affa71a57e  qqc2-breeze-style-7d347454686aabd158b2c74cf7aa684978f5becd.tar.xz
+92e0f640458234027cd459753bc4ee2b11682a731ca8062c569ec32d33a376082b54f9201642dc267b29aefbce6db2ec670d230eed73cc5d8f66156cbe883d56  qqc2-breeze-style-229225de042faabc6f75b20e4bbe13727e603811.tar.xz
 "

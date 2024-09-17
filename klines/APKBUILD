@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=klines
-pkgver=9999_git20240908
+pkgver=9999_git20240916
 pkgrel=0
-_commit="4d6e200ea0a092b10e8a7bda7161422098232149"
+_commit="e9d93f53f5320eed5a627174afb34a2e7e604a7d"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/games/klines/"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/games/klines.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-13/klines-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-16/klines-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-f3d98c9a39cfdb058a9a9066a0ad624f73ffbd336608d21f9582db03e63a82b39e4590a2371f5959fd26254b265284f9d64d7df06d6e85ecd760670ad515edfc  klines-4d6e200ea0a092b10e8a7bda7161422098232149.tar.xz
+6386264ee3a342f16fca0087f1be9c66d982a9955f160d234acc364237db7139e4b8dc92ab21a50770a14e0c0cc36449e988ebd4db482aafa548320591b10973  klines-e9d93f53f5320eed5a627174afb34a2e7e604a7d.tar.xz
 "

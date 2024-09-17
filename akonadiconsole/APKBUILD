@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=akonadiconsole
-pkgver=9999_git20240910
+pkgver=9999_git20240916
 pkgrel=0
-_commit="a29fad81106a732307d462ffedb3d321e5b42862"
+_commit="32044333bd67789cf9bd5ef90296c456e3a06e22"
 # armhf blocked by extra-cmake-modules
 # s390x, ppc64le and riscv64 blocked by akonadi
 # ppc64le blocked by calendarsupport
@@ -45,7 +45,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/akonadiconsole.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-13/akonadiconsole-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-16/akonadiconsole-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/akonadiconsole-$_commit"
@@ -67,5 +67,5 @@ package() {
 }
 
 sha512sums="
-804af49158a4de58b0840277e9b12ae722d63529e54919ca31af83c6fd51d2dd1a49038c1f475569c1d8ab6483430f90e63246d271115223268882794014876c  akonadiconsole-a29fad81106a732307d462ffedb3d321e5b42862.tar.xz
+2c833a76bb687395de306fc0051bc1da558b81e4116a8750cbea1d7240a81af2f83465a1f07484195255396c5907a9820c4c52693a72961abba763b8fba91a15  akonadiconsole-32044333bd67789cf9bd5ef90296c456e3a06e22.tar.xz
 "

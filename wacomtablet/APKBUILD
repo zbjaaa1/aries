@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=wacomtablet
-pkgver=9999_git20240916
+pkgver=9999_git20240917
 pkgrel=0
-_commit="7d837597c2e0556dc592621af91dd5a76a5e39b1"
+_commit="277391ccdac6223360fa1abb6dbd13e5a2ac07e4"
 pkgdesc="GUI for Wacom Linux drivers that supports different button/pen layout profiles"
 # armhf blocked by qt5-qtdeclarative
 arch="all !armhf"
@@ -35,7 +35,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/system/wacomtablet.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-16/wacomtablet-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-17/wacomtablet-$_commit.tar.xz"
 subpackages="$pkgname-lang $pkgname-doc"
 
 options="!check"
@@ -57,5 +57,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-c01d2b97cd8e84b09eb90d0ed7ab50d2d05a2e98d15b08d5cd5bd1e6bd8afc685bec196b2bce84261e271606e055eb50763d7aa09b0fff50adff03a6cfa71210  wacomtablet-7d837597c2e0556dc592621af91dd5a76a5e39b1.tar.xz
+8bfcf75ab77dfcfe6f40e0069449d93b3c7f4ab264bb63344100bbdbd02a4ea9f61ab97edd98ba36b46ca6786e744de922d95830455d0b3eff0038f72e66a487  wacomtablet-277391ccdac6223360fa1abb6dbd13e5a2ac07e4.tar.xz
 "

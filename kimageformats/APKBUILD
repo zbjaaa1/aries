@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kimageformats
-pkgver=9999_git20240915
+pkgver=9999_git20240916
 pkgrel=0
-_commit="f7c8eaa140e1000f57a501d6dfd1d9d1f58a8e1c"
+_commit="46f7b90ce6cd5b3f03c965ce8a208a0aeefcdb08"
 pkgdesc="Image format plugins for Qt"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -24,7 +24,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kimageformats.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-17/kimageformats-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/kimageformats-$_commit.tar.xz"
 
 case "$CARCH" in
 s390x)
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-2430b94d52970475cd9027a4c712045449f61929a0457f49560411db398bab42d6223e7c1c09dd140d7959f2ea70730014e3c6000b72dbee0b132cb59573cc1d  kimageformats-f7c8eaa140e1000f57a501d6dfd1d9d1f58a8e1c.tar.xz
+6e608da7354aaf7f519fe424960fb57e609fdd9fe1cc4508200334c0b9e365ff3b6e824c345f6471e77b013579c73484e4493dd10470f982079fbf62cba80294  kimageformats-46f7b90ce6cd5b3f03c965ce8a208a0aeefcdb08.tar.xz
 "

@@ -85,6 +85,16 @@ case "$CARCH" in
 		;;
 esac
 
+case "$CARCH" in
+	armv7|armhf)
+		# some test are broken with lto enabled
+		use_lto=false
+		;;
+	*)
+		use_lto=true
+		;;
+esac
+
 # put libs last to steal residual files taken by some prior extras
 subpackages="$subpackages $pkgname-libs"
 
@@ -93,7 +103,7 @@ build() {
 	CXXFLAGS="$CXXFLAGS -O2" \
 	CPPFLAGS="$CPPFLAGS -O2" \
 	abuild-meson \
-		-Db_lto=true \
+		-Db_lto=$use_lto \
 		-Dlibjack-path=/usr/lib \
 		-Dlibv4l2-path=/usr/lib \
 		-Ddocs=disabled \

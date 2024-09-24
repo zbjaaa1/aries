@@ -47,9 +47,19 @@ s390x)
 	;;
 esac
 
+case "$CARCH" in
+	armv7|armhf)
+		# some test are broken with lto enabled
+		use_lto=false
+		;;
+	*)
+		use_lto=true
+		;;
+esac
+
 build() {
 	abuild-meson \
-		-Db_lto=true \
+		-Db_lto=$use_lto \
 		-Dsystem-lua=true \
 		-Delogind=enabled \
 		-Dtests="$(want_check && echo true || echo false)" \

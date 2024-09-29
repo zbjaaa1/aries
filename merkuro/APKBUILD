@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=merkuro
-pkgver=9999_git20240918
+pkgver=9999_git20240924
 pkgrel=0
-_commit="8dc780d59cee918c6c1f166111976afd8c2b495a"
+_commit="3955b0f3ba3e18d1353a8cb40282480fdb9f0be8"
 pkgdesc="A calendar application using Akonadi to sync with external services (NextCloud, GMail, ...)"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> akonadi
@@ -47,7 +47,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/pim/merkuro.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/merkuro-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/merkuro-$_commit.tar.xz"
 options="!check" # No tests
 
 provides="kalendar=$pkgver-r$pkgrel"
@@ -69,5 +69,5 @@ package() {
 }
 
 sha512sums="
-993aaa7a5986724ee29eaa28ec25022812213dfb293e64e2bde88d88c3afde0c098b2e4d2da67540ab9db8d20dc8234acdf56e9b55b0bfa6177987937a3e8a28  merkuro-8dc780d59cee918c6c1f166111976afd8c2b495a.tar.xz
+c84499559b449d9db0b5f7e2a671ed136d3f2235b39267f62ea3b99b01f797c58a34f6e1c2df838534bb5d0713ea15e75a65c40d8725690ba2ac1b30e9431d5c  merkuro-3955b0f3ba3e18d1353a8cb40282480fdb9f0be8.tar.xz
 "

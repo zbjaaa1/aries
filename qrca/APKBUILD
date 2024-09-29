@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=qrca
-pkgver=9999_git20240831
+pkgver=9999_git20240924
 pkgrel=0
-_commit="d36168c0edc72d97dd6539220b200f52189e5650"
+_commit="d4c13679027c5b54f611b2eb03e729ab3863c97d"
 pkgdesc="QR-Code scanner for Plasma Mobile"
 # armhf blocked by qt5-qtdeclarative
 # ppc64le, s390x, riscv64 and loongarch64 blocked by qt5-qtwebengine -> purpose
@@ -35,7 +35,7 @@ makedepends="
 checkdepends="appstream"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/utilities/qrca.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/qrca-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/qrca-$_commit.tar.xz"
 builddir="$srcdir/$pkgname-$_commit"
 
 build() {
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-ea439b033923cc4bb075254878682a5749d16c50b3d8c45cebfa77512d7b1c64e5e4986b1e0d4d2235683f683d3bcbf523d8e05eeb4aaf5e10b6ca6bda4048f9  qrca-d36168c0edc72d97dd6539220b200f52189e5650.tar.xz
+0eeb7fcfa038b9685fc2eef60b858e4d0a2dfe92af743e9524ae4aa31b2a66d675c200db4985fa29d032fc2d38ac85ec57d923314f44a72a469845b7202316e8  qrca-d4c13679027c5b54f611b2eb03e729ab3863c97d.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=libplasma
-pkgver=9999_git20240918
+pkgver=9999_git20240924
 pkgrel=0
-_commit="a47113c9657cbc62b05d02963d2122802281805f"
+_commit="78f3ff4267e6e8703b3dbc48be7b7a4a3fa8c8bf"
 pkgdesc="Plasma library and runtime components based upon KDE Frameworks and Qt"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -51,7 +51,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/plasma/libplasma.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/libplasma-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/libplasma-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 options="!check" # 8 out of 13 tests fail
 
@@ -78,5 +78,5 @@ package() {
 }
 
 sha512sums="
-c4f1f75cad020daeb34b4de1366ccd96a13bc52fbb5cfe5eec177389113b5640667d82cd258dcf7d9a946a8de7ec773aa493b321822c51b098cba1f0b1859d51  libplasma-a47113c9657cbc62b05d02963d2122802281805f.tar.xz
+3cd8c408ff2b451d07350302ee13346a25b6cf8fb9999606cb0a697adaf95a23eabd76069ad8fed1dd1146d43d540df482164190546601626d80b215b1e400e1  libplasma-78f3ff4267e6e8703b3dbc48be7b7a4a3fa8c8bf.tar.xz
 "

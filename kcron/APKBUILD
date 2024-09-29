@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kcron
-pkgver=9999_git20240918
+pkgver=9999_git20240926
 pkgrel=0
-_commit="f73886d905ce77f5ed98c6fe0dcb1e25df614a25"
+_commit="b998ad39c71dcf4fd5a40c1a74f8eb4363968048"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/system/"
@@ -20,11 +20,13 @@ makedepends="
 	ki18n-dev
 	kiconthemes-dev
 	kio-dev
+	kirigami-addons-dev
+	kirigami-dev
 	qt6-qtbase-dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/system/kcron.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/kcron-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/kcron-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -47,5 +49,5 @@ package() {
 }
 
 sha512sums="
-8f6d392a8a59fb78263390c4faa588ff270110cf1fbc598b4acccf24bca802e7b5f4fad28e2a2adbb7c61180dfc563d35c7d1a6a1dd78a3957bcb92b08389552  kcron-f73886d905ce77f5ed98c6fe0dcb1e25df614a25.tar.xz
+d417aa2d60865d4d49cfe805f4643348107f0ca118e7a05056e9f22b107c697ff94d122357b0924a67ef23126e07d1c0ee71f0ae92bdfdf9994fe44b09d2268c  kcron-b998ad39c71dcf4fd5a40c1a74f8eb4363968048.tar.xz
 "

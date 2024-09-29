@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-mobile
-pkgver=9999_git20240918
+pkgver=9999_git20240926
 pkgrel=0
-_commit="aa62d679845925b82090258a97a62425f9c027c9"
+_commit="f726443f7727631ef71457aa649a5303c239d5bc"
 pkgdesc="Modules providing phone functionality for Plasma"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -75,7 +75,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-mobile.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/plasma-mobile-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/plasma-mobile-$_commit.tar.xz
 	99-flashlight.rules
 	"
 options="!check" # No tests
@@ -102,6 +102,6 @@ package() {
 }
 
 sha512sums="
-56a485141185f7ddcaaf07321f231be1c858d758e3b24c78f68d527d104e1ab3594ef7b30203e6a810c65f996a287f3d6ea3ed67bee5a40a44a618b9c0f1d18c  plasma-mobile-aa62d679845925b82090258a97a62425f9c027c9.tar.xz
+5a466fa0b29ae69c19babac9a74d957120c9c5c7604e326415af0836c3d76905f870a7f034158cd868ba6f35108d120a7d0182a604b0f0e914f499b9bcbff4e0  plasma-mobile-f726443f7727631ef71457aa649a5303c239d5bc.tar.xz
 4badc25cbb7dc84d6af54cff5f3c09dcc37da86b7e930bdcab6d75f8dd90ef0dd9c8a3837ab696b1f4de9cad82d5e64ddd44904640a92e910a8f45524542be95  99-flashlight.rules
 "

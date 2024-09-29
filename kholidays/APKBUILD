@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kholidays
-pkgver=9999_git20240916
+pkgver=9999_git20240920
 pkgrel=0
-_commit="b13dbdd63455eb6a942189116089bedc9870b384"
+_commit="8207aeaac25610eed8c36dc8805beaf196670ad5"
 pkgdesc="Support for icon themes"
 arch="all !armhf" # armhf blocked by qt6-qtdeclarative
 url="https://community.kde.org/Frameworks"
@@ -22,7 +22,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kholidays.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-19/kholidays-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-26/kholidays-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -46,5 +46,5 @@ package() {
 }
 
 sha512sums="
-fb58a8f6936dba1197c39a5c24c71bb82b14834c6ede5c0290811dba18c693b8e121950d40a13b1caa9ce15200c245e534b5d95b1a15ce8ff2d5106c1835ed60  kholidays-b13dbdd63455eb6a942189116089bedc9870b384.tar.xz
+8326fc473e9f326a4a386ceb72bfc027b425d5e51756b657a3a7b18c865a8c6db4b2aa9dce7f7a5a9398d9770f7e4e7857ca79a32212626975f9f25747fcf87e  kholidays-8207aeaac25610eed8c36dc8805beaf196670ad5.tar.xz
 "

@@ -1,7 +1,7 @@
 # Maintainer: Clayton Craft <clayton@craftyguy.net>
 pkgname=postmarketos-base-ui
 pkgver=28
-pkgrel=2
+pkgrel=5
 pkgdesc="Meta package for minimal postmarketOS UI base"
 url="https://postmarketos.org"
 arch="noarch"
@@ -42,7 +42,6 @@ subpackages="
 	$pkgname-wifi-wpa_supplicant-openrc:wpa_supplicant_openrc
 	$pkgname-wifi-wpa_supplicant:wpa_supplicant
 	$pkgname-x11
-	postmarketos-default-camera:_default_camera
 	"
 replaces="
 	chrony
@@ -51,7 +50,8 @@ replaces="
 	"
 replaces_priority=100  # leave plenty for alpine
 
-_pmb_recommends="font-droid font-droid-nonlatin" # MR 5540
+# See MR 4744, MR 5352 and MR 5540 for the rationale
+_pmb_recommends="font-droid font-droid-nonlatin font-twemoji"
 
 _source644="
 	etc/chrony/chrony.conf
@@ -115,7 +115,6 @@ package() {
 
 wayland() {
 	install_if="$pkgname=$pkgver-r$pkgrel wayland-server-libs"
-	_pmb_recommends="font-twemoji" # MR 4744 and MR 5352
 
 	mkdir -p "$subpkgdir"
 }
@@ -126,7 +125,6 @@ x11() {
 		libinput
 		xf86-input-libinput
 		xf86-video-fbdev"
-	_pmb_recommends="font-twemoji" # MR 4744 and MR 5352
 	provides="postmarketos-base-x11=$pkgver-r$pkgrel"
 	amove etc/X11/Xwrapper.config
 }
@@ -213,12 +211,6 @@ networkmanager() {
 	amove usr/lib/NetworkManager/dispatcher.d/50-dns-filter.sh
 }
 
-_default_camera() {
-	# dummy package for camera app, packages can install_if on this to install
-	# the appropriate camera app for that device/UI
-	mkdir "$subpkgdir"
-}
-
 qt_tweaks() {
 	amove etc/profile.d/qt-mobile-controls.sh
 }
@@ -238,7 +230,7 @@ wpa_supplicant() {
 }
 
 wpa_supplicant_openrc() {
-	install_if="$pkgname-wpa_supplicant=$pkgver-r$pkgrel openrc"
+	install_if="$pkgname-wifi-wpa_supplicant=$pkgver-r$pkgrel openrc"
 	install="$subpkgname.post-install $subpkgname.post-upgrade"
 
 	depends="wpa_supplicant-openrc openrc"
@@ -261,7 +253,7 @@ iwd() {
 }
 
 iwd_openrc() {
-	install_if="$pkgname-iwd=$pkgver-r$pkgrel openrc"
+	install_if="$pkgname-wifi-iwd=$pkgver-r$pkgrel openrc"
 	install="$subpkgname.post-install $subpkgname.post-upgrade"
 
 	depends="iwd-openrc openrc"

@@ -281,6 +281,8 @@ USB_FUNCTIONFS = false
 USB_MASS_STORAGE = false
 USB_G_SERIAL = false
 # enable configfs gadgets
+USB_CONFIGFS_ACM = true  # Serial gadget for debug-shell
+USB_CONFIGFS_MASS_STORAGE = true  # Mass storage gadget for debug-shell
 USB_CONFIGFS_NCM = true  # USB networking via NCM
 USB_CONFIGFS_RNDIS = true  # USB networking via RNDIS (legacy)
 
@@ -325,10 +327,7 @@ EFI_PARAMS_FROM_FDT = true
 EFI_ZBOOT = true
 
 ["category:libcamera".">=0.0.0"."aarch64"]
-DMABUF_HEAPS_CMA = true
-DMABUF_HEAPS = true
-DMA_CMA = true
-CMA = true
+UDMABUF = true
 
 ["category:input".">=0.0.0"."all"]
 BT_HIDP = true  # Bluetooth HID

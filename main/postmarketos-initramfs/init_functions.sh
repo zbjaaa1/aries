@@ -4,6 +4,7 @@ ROOT_PARTITION_UNLOCKED=0
 ROOT_PARTITION_RESIZED=0
 PMOS_BOOT=""
 PMOS_ROOT=""
+SUBPARTITION_DEV=""
 
 CONFIGFS="/config/usb_gadget"
 CONFIGFS_ACM_FUNCTION="acm.usb0"
@@ -150,21 +151,23 @@ mount_subpartitions() {
 	attempt_start=$(get_uptime_seconds)
 	wait_seconds=10
 	echo "Trying to mount subpartitions for $wait_seconds seconds..."
-	while [ -z "$(find_root_partition)" ]; do
+	while [ -z "$(find_boot_partition)" ] || [ -z "$(find_root_partition)" ]; do
 		partitions="$android_parts $(grep -v "loop\|ram" < /proc/diskstats |\
 			sed 's/\(\s\+[0-9]\+\)\+\s\+//;s/ .*//;s/^/\/dev\//')"
 		for partition in $partitions; do
 			case "$(kpartx -l "$partition" 2>/dev/null | wc -l)" in
 				2)
 					echo "Mount subpartitions of $partition"
+					SUBPARTITION_DEV="$partition"
 					kpartx -afs "$partition"
 					# Ensure that this was the *correct* subpartition
 					# Some devices have mmc partitions that appear to have
 					# subpartitions, but aren't our subpartition.
-					if [ -n "$(find_root_partition)" ]; then
+					if [ -n "$(find_boot_partition)" ] && [ -n "$(find_root_partition)" ]; then
 						break
 					fi
 					kpartx -d "$partition"
+					SUBPARTITION_DEV=""
 					continue
 					;;
 				*)
@@ -519,8 +522,12 @@ resize_root_partition() {
 	# external partition.
 	if [ -z "${partition##"/dev/mapper/"*}" ] || [ -z "${partition##"/dev/dm-"*}" ]; then
 		# Get physical device
-		partition_dev=$(dmsetup deps -o blkdevname "$partition" | \
-			awk -F "[()]" '{print "/dev/"$2}')
+		if [ -n "$SUBPARTITION_DEV" ]; then
+			partition_dev="$SUBPARTITION_DEV"
+		else
+			partition_dev=$(dmsetup deps -o blkdevname "$partition" | \
+				awk -F "[()]" '{print "/dev/"$2}')
+		fi
 		if has_unallocated_space "$partition_dev"; then
 			echo "Resize root partition ($partition)"
 			# unmount subpartition, resize and remount it

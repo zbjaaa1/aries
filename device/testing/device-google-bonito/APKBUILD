@@ -1,7 +1,7 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-google-bonito
 pkgdesc="Google Pixel 3a XL"
-pkgver=2
+pkgver=3
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -17,9 +17,12 @@ depends="
 "
 makedepends="devicepkg-dev"
 source="
+	81-libssc-google-sargo.rules
 	90-feedbackd-drv2624.rules
 	deviceinfo
+	hexagonrpcd-adsp-sensorspd.confd
 	modules-initfs
+	no-hexagonrpcd-on-suspend.sh
 	q6voiced.conf
 "
 subpackages="
@@ -47,23 +50,45 @@ kernel_sdc() {
 
 nonfree_firmware() {
 	pkgdesc="Proprietary firmware blobs for the Google Pixel 3a XL"
+	replaces="hexagonrpcd-openrc"
 	depends="
 		firmware-google-sargo
+		hexagonrpcd
 		linux-firmware-ath10k
 		linux-firmware-qca
 		linux-firmware-qcom
 		soc-qcom-sdm845-modem
 		soc-qcom-sdm845-nonfree-firmware
 	"
+	# Enable HexagonRPCD by default, but not if the user installed this
+	# package then disabled it.
+	install="
+		device-google-sargo-nonfree-firmware.post-install
+	"
 
 	# The q6voiced configuration can only be used if the ADSP is brought up
 	# via non-free firmware.
 	install -Dm644 "$srcdir"/q6voiced.conf "$subpkgdir"/etc/conf.d/q6voiced
+
+	# Sensors depend on ADSP firmware and the sensors registry served over FastRPC.
+	install -Dm644 "$srcdir"/hexagonrpcd-adsp-sensorspd.confd \
+		"$subpkgdir"/etc/conf.d/hexagonrpcd-adsp-sensorspd
+
+	# Sensors depend on ADSP firmware and the sensors registry served over FastRPC.
+	install -Dm644 "$srcdir"/81-libssc-google-sargo.rules \
+		"$subpkgdir"/usr/lib/udev/rules.d/81-libssc-google-sargo.rules
+
+	# The FastRPC service is only enabled when non-free firmware is installed.
+	install -Dm755 "$srcdir"/no-hexagonrpcd-on-suspend.sh \
+		"$subpkgdir"/etc/elogind/system-sleep/no-hexagonrpcd-on-suspend.sh
 }
 
 sha512sums="
+089ce0acba4e1d789e337bedfca7570796a6416e7230ae9b8fc6b625747a40dbb064b1a707877cd6b7bdc73844c6571316e2ec0746a77060f13d98c52fdbfc00  81-libssc-google-sargo.rules
 016d398155f2344417f5e5649a361719ba6e53e593c501b5df39114cdd284302b9bf8686a39817aee0c08fec95b3ab613c181d6cc9596299aaf7fd05dbe0c3dd  90-feedbackd-drv2624.rules
 a6860945d4c75b698a9fadfd0f42355a601c064f62bcf197061ba97be46d23727cac1df355a238042ce9c9017e0ddf458f23a858aad60bebe672ba495cc6c4ad  deviceinfo
-1eb5f138619f499fab31ea64f63ee9f8984f195528708ec6a01ddc533c74cfb71d1442b97905ae15db24b8faac259fa3e89db357ca9c747ce3ee598c2d681639  modules-initfs
+b6208c254b6e44ac4f6d748a38cc6b05da0db2c90235ada2011b138b82ccc3372687df2f5ad97e885e9eea135216a3c52266a08a7f4eb323e62e799f6f82ec7b  hexagonrpcd-adsp-sensorspd.confd
+0253ff4688b789aa7cdbffb22e7ff9497aabe083adc44bf33fa52617215a1f48fc722bd61aa13a35d109eff1e69202eb599dccff029e39c0a390dcab11dd9b76  modules-initfs
+2972005a9cf6ca57061965075593dddfa8ee479bc6c21cd41851b1a14768cb1cddbd31a17975ae17adc36d40d294ccbc6bf83defbd69fc7b363f638d8564fbbc  no-hexagonrpcd-on-suspend.sh
 3a4a9322839d4b3ef9d79668a37840a9f444954759ae3c512e694051d2f9a2573db42ad6c4c1a5c75eeb861232a27ba1a8cef9b503decd54ead25a96e3dd6f98  q6voiced.conf
 "

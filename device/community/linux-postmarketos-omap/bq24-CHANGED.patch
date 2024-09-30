@@ -1,0 +1,13 @@
+diff --git a/drivers/power/supply/bq2415x_charger.c b/drivers/power/supply/bq2415x_charger.c
+index 25e28dac900d..a9dc9b0abc03 100644
+--- a/drivers/power/supply/bq2415x_charger.c
++++ b/drivers/power/supply/bq2415x_charger.c
+@@ -835,6 +835,8 @@ static int bq2415x_notifier_call(struct notifier_block *nb,
+ 	if (!bq2415x_update_reported_mode(bq, prop.intval))
+ 		return NOTIFY_OK;
+ 
++	power_supply_changed(bq->charger);
++
+ 	/* if automode is not enabled do not tell about reported_mode */
+ 	if (bq->automode < 1)
+ 		return NOTIFY_OK;

@@ -1,0 +1,90 @@
+diff --git a/drivers/power/supply/bq27xxx_battery.c b/drivers/power/supply/bq27xxx_battery.c
+index 750fda543308..2560104c85a9 100644
+--- a/drivers/power/supply/bq27xxx_battery.c
++++ b/drivers/power/supply/bq27xxx_battery.c
+@@ -1522,6 +1522,18 @@ static void bq27xxx_battery_settings(struct bq27xxx_device_info *di)
+ 		bq27xxx_battery_set_config(di, info);
+ }
+ 
++/*
++ * Returns true if reported battery capacity is inaccurate
++ */
++static bool bq27xxx_battery_capacity_inaccurate(struct bq27xxx_device_info *di,
++						 u16 flags)
++{
++	if (di->opts & BQ27XXX_O_HAS_CI)
++		return (flags & BQ27000_FLAG_CI);
++	else
++		return false;
++}
++
+ /*
+  * Return the battery State-of-Charge
+  * Or < 0 if something fails.
+@@ -1538,6 +1550,12 @@ static int bq27xxx_battery_read_soc(struct bq27xxx_device_info *di)
+ 	if (soc < 0)
+ 		dev_dbg(di->dev, "error reading State-of-Charge\n");
+ 
++	/* If CI flag is set, SoC value always reports zero, therefore hide it
++	 * from userspace.
++	 */
++	if (soc == 0 && bq27xxx_battery_capacity_inaccurate(di, di->cache.flags))
++		return -ENODATA;
++
+ 	return soc;
+ }
+ 
+@@ -1562,6 +1580,12 @@ static int bq27xxx_battery_read_charge(struct bq27xxx_device_info *di, u8 reg,
+ 	else
+ 		charge *= 1000;
+ 
++	/* If CI flag is set, reported charge will always be zero since the chip
++	 * calculates it from the value of SoC. Therefore hide it from userspace.
++	 */
++	if (charge == 0 && bq27xxx_battery_capacity_inaccurate(di, di->cache.flags))
++		return -ENODATA;
++
+ 	val->intval = charge;
+ 
+ 	return 0;
+@@ -1655,6 +1679,12 @@ static int bq27xxx_battery_read_energy(struct bq27xxx_device_info *di,
+ 	else
+ 		ae *= 1000;
+ 
++	/* If CI flag is set, reported energy will always be zero since the chip
++	 * calculates it from the value of SoC. Therefore hide it from userspace.
++	 */
++	if (ae == 0 && bq27xxx_battery_capacity_inaccurate(di, di->cache.flags))
++		return -ENODATA;
++
+ 	val->intval = ae;
+ 
+ 	return 0;
+@@ -1720,7 +1750,7 @@ static int bq27xxx_battery_read_time(struct bq27xxx_device_info *di, u8 reg,
+ 		return tval;
+ 	}
+ 
+-	if (tval == 65535)
++	if (tval == 65535 || (tval == 0 && bq27xxx_battery_capacity_inaccurate(di, di->cache.flags)))
+ 		return -ENODATA;
+ 
+ 	val->intval = tval * 60;
+@@ -1765,18 +1795,6 @@ static bool bq27xxx_battery_dead(struct bq27xxx_device_info *di, u16 flags)
+ 		return flags & (BQ27XXX_FLAG_SOC1 | BQ27XXX_FLAG_SOCF);
+ }
+ 
+-/*
+- * Returns true if reported battery capacity is inaccurate
+- */
+-static bool bq27xxx_battery_capacity_inaccurate(struct bq27xxx_device_info *di,
+-						 u16 flags)
+-{
+-	if (di->opts & BQ27XXX_O_HAS_CI)
+-		return (flags & BQ27000_FLAG_CI);
+-	else
+-		return false;
+-}
+-
+ static int bq27xxx_battery_read_health(struct bq27xxx_device_info *di,
+ 				       union power_supply_propval *val)
+ {

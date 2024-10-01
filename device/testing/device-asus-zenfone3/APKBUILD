@@ -9,7 +9,6 @@ arch="aarch64"
 options="!check !archcheck"
 depends="
 	firmware-asus-zenfone3
-	linux-postmarketos-qcom-msm8953
 	mkbootimg
 	postmarketos-base
 	soc-qcom-msm8953
@@ -34,11 +33,13 @@ package() {
 }
 
 kernel_ze520kl() {
+	depends="linux-postmarketos-qcom-msm8953"
 	pkgdesc="Asus Zenfone 3 (ZE520KL)"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 kernel_ze552kl() {
+	depends="linux-postmarketos-qcom-msm8953"
 	pkgdesc="Asus Zenfone 3 (ZE552KL)"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }

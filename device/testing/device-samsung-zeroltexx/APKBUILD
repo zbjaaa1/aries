@@ -2,7 +2,7 @@
 pkgname=device-samsung-zeroltexx
 pkgdesc="Samsung Galaxy S6 edge"
 pkgver=1
-pkgrel=1
+pkgrel=2
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
@@ -16,11 +16,11 @@ depends="
 	postmarketos-initramfs-minimal
 "
 makedepends="devicepkg-dev"
+subpackages="
+	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-openrc
+	"
 source="deviceinfo"
-
-subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
-
-install="$pkgname.post-install"
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -34,6 +34,13 @@ nonfree_firmware() {
 	pkgdesc="Non-free firmware for the Samsung Galaxy S6 edge"
 	depends="firmware-samsung-zero"
 	mkdir "$subpkgdir"
+}
+
+openrc() {
+	install_if="$pkgname=$pkgver-r$pkgrel openrc"
+	install="$subpkgname.post-install"
+
+	mkdir -p "$subpkgdir"
 }
 
 

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=plasmatube
-pkgver=9999_git20240925
+pkgver=9999_git20241001
 pkgrel=0
-_commit="c5423d5cabb48b488f3a4757c0737fe5f80199a1"
+_commit="6afd7f715e7acb287db88bc123f40cc12c533dfd"
 pkgdesc="Kirigami YouTube video player based on Invidious"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -37,7 +37,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/multimedia/plasmatube.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-30/plasmatube-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-01/plasmatube-$_commit.tar.xz"
 options="!check" # No tests
 
 options="!check"
@@ -60,5 +60,5 @@ package() {
 }
 
 sha512sums="
-e80ab0d7053c8806f5270ce71f446847489ff25ac56ec03c534ccc604e92da34a78015d220dfd3c57eeeb26236a215cdb367dbaadc961afc148ff17904d10a08  plasmatube-c5423d5cabb48b488f3a4757c0737fe5f80199a1.tar.xz
+a424ec13578024ad72f364958e7be9994c36849eb8122be0c267a326f5b8cfa682ac6471b0498c5674e1c5f21b305e22361f0ef88cd3b87157acd608e99776eb  plasmatube-6afd7f715e7acb287db88bc123f40cc12c533dfd.tar.xz
 "

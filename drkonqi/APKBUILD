@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=drkonqi
-pkgver=9999_git20240927
+pkgver=9999_git20240930
 pkgrel=0
-_commit="2f69fd8894d6e60bfdc177bc96507deb3c596af7"
+_commit="6b9792cf2fc2990cdefcc36973a49b4202a3dfd2"
 pkgdesc="The KDE crash handler"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -44,7 +44,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/drkonqi.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-09-30/drkonqi-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-01/drkonqi-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -69,5 +69,5 @@ package() {
 }
 
 sha512sums="
-1b1fc47bf2e08328d8bb36043ec78fd2847a066f376c10c735b204dca79aca5ae644c8cd4466684cef68bbefc12158a7f78032d43df3fe24cb4e4b9e292d3e45  drkonqi-2f69fd8894d6e60bfdc177bc96507deb3c596af7.tar.xz
+d040fe492c6058e89b220ffd2479c8cdeb91020fc3ab513834100966f305784b6586e58a9bb3459750859afe39b278342db05f706932f4c0483fd7ff9f79bfc9  drkonqi-6b9792cf2fc2990cdefcc36973a49b4202a3dfd2.tar.xz
 "

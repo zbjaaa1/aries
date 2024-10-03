@@ -1,6 +1,6 @@
 # Reference: <https://postmarketos.org/devicepkg>
 # Maintainer: Raymond Hackley <raymondhackley@protonmail.com>
-pkgname=device-qcom-msm8909
+pkgname=device-qualcomm-msm8909
 pkgdesc="Generic device package for various Qualcomm MSM8905/MSM8909/MSM8916-based devices"
 pkgver=1
 pkgrel=0
@@ -19,6 +19,8 @@ source="
 	modules-initfs
 "
 subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
+provides="device-qcom-msm8909"
+replaces="device-qcom-msm8909"
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -43,6 +45,6 @@ nonfree_firmware() {
 }
 
 sha512sums="
-d77082a92edd4b2f8de2f8a3eaa395a020014c829c73e4008fbe7a2c1dfa7d8a258b10e52b288c2cfa7afc85156a6ab667561f0f4c20c32856ec6bf71b66398c  deviceinfo
+c5441ef71988a8da9401b41791cd7b3868d3560f3ccf294c1d698e37b5f44882dbfb446a63976242adf56bcbd8b5bc6e836bb01c1702f45715d2987979b1c89e  deviceinfo
 3c4ae8aad562270a6094add613912955bafed994e0df2f8842575fb4e38db0f21a57dc61fb772af418d1423512811e7f9f533c2e9b3f8edb657ed20f12ca2fc9  modules-initfs
 "

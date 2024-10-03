@@ -1,6 +1,6 @@
 # Reference: <https://postmarketos.org/devicepkg>
 # Maintainer: Nikita Travkin <nikita@trvn.ru>
-pkgname=device-qcom-msm8916
+pkgname=device-qualcomm-msm8916
 pkgdesc="Generic device package for various Qualcomm MSM8916/MSM8939-based devices"
 pkgver=2
 pkgrel=1
@@ -22,6 +22,8 @@ subpackages="
 	$pkgname-kernel-extlinux:kernel_extlinux
 	$pkgname-kernel-efi:kernel_efi
 "
+provides="device-qcom-msm8916"
+replaces="device-qcom-msm8916"
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -58,6 +60,6 @@ kernel_efi() {
 }
 
 sha512sums="
-0894e6a63f69062d4c9e744cdda700b30c68795fdfdc866b8c60c0d0d27b97f3ad915615d87baede2fdaceb5c2773240c649eb95d82b2d58acd5b59f1e5190c0  deviceinfo
+3d2c04e27b66fc3c2a0b158a39b501164975f9a8ceb9aed66bb50d794483b2a16e7318c8897c351b9514fded40cf7fbb5402156eaa41ab60983b9e7bd2bc9445  deviceinfo
 80b037998756dab0c6b2a3bb438fb2d6bf727148c4af29648074b85c3beacdbbbffb2fefd477e68904d4c3bedb76bf0e532719a15a3bb7c8ef5f922be0d73c1d  modules-initfs
 "

@@ -6,7 +6,7 @@
 pkgname=akonadi-calendar
 pkgver=9999_git20241001
 pkgrel=0
-_commit="5809e0351d92398ab97b04c3419047d3bd796e38"
+_commit="da856c5054292815310ababfc8dad4d16c7b3b86"
 pkgdesc="Akonadi calendar integration"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by kmailtransport -> libkgapi -> qt6-qtwebengine
@@ -35,7 +35,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/akonadi-calendar.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-01/akonadi-calendar-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-02/akonadi-calendar-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="!check" # Broken
 
@@ -60,5 +60,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-81aceb3a123c1fa8e66fa97f6eb004871c2529ed0eb2c82f0f0e75ac84372e82ce258d6e6d26c00d98e0db4c5ae5cf58df2f3526c860746d3323b11067e326ba  akonadi-calendar-5809e0351d92398ab97b04c3419047d3bd796e38.tar.xz
+246e8bd7f6f29ae002233a4edfdeaaa8c76f28da271176313361aec908c27bc44c85493aa21cca734def21eeba5c208561626622f6125c580e1491283b648117  akonadi-calendar-da856c5054292815310ababfc8dad4d16c7b3b86.tar.xz
 "

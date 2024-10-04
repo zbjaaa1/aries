@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=discover
-pkgver=9999_git20241001
+pkgver=9999_git20241002
 pkgrel=0
-_commit="d6748e1026069f9811b5de357a88fd0c5d24cd93"
+_commit="f725e54a7a52f967c60d9ad563df1d7672ddfbb0"
 pkgdesc="KDE Plasma resources management GUI"
 url="https://userbase.kde.org/Discover"
 # armhf blocked by qt5-qtdeclarative
@@ -61,7 +61,7 @@ case "$pkgver" in
 *) _rel=stable ;;
 esac
 _repo_url="https://invent.kde.org/plasma/discover.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-01/discover-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-02/discover-$_commit.tar.xz
 	alpine-appstream-data.json
 	alpine-linux-logo-icon.png
 	"
@@ -141,7 +141,7 @@ backend_apk() {
 }
 
 sha512sums="
-7fcf73e3a0e34a853e0be557e6c3cfc6200beffd465be4b81ba3f1453c1582998b578a910d6509e7953a28197dd029e8455190aa4c7f49d6101a1ae286490ee4  discover-d6748e1026069f9811b5de357a88fd0c5d24cd93.tar.xz
+51b4c6cc285290b4244246233459479e1d83eb31010fb8e2f0c5c4c075f35a034e953944d12394c3140a49328656f944db60f7a9e3730ae9ac66dc44c42776bb  discover-f725e54a7a52f967c60d9ad563df1d7672ddfbb0.tar.xz
 d9cc12a5a92df820d6d133a3698a4fbb08a97f08f00554a11d87c73c6144b42d07cecd6682bf9576d83c8e2556e35ade2fb39e77895afbbe33e2f94630441bb7  alpine-appstream-data.json
 0766668630cb14f58c840ebdda8b76bd1dec98b4dd61469677d4ad6eb4966809a25dbec2a846502cad0391df5b6ca9d692bb857a6fa203b61a52e6ac044cfbf4  alpine-linux-logo-icon.png
 "

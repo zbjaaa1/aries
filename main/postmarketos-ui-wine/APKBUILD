@@ -1,0 +1,22 @@
+pkgname=postmarketos-ui-wine
+pkgver=1
+pkgrel=0
+pkgdesc="(XWayland) Wine desktop"
+arch="x86_64"
+url="https://postmarketos.org/"
+license="GPL-3.0-or-later"
+options="!check"
+depends="postmarketos-base-ui-cage networkmanager wine"
+source="10-wine.sh"
+# https://gitlab.com/postmarketOS/pmbootstrap/-/issues/2347
+_pmb_groups="seat"
+
+
+package() {
+	install -Dm755 "$srcdir"/10-wine.sh \
+		-t "$pkgdir"/etc/tinydm.d/env-wayland.d
+}
+
+sha512sums="
+2c361ff1594c7f0f39d5f580030ca41a81b37478e2dfce26e5a248f6bbf78c9189780872c0d2b0f11ce619651deba70fdcaa0a603c5a417e012d4a276c4fffb9  10-wine.sh
+"

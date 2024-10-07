@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kparts
-pkgver=9999_git20240916
+pkgver=9999_git20241004
 pkgrel=0
-_commit="a5565d90bdfeab0024298790b1e7c40aedcb1ec2"
+_commit="f4ab364493b78024c936ee58788906fbea2672ff"
 pkgdesc="Document centric plugin system"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -33,7 +33,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kparts.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-04/kparts-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-05/kparts-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -57,5 +57,5 @@ package() {
 }
 
 sha512sums="
-3d7b47640ceed172cac64cd08a5340c35fee9cb207cf04f4a5eda491eda47c13985469578fe0f76c6d3de15e99e108e889b3472968cc6335aec1a10d3390c980  kparts-a5565d90bdfeab0024298790b1e7c40aedcb1ec2.tar.xz
+4cde7949304ec0439d855ad083ae3e0dc835fa288dd6ffce47a19ce306e14930576c3706abe6a953efde14bf4de6ccc2ca27f857999bb7b683182ea8c08b76c0  kparts-f4ab364493b78024c936ee58788906fbea2672ff.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=knotifyconfig
-pkgver=9999_git20240924
+pkgver=9999_git20241004
 pkgrel=0
-_commit="d3995be2ab17e6b14d295928161a2e313ba43e7c"
+_commit="1bde569c0adca210241e807d377c196fb3b5837c"
 pkgdesc="Configuration system for KNotify"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/knotifyconfig.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-04/knotifyconfig-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-05/knotifyconfig-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-b1eaaa7dffe742163096a2db7903cbcbcdbef90f7ea0cd991057b2478f347a93dcb97ef80a0db3f0ea3456ae0426313d4ca5d1f2386e517a6a6b6f29c8c57373  knotifyconfig-d3995be2ab17e6b14d295928161a2e313ba43e7c.tar.xz
+4727c1b4e2d1cf68de816c52d516a0db85805377d52b7064d02f0da19ced29e1d09fc9ecd06ae658d8b9b8ad4307eba99124f5fb3a10482c9686648092bb8ecc  knotifyconfig-1bde569c0adca210241e807d377c196fb3b5837c.tar.xz
 "

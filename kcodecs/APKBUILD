@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kcodecs
-pkgver=9999_git20240916
+pkgver=9999_git20241004
 pkgrel=0
-_commit="0bd021498615dd9762046a2f48c8b77c6e1628be"
+_commit="1506c842b1290b308164a655605cb3930ac03d24"
 pkgdesc="Provide a collection of methods to manipulate strings using various encodings"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -21,7 +21,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kcodecs.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-04/kcodecs-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-05/kcodecs-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -45,5 +45,5 @@ package() {
 }
 
 sha512sums="
-72ed5028ad1d1b74e2410f29df411c2abc1aabebc6db4b77d285e212cc42dffeaab32bb706d1b649c1cffcb7d04ea37a918dec8a6368acd6c7a0e23e49700560  kcodecs-0bd021498615dd9762046a2f48c8b77c6e1628be.tar.xz
+28a83e793802286d5d8e465ac8e4741de8d4d393b7d29bd5c65770b3d2201b4ce2c52bb174e0181c6f6b3e27126dd10d435220ca3b3b72bca11ab9c74fb33473  kcodecs-1506c842b1290b308164a655605cb3930ac03d24.tar.xz
 "

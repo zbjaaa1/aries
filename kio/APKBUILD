@@ -6,7 +6,7 @@
 pkgname=kio
 pkgver=9999_git20241004
 pkgrel=0
-_commit="0f3e65d15a1b32fde0191745be64dfe0fa45dba1"
+_commit="94e6143e32e2f0c07a8cac8bdcb4bab220712def"
 pkgdesc="Resource and network access abstraction"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -45,7 +45,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kio.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-04/kio-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-05/kio-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-dbg $pkgname-doc $pkgname-lang $pkgname-kwallet"
 options="!check" # Fails due to requiring physical devices not normally available and test 14 hangs
 
@@ -76,5 +76,5 @@ kwallet() {
 }
 
 sha512sums="
-77d87d0ebb50a6aa36bd0f1fa1445e02181fe7c2559a22369054590d461aaa51af8c7263265a40cbadc5cbbf29c12e0703599d802a1044f44b9796993647a38f  kio-0f3e65d15a1b32fde0191745be64dfe0fa45dba1.tar.xz
+6f453dd1b98654f739e7e1b679e71eb6566b7f85e9f7d4586828d8e0ef887f18fb978e70c83dad73e852f357be5bdc7cc46351774eb628bcc666a51a6567da75  kio-94e6143e32e2f0c07a8cac8bdcb4bab220712def.tar.xz
 "

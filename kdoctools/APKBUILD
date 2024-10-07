@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kdoctools
-pkgver=9999_git20241003
+pkgver=9999_git20241004
 pkgrel=0
-_commit="c17f3aa3f91a31cd1467bedde4cae5cc5b763d71"
+_commit="1331c421481bb12ce088f513aaabc96cf1f0a64c"
 pkgdesc="Documentation generation from docbook"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -32,7 +32,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kdoctools.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-04/kdoctools-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-05/kdoctools-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-89c8a3621c407621f5f01b7e50b2772d27b7585645c52806ca30670008b44f22c202d6ab67df4a0d0cd9af5b27c3637cd8c5ca2ec2f7adb29619ebeec5aa51d4  kdoctools-c17f3aa3f91a31cd1467bedde4cae5cc5b763d71.tar.xz
+d2b9e0ac0839f68da5c158a92e7558fa29fed98ee7c1928174148008b0ea54a4af76800d69b8da7ddedf1b29abd3ec5d06712a171dbf58eac31a1e79f9652eb0  kdoctools-1331c421481bb12ce088f513aaabc96cf1f0a64c.tar.xz
 "

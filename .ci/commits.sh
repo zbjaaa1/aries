@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 # Copyright 2023 Oliver Smith
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Description: check pkgver/pkgrel bumps, amount of changed pkgs etc
@@ -12,7 +12,7 @@ if [ "$(id -u)" = 0 ]; then
 	# already downloads and runs install_pmbootstrap.sh.
 	if ! [ -e install_pmbootstrap.sh ]; then
 		wget "https://gitlab.postmarketos.org/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
-		sh ./install_pmbootstrap.sh
+		sh -x ./install_pmbootstrap.sh
 	fi
 	exec su "${TESTUSER:-pmos}" -c "sh -e $0"
 fi

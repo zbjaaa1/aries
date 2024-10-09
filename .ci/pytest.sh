@@ -1,4 +1,4 @@
-#!/bin/sh -e
+#!/bin/sh -ex
 # Copyright 2023 Oliver Smith
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Description: lint with various python tests
@@ -9,7 +9,7 @@
 if [ "$(id -u)" = 0 ]; then
 	set -x
 	wget "https://gitlab.postmarketos.org/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
-	sh ./install_pmbootstrap.sh pytest
+	sh -x ./install_pmbootstrap.sh pytest
 	exec su "${TESTUSER:-pmos}" -c "sh -e $0"
 fi
 

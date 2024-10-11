@@ -3,9 +3,6 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # usage: install_pmbootstrap.sh [ADDITIONAL_PACKAGE, ...]
 
-echo "**** install_pmbootstrap"
-set -x
-
 : "${PMBOOTSTRAP_TAG:="master"}"
 : "${PMBOOTSTRAP_URL:="https://gitlab.postmarketos.org/postmarketOS/pmbootstrap.git"}"
 
@@ -38,6 +35,9 @@ add_remote_origin_original() {
 		cat /tmp/git_remote_add
 		exit 1
 	fi
+
+	# Make sure everyone can write to the repo later, since CI runs as several different users (root, TESTUSER/pmos, build)
+	chmod -R go+w "$pmaports/.git"
 }
 
 # Set up depends

@@ -2,12 +2,12 @@
 # Maintainer: Bart Ribbers <bribbers@disroot.org>
 
 # group=3rdparty
-pkgname=qmltermwidget
+pkgname=libkonsoleqml
 pkgver=9999_git20231229
 pkgrel=0
 _commit="bcaacdecb8830d9ae4e6dd17b2d12eadcb036426"
 arch="all"
-url="https://github.com/swordfish90/qmltermwidget"
+url="https://invent.kde.org/jbbgameich/libkonsoleqml"
 license="GPL-2.0-or-later"
 pkgdesc="QML port of qtermwidget"
 makedepends="
@@ -23,11 +23,11 @@ checkdepends="
 	mcookie
 	xvfb-run
 	"
-_repo_url="https://invent.kde.org/jbbgameich/qmltermwidget.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-08/qmltermwidget-$_commit.tar.xz"
-#options="!check" # Requires itself to be installed
+_repo_url="https://invent.kde.org/jbbgameich/libkonsoleqml.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-13/libkonsoleqml-$_commit.tar.xz"
+options="!check" # Has no tests
 
-builddir="$srcdir/qmltermwidget-$_commit"
+builddir="$srcdir/libkonsoleqml-$_commit"
 
 build() {
 	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
@@ -37,13 +37,9 @@ build() {
 	cmake --build build
 }
 
-check() {
-	xvfb-run ctest --test-dir build --output-on-failure
-}
-
 package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-157b10abeea5b0e659ce50e3e1b80596bc88832411e1a83bc91760c7ded049ed792354b9a1e9ce1f1c1bf11e79adc0927cbd84d00a41b5697b5325cf9dde3e74  qmltermwidget-bcaacdecb8830d9ae4e6dd17b2d12eadcb036426.tar.xz
+f1ff91bf66ab2f7661204df4a26fa3fdc6cfd075479c282c99b484343fce2bc8f5605213eb7029fa7a64efadcf58bf447a74049646e375e4010046c2661af8cd  libkonsoleqml-bcaacdecb8830d9ae4e6dd17b2d12eadcb036426.tar.xz
 "

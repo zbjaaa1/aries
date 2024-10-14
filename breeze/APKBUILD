@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=breeze
-pkgver=9999_git20241005
+pkgver=9999_git20241011
 pkgrel=0
-_commit="f212edacfc649c1282acdca9f16640f04dfe0f52"
+_commit="c3e8b1b1a984bab62d9af9b03d8f349f4c1e79a4"
 pkgdesc="Artwork, styles and assets for the Breeze visual style for the Plasma Desktop"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -48,7 +48,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/breeze.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-08/breeze-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-11/breeze-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -70,5 +70,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-05d9d2bf443f68e61ac13ca16411a30f37ad54c5fa24e5a75a85828bb02b14af8750e0ad5e75a92a9e224363480be3b2f2b54cc2174afd23ab2c3c5326164168  breeze-f212edacfc649c1282acdca9f16640f04dfe0f52.tar.xz
+546571f02caed746df58fe3dbcde6253f8179b9e3346b9459da1854db4515400a09a1f6acaeb2ceb179072f4d72a585e8fb6e77624fb964c9611b7792cd6b5b5  breeze-c3e8b1b1a984bab62d9af9b03d8f349f4c1e79a4.tar.xz
 "

@@ -1,0 +1,57 @@
+# Reference: <https://postmarketos.org/devicepkg>
+# Maintainer: Jens Reidel <adrian@travitia.xyz>
+# Co-Maintainer: famfo <famfo@famfo.xyz>
+pkgname=device-qemu-ppc64le
+pkgver=1
+pkgrel=0
+pkgdesc="Simulated device in QEMU (ppc64le)"
+url="https://postmarketos.org"
+arch="ppc64le"
+license="MIT"
+depends="postmarketos-base"
+makedepends="devicepkg-dev"
+subpackages="
+	$pkgname-kernel-lts:kernel_lts
+	$pkgname-mce
+	$pkgname-sway
+	"
+
+source="
+	deviceinfo
+	modules-initfs
+	mce-display-blanking.conf
+	"
+options="!check !archcheck"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+mce() {
+	pkgdesc="Prevents screen blanking for UI's using mce (Glacier, Asteroid)"
+	install_if="$pkgname=$pkgver-r$pkgrel mce"
+	install -Dm644 "$srcdir"/mce-display-blanking.conf \
+		"$subpkgdir"/etc/mce/50display-blanking.conf
+}
+
+sway() {
+	install_if="$pkgname=$pkgver-r$pkgrel postmarketos-ui-sway"
+	depends="postmarketos-ui-sway-logo-key-alt"
+	mkdir "$subpkgdir"
+}
+
+kernel_lts() {
+	pkgdesc="Alpine LTS kernel"
+	depends="linux-lts linux-firmware-none"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+sha512sums="
+3996a6e44f15fd5c989cf4cb10f180adc8594b67697010c0ac0c2a1d7e677002b1708a62ade65df23e22a9f743409b3de001d87990ba177295010892d69c64f9  deviceinfo
+8129439ec53e76e714b2d3dac97bbe702822d6f6642ea6b631aa26001fec85ca310fbe9eeb04c2bd849145a1137b7934c21b704524f3a98b96b7c6f71c2ca992  modules-initfs
+99d32eed6c5cda59e91516e982c5bd5165ff718133e2411a0dbba04e2057d1dfad49a75e5cc67140d0e0adcbe1383671bd2892335929b782a5b19f5472e635ad  mce-display-blanking.conf
+"

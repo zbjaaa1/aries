@@ -3,9 +3,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma5support
-pkgver=9999_git20241011
+pkgver=9999_git20241014
 pkgrel=0
-_commit="7a1d73e6b11c102be925ef2c719f52988cb867b8"
+_commit="3394bf5f9b0ea99508f2e04c573e4da150a64f71"
 pkgdesc="Support components for porting from KF5/Qt5 to KF6/Qt6"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -34,7 +34,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma5support.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-11/plasma5support-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-14/plasma5support-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -65,5 +65,5 @@ lang() {
 	default_lang
 }
 sha512sums="
-e65075f2fc9897ea281368f575d15cfc08f9923ef3e6de0e268bbac927e56a834635fe76c0b77b2abd45b30bc634a52bdd0108b4e6d1e7abab5e3f7d9db11c7e  plasma5support-7a1d73e6b11c102be925ef2c719f52988cb867b8.tar.xz
+9f9b68d05fb54577f2e71b4e4b996f5a401aceca1df7577b7f651849f25684654d62af5449a6261b9b6e9f073f2a623cf5e595bbbec529e46d0d30b7212be75c  plasma5support-3394bf5f9b0ea99508f2e04c573e4da150a64f71.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kpimtextedit
-pkgver=9999_git20241009
+pkgver=9999_git20241013
 pkgrel=0
-_commit="a6a495b5d69f19227af9db3f8ab9c86cb469eb54"
+_commit="77466194cc0c4c73e3353d2d361a55e0ac88fbac"
 pkgdesc="Advanced text editor which provide advanced html feature"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -37,7 +37,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/kpimtextedit.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-11/kpimtextedit-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-14/kpimtextedit-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -81,5 +81,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-4b449decf6778520e3538993e4e362a3fc90360cc99689e6989af443086bc575852897a722198cb4cd1af24989dcf5b7a5b68f317de0c46a0ec18c3b76da968d  kpimtextedit-a6a495b5d69f19227af9db3f8ab9c86cb469eb54.tar.xz
+60f0ed8aec6590fec15ff1a9b965b30203edd91a45d51cb9df4f68ba2912db4b1e6f8eb68abe459e7614081c2ca453748faaa05d6ee2d77aa1ad9569d4036e54  kpimtextedit-77466194cc0c4c73e3353d2d361a55e0ac88fbac.tar.xz
 "

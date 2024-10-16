@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kalarm
-pkgver=9999_git20241011
+pkgver=9999_git20241013
 pkgrel=0
-_commit="97632e5b46fb63b551fd9ccf9cddf2554b7451d5"
+_commit="f70cabe9aa408fb7a9fadbaac8c93328a9709b17"
 pkgdesc="Personal alarm scheduler"
 url="https://kontact.kde.org/"
 # armhf blocked by extra-cmake-modules
@@ -60,7 +60,7 @@ makedepends="
 	vlc-dev
 	"
 _repo_url="https://invent.kde.org/pim/kalarm.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-11/kalarm-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-14/kalarm-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # Tests are broken
 
@@ -84,5 +84,5 @@ package() {
 }
 
 sha512sums="
-e3a218bb2902d794d02c371bc0accaa3b695cb8826ecf2b96bed8e1b5138d424bca304154870ab7db98e3b3562133fd640bad7b08beac7ed9fbd81742ee09a9e  kalarm-97632e5b46fb63b551fd9ccf9cddf2554b7451d5.tar.xz
+903baeec63c325e4f439f3717daf60153be403e175a47dde687e1d87c1173648bfb6d735d640b9bd8f06634355ae7db42fc6151d9ccfe4d197a87b6b1c9d86d8  kalarm-f70cabe9aa408fb7a9fadbaac8c93328a9709b17.tar.xz
 "

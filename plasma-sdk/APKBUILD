@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-sdk
-pkgver=9999_git20241004
+pkgver=9999_git20241016
 pkgrel=0
-_commit="5b6ba2e1bacf1e3acd146f38d1ebb0050b9a0bc6"
+_commit="5979fabd363fd84574c2bbf7d843544f6dfefe5e"
 pkgdesc="Applications useful for Plasma Development"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -46,7 +46,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-sdk.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-14/plasma-sdk-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-16/plasma-sdk-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang $pkgname-zsh-completion"
 
 options="!check"
@@ -70,5 +70,5 @@ package() {
 }
 
 sha512sums="
-39ed84d896bc54bf8f343b20ce615ac21f7bcad82a554475645d7ce936c88fd918cdfc08e242dca008adff82f788d4e53adb238ec7caabc654188315a5f687ad  plasma-sdk-5b6ba2e1bacf1e3acd146f38d1ebb0050b9a0bc6.tar.xz
+ab7f6eb411c0c3b8863e2a44f7ae9f240623d11d9abc9704401fad6f6b98a16c1755e6df89a1853f8c4344089e0a5f80216e582d2e9375faa723cd6d363b287b  plasma-sdk-5979fabd363fd84574c2bbf7d843544f6dfefe5e.tar.xz
 "

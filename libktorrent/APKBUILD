@@ -37,7 +37,7 @@ checkdepends="
 	"
 subpackages="$pkgname-dev $pkgname-lang"
 _repo_url="https://invent.kde.org/network/libktorrent.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-16/libktorrent-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-18/libktorrent-$_commit.tar.xz"
 
 builddir="$srcdir/$pkgname-$_commit"
 
@@ -52,7 +52,7 @@ build() {
 check() {
 	# utppolltest requires network access
 	# superseedtest is broken
-	xvfb-run ctest --test-dir build --output-on-failure -E "(utppoll|superseed)test"
+	xvfb-run -a ctest --test-dir build --output-on-failure -E "(utppoll|superseed)test"
 }
 
 package() {

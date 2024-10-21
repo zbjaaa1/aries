@@ -1,0 +1,48 @@
+# Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
+
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=ktexttemplate
+pkgver=9999_git20241011
+pkgrel=0
+_commit="37afe22010e7720915413327954c101935332519"
+pkgdesc="Library to allow application developers to separate the structure of documents from the data they contain"
+arch="all !armhf" # armhf blocked by extra-cmake-modules
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.0-or-later AND LGPL-2.1-or-later"
+makedepends="
+	doxygen
+	extra-cmake-modules
+	qt6-qtbase-dev
+	samurai
+	graphviz
+	qt6-qttools-dev
+	"
+checkdepends="xvfb-run"
+_repo_url="https://invent.kde.org/frameworks/ktexttemplate.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/ktexttemplate-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc "
+
+options="!check"
+builddir="$srcdir/ktexttemplate-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+sha512sums="
+341821c178cd3112906769b7e1c46f362086e94a0b2307dbd06a74de50022ab0bddd685ab0b6c95e1b0cae42a13631dacbe236b24d34923865faedc2426dc320  ktexttemplate-37afe22010e7720915413327954c101935332519.tar.xz
+"

@@ -1,0 +1,60 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=akonadi-mime
+pkgver=9999_git20241019
+pkgrel=0
+_commit="84c3996ce5ba0bc4b4ba6ee48283d6e6a16b786c"
+pkgdesc="Libraries and daemons to implement basic email handling"
+# armhf blocked by extra-cmake-modules
+# s390x and riscv64 blocked by akonadi
+# ppc64le blocked by qt6-qtwebengine -> kaccounts-integration
+arch="all !armhf !s390x !riscv64 !ppc64le"
+url="https://community.kde.org/KDE_PIM"
+license="LGPL-2.0-or-later"
+depends_dev="
+	akonadi-dev
+	kcodecs-dev
+	kconfigwidgets-dev
+	kdbusaddons-dev
+	ki18n-dev
+	kio-dev
+	kitemmodels-dev
+	kmime-dev
+	kxmlgui-dev
+	libxslt-dev
+	qt6-qtbase-dev
+	shared-mime-info
+	"
+makedepends="$depends_dev
+	extra-cmake-modules
+	samurai
+	"
+_repo_url="https://invent.kde.org/pim/akonadi-mime.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/akonadi-mime-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/akonadi-mime-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	# mailserializerplugintest is broken
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest -E "mailserializerplugintest"
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+sha512sums="
+8bbcc6de24e8c98f5ac73dbab3eb746231ea4e9d92951d02eaf1637926aad52d97b47e804a348e38446b60a0b5c9f2618b5edf09dfe4fe34547cb16c607cc09b  akonadi-mime-84c3996ce5ba0bc4b4ba6ee48283d6e6a16b786c.tar.xz
+"

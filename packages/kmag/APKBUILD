@@ -1,0 +1,49 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=kmag
+pkgver=9999_git20241020
+pkgrel=0
+_commit="d18b868c46ade6899ea23f178f9a4eae9e836841"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://kde.org/applications/utilities/org.kde.kmag"
+pkgdesc="A screen magnifier"
+license="GPL-2.0-or-later AND GFDL-1.2-only"
+makedepends="
+	extra-cmake-modules
+	kdoctools-dev
+	ki18n-dev
+	kio-dev
+	kxmlgui-dev
+	qt6-qtbase-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/accessibility/kmag.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kmag-$_commit.tar.xz"
+subpackages="$pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kmag-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+61ba886ff415059c9f177e11067245c80b28329813bb214eaec909a5dbd47856341dcd6b82e1243ca8f564d88c13eae7333f467b2d741783ef87ce7bda679be5  kmag-d18b868c46ade6899ea23f178f9a4eae9e836841.tar.xz
+"

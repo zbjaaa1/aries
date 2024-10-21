@@ -1,0 +1,72 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-plasma
+pkgname=plasma-remotecontrollers
+pkgver=9999_git20241011
+pkgrel=0
+_commit="c7b4085f71c244ba4840af22d573ebe35cb775e2"
+pkgdesc="Translate various input device events into keyboard and pointer events"
+url="https://invent.kde.org/plasma-bigscreen/plasma-remotecontrollers"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+license="BSD-2-Clause AND (GPL-2.0-only OR GPL-3.0-only) AND CC0-1.0"
+# For some reason there is no dep on so:libcec but it crashes without it
+depends="libcec"
+makedepends="
+	extra-cmake-modules
+	kcmutils-dev
+	kconfig-dev
+	kdeclarative-dev
+	ki18n-dev
+	knotifications-dev
+	kpackage-dev
+	kstatusnotifieritem-dev
+	kwindowsystem-dev
+	libcec-dev
+	libevdev-dev
+	plasma-workspace-dev
+	qt6-qtbase-dev
+	qt6-qtwayland-dev
+	samurai
+	solid-dev
+	"
+case "$CARCH" in
+	ppc64le) ;;
+	*) makedepends="$makedepends xwiimote-dev" ;;
+esac
+
+subpackages="$pkgname-lang"
+case "$pkgver" in
+	*.90*) _rel=unstable;;
+	*) _rel=stable;;
+esac
+_repo_url="https://invent.kde.org/plasma-bigscreen/plasma-remotecontrollers.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/plasma-remotecontrollers-$_commit.tar.xz
+	uinput.conf
+	"
+options="!check" # No tests
+
+builddir="$srcdir/plasma-remotecontrollers-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+
+	install -Dm644 \
+		"$srcdir"/uinput.conf \
+		-t "$pkgdir"/etc/modules-load.d
+}
+
+sha512sums="
+e1416a51998cd3f63baa550f0ec7a63ee33467a41f71105da06d8150fd5e0ff4701ee9380e7719bc3204f77803398f220a69f7c3162f1b999fe0d668b3b680ca  plasma-remotecontrollers-c7b4085f71c244ba4840af22d573ebe35cb775e2.tar.xz
+a9b069ed121ffeee887e0583d8cb46035ecf1fa90a26a4ecb3aa11ff03178b2b08621f6676db6b2350f290694c04aabcf36f2ce3e0813a76dde9a33555edb112  uinput.conf
+"

@@ -1,0 +1,78 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=kdepim-runtime
+pkgver=9999_git20241013
+pkgrel=0
+_commit="b7356b8a2a34cc8a18d8fc3dc082c1e8d185ac17"
+pkgdesc="Extends the functionality of kdepim"
+url="https://kontact.kde.org/"
+# armhf blocked by extra-cmake-modules
+# ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> akonadi
+arch="all !armhf !ppc64le !s390x !riscv64"
+license="LGPL-2.0-or-later"
+makedepends="
+	akonadi-calendar-dev
+	akonadi-contacts-dev
+	akonadi-dev
+	akonadi-mime-dev
+	akonadi-notes-dev
+	extra-cmake-modules
+	kcalendarcore-dev
+	kcalutils-dev
+	kcodecs-dev
+	kconfig-dev
+	kconfigwidgets-dev
+	kcontacts-dev
+	kdav-dev
+	kdoctools-dev
+	kholidays-dev
+	kidentitymanagement-dev
+	kimap-dev
+	kio-dev
+	kitemmodels-dev
+	kmailtransport-dev
+	kmbox-dev
+	kmime-dev
+	knotifications-dev
+	knotifyconfig-dev
+	ktextwidgets-dev
+	kwindowsystem-dev
+	libkgapi-dev
+	libxslt-dev
+	pimcommon-dev
+	qca-qt6-dev
+	qt6-qtbase-dev
+	qt6-qtnetworkauth-dev
+	qt6-qtspeech-dev
+	samurai
+	shared-mime-info
+	"
+subpackages="$pkgname-dbg $pkgname-lang"
+_repo_url="https://invent.kde.org/pim/kdepim-runtime.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kdepim-runtime-$_commit.tar.xz"
+
+options="!check"
+builddir="$srcdir/kdepim-runtime-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+2c18fb9bf7f15276a73f2c1b01bf33ae7bfe81cc351bf9027bb97344e80a6c617713605dd580e472f0391db3f3f71f031da99ed000668b8a5a83f02011f1a4f6  kdepim-runtime-b7356b8a2a34cc8a18d8fc3dc082c1e8d185ac17.tar.xz
+"

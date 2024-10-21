@@ -1,0 +1,60 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-other
+pkgname=phonon-backend-vlc
+pkgver=9999_git20240906
+pkgrel=0
+_commit="2c30b7e13888bcdc3dfe7466b2c83f684ac9e314"
+pkgdesc="Phonon VLC backend"
+url="https://userbase.kde.org/Phonon"
+# armhf blocked by extra-cmake-modules
+# s390x blocked by vlc
+arch="all !armhf !s390x"
+license="LGPL-2.1-or-later"
+makedepends="
+	extra-cmake-modules
+	phonon-dev
+	qt5-qtbase-dev
+	qt5-qttools-dev
+	qt6-qtbase-dev
+	qt6-qttools-dev
+	samurai
+	vlc-dev
+	"
+subpackages="$pkgname-qt5 $pkgname-qt6"
+_repo_url="https://invent.kde.org/libraries/phonon-vlc.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/phonon-vlc-$_commit.tar.xz"
+options="!check" # No tests available
+
+options="!check"
+builddir="$srcdir/phonon-vlc-$_commit"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+qt5() {
+	amove usr/lib/qt5/plugins/phonon4qt5_backend
+}
+
+qt6() {
+	amove usr/lib/qt6/plugins/phonon4qt6_backend
+}
+
+sha512sums="
+96dcda568cfecba1105fe8dd940b231b6cfb3a4b69bb229742045f49ea8462001d76b809fe1e38b948cff0eead444cebe41eb49075efe1d905e91b4ebfd20cb4  phonon-vlc-2c30b7e13888bcdc3dfe7466b2c83f684ac9e314.tar.xz
+"

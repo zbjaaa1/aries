@@ -1,0 +1,53 @@
+# Contributor: jane400 <ralfrachinger@gmail.com>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=mpvqt
+pkgver=9999_git20241016
+pkgrel=0
+_commit="75dbcd0d5db36925ed409b07e50028a6dee3b78e"
+pkgdesc="A libmpv wrapper for QtQuick2 and QML"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://invent.kde.org/libraries/mpvqt"
+license="BSD-2-Clause AND BSD-3-Clause AND LGPL-2.1-only AND LGPL-3.0-only AND LicenseRef-KDE-Accepted-LGPL AND MIT"
+depends="
+	yt-dlp
+	"
+depends_dev="
+	mpv-dev
+	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	"
+makedepends="$depends_dev
+	extra-cmake-modules
+	samurai
+	"
+subpackages="$pkgname-dev"
+_repo_url="https://invent.kde.org/libraries/mpvqt.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/mpvqt-$_commit.tar.xz"
+options="!check" # No tests
+
+options="!check"
+builddir="$srcdir/mpvqt-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+059fe7f48d967d099c83670e8a964c3f6092b0dba2c30ccb48b230f16598d5b160914063e6c1db3e5910ded4a9c822557ea7d84806c461a8cd8348c9d1d4521d  mpvqt-75dbcd0d5db36925ed409b07e50028a6dee3b78e.tar.xz
+"

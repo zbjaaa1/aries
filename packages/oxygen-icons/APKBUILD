@@ -1,0 +1,46 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=oxygen-icons
+pkgver=9999_git20241017
+pkgrel=0
+_commit="ef1146a61f6716abc114d6ec90400c40e6fd8df1"
+arch="noarch !armhf" # armhf blocked by extra-cmake-modules
+pkgdesc="Oxygen icon theme"
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.1-or-later"
+makedepends="$depends_dev
+	extra-cmake-modules
+	fdupes
+	qt6-qtbase-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/frameworks/oxygen-icons5.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/oxygen-icons5-$_commit.tar.xz"
+builddir="$srcdir/oxygen-icons5-$pkgver"
+
+options="!check"
+builddir="$srcdir/oxygen-icons5-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+0e8da48f7e556cc4a1d76a012be517f84f3926e05f1688b137a23cef0c5ba3a938e1aa5dff5703d18dcc8911ae1cb7f7ceeb0af0591e74a12dce67ffdb9cb3bc  oxygen-icons5-ef1146a61f6716abc114d6ec90400c40e6fd8df1.tar.xz
+"

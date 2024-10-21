@@ -1,0 +1,54 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=ki18n
+pkgver=9999_git20241013
+pkgrel=0
+_commit="e1804d3f9cc897df9dc7163987a1c65b926bfb80"
+pkgdesc="Advanced internationalization framework"
+# armhf blocked by qt6-qtdeclarative
+arch="all !armhf"
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.0-or-later AND (LGPL-2.1-only OR LGPL-3.0-or-later)"
+depends_dev="
+	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	"
+makedepends="$depends_dev
+	extra-cmake-modules
+	doxygen
+	graphviz
+	qt6-qttools-dev
+	samurai
+	"
+checkdepends="xvfb-run"
+_repo_url="https://invent.kde.org/frameworks/ki18n.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/ki18n-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/ki18n-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	# ki18n-klocalizedstringtest, kcountrytest, kcountrysubdivisiontest and kcatalogtest are broken
+	xvfb-run ctest --test-dir build --output-on-failure -E "(ki18n-klocalizedstring|kcountry|kcountrysubdivision|kcatalog)test"
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+5ca221fa1ea98ad5da8bd744ddeab70f4474118c7c293d274806885e49b7baba36afdea4038693dfa743b413a75e77fecbaeeeb9c60ff115b53b4e62d3aba661  ki18n-e1804d3f9cc897df9dc7163987a1c65b926bfb80.tar.xz
+"

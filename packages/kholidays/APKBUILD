@@ -1,0 +1,50 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=kholidays
+pkgver=9999_git20241011
+pkgrel=0
+_commit="faefc68d99ff43f4b5d7e3c982198f848cdffd02"
+pkgdesc="Support for icon themes"
+arch="all !armhf" # armhf blocked by qt6-qtdeclarative
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.0-or-later"
+depends_dev="
+	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	"
+makedepends="$depends_dev
+	doxygen
+	extra-cmake-modules
+	qt6-qttools-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/frameworks/kholidays.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kholidays-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kholidays-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+756b5dcaf215ceb45fa1dc98230f4c5fafe80c202f179d672931317e37465ce8c46e395936e62b200faff957822517f5d66f43c5686aa1347a973e9a83bef321  kholidays-faefc68d99ff43f4b5d7e3c982198f848cdffd02.tar.xz
+"

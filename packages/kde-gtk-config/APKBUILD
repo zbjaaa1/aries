@@ -1,0 +1,67 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-plasma
+pkgname=kde-gtk-config
+pkgver=9999_git20241003
+pkgrel=0
+_commit="298e1548fdaee49329672503fffaa3223ae00b5c"
+pkgdesc="GTK2 and GTK3 Configurator for KDE"
+# armhf blocked by qt6-qtdeclarative
+arch="all !armhf"
+url="https://invent.kde.org/plasma/kde-gtk-config"
+license="GPL-2.0 AND LGPL-2.1-only OR LGPL-3.0-only"
+depends="
+	gsettings-desktop-schemas
+	xdg-desktop-portal-gtk
+	xsettingsd
+	"
+makedepends="
+	extra-cmake-modules
+	gsettings-desktop-schemas-dev
+	gtk+2.0-dev
+	gtk+3.0-dev
+	karchive-dev
+	kcmutils-dev
+	kconfigwidgets-dev
+	kdecoration-dev
+	ki18n-dev
+	kiconthemes-dev
+	kio-dev
+	knewstuff-dev
+	qt6-qtbase-dev
+	qt6-qtsvg-dev
+	samurai
+	sassc
+	"
+
+case "$pkgver" in
+	*.90*) _rel=unstable;;
+	*) _rel=stable;;
+esac
+_repo_url="https://invent.kde.org/plasma/kde-gtk-config.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kde-gtk-config-$_commit.tar.xz"
+
+options="!check"
+builddir="$srcdir/kde-gtk-config-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+d8cc9d5f435c76ba47223ca2787875290d876a9ce1ec50d411ee45955e47143ae1a7cd276cf906e23693e6fab350242f0193f9634066f88277f85228935c266f  kde-gtk-config-298e1548fdaee49329672503fffaa3223ae00b5c.tar.xz
+"

@@ -1,0 +1,54 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=kcompletion
+pkgver=9999_git20241011
+pkgrel=0
+_commit="938d8247ec2825eee5cb186f079aaf258ed7816a"
+pkgdesc="Text completion helpers and widgets"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.1-or-later"
+depends_dev="
+	kcodecs-dev
+	kconfig-dev
+	kwidgetsaddons-dev
+	"
+makedepends="$depends_dev
+	doxygen
+	extra-cmake-modules
+	graphviz
+	qt6-qttools-dev
+	samurai
+	"
+checkdepends="xvfb-run"
+_repo_url="https://invent.kde.org/frameworks/kcompletion.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kcompletion-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kcompletion-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	xvfb-run ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+872bfbf1df8a92a814fee721126be8c6df26d78ebc77c36c71ffb3a287bca1f8de53041c5d394f14e054047ea988b54d676562d4e4636ae84971b5931f42720c  kcompletion-938d8247ec2825eee5cb186f079aaf258ed7816a.tar.xz
+"

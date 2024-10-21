@@ -1,0 +1,53 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=kapptemplate
+pkgver=9999_git20241006
+pkgrel=0
+_commit="01eecb4c4def442ae7f61578c8a5ff3b79454114"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://kde.org/applications/development/org.kde.kapptemplate"
+pkgdesc="Factory for the easy creation of KDE/Qt components and programs"
+license="GPL-2.0-or-later AND GFDL-1.2-only"
+makedepends="
+	extra-cmake-modules
+	karchive-dev
+	kcompletion-dev
+	kconfigwidgets-dev
+	kcoreaddons-dev
+	kdoctools-dev
+	ki18n-dev
+	kio-dev
+	kirigami-addons-dev
+	qt6-qtbase-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/sdk/kapptemplate.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kapptemplate-$_commit.tar.xz"
+subpackages="$pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kapptemplate-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+3728cf3119ea45608bb1f94667cbe6d644f8586874cb8ac9264e03d38e7f05ed09986a5b7cadb4e1205e68f609d9f07aac713870b4b894d468b9298c6b87b6cb  kapptemplate-01eecb4c4def442ae7f61578c8a5ff3b79454114.tar.xz
+"

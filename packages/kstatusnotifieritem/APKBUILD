@@ -1,0 +1,48 @@
+# Forked from Alpine INSERT-REASON-HERE (CHANGEME!)
+
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=kstatusnotifieritem
+pkgver=9999_git20241011
+pkgrel=0
+_commit="ac1f5bf9043e71f2d5e762ea8f42cd68492f384d"
+pkgdesc="Implementation of Status Notifier Items"
+arch="all !armhf" # armhf blocked by extra-cmake-modules
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.0-or-later"
+makedepends="
+	doxygen
+	extra-cmake-modules
+	graphviz
+	kwindowsystem-dev
+	qt6-qtbase-dev
+	qt6-qttools-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/frameworks/kstatusnotifieritem.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kstatusnotifieritem-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kstatusnotifieritem-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+sha512sums="
+eb5633fd120b8ce27c5898bce8f31ef1a68b2d9e72b9866a16a994198ef0db2d6dd7126c8a3f441d704b30c98f3a8fd8f3f199c26b0da9e238fd88d9e468c943  kstatusnotifieritem-ac1f5bf9043e71f2d5e762ea8f42cd68492f384d.tar.xz
+"

@@ -1,0 +1,53 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-frameworks
+pkgname=modemmanager-qt
+pkgver=9999_git20241011
+pkgrel=0
+_commit="86fe9cded8a8b5ef45c598272e691d9dadc4656c"
+pkgdesc="Qt wrapper for ModemManager DBus API"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://community.kde.org/Frameworks"
+license="LGPL-2.1-only OR LGPL-3.0-only"
+depends_dev="
+	modemmanager-dev
+	qt6-qtbase-dev
+	"
+makedepends="$depends_dev
+	doxygen
+	extra-cmake-modules
+	graphviz-dev
+	qt6-qttools-dev
+	samurai
+	"
+subpackages="$pkgname-dev $pkgname-doc"
+checkdepends="dbus"
+_repo_url="https://invent.kde.org/frameworks/modemmanager-qt.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/modemmanager-qt-$_commit.tar.xz"
+
+options="!check"
+builddir="$srcdir/modemmanager-qt-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	dbus-run-session -- ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+c783649604c247b8531734cf326ef5e49fabaf934933b7743beeb6f3552cde706e477894d81f1dcfa2ca6f0747f0bb7f2f977fcd8b442ff536d13fd11834fd73  modemmanager-qt-86fe9cded8a8b5ef45c598272e691d9dadc4656c.tar.xz
+"

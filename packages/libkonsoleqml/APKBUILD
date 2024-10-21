@@ -1,0 +1,45 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: Bart Ribbers <bribbers@disroot.org>
+
+# group=3rdparty
+pkgname=libkonsoleqml
+pkgver=9999_git20231229
+pkgrel=0
+_commit="bcaacdecb8830d9ae4e6dd17b2d12eadcb036426"
+arch="all"
+url="https://invent.kde.org/jbbgameich/libkonsoleqml"
+license="GPL-2.0-or-later"
+pkgdesc="QML port of qtermwidget"
+makedepends="
+	extra-cmake-modules
+	kcoreaddons-dev
+	kpty-dev
+	qt6-qt5compat-dev
+	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	samurai
+	"
+checkdepends="
+	mcookie
+	xvfb-run
+	"
+_repo_url="https://invent.kde.org/jbbgameich/libkonsoleqml.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/libkonsoleqml-$_commit.tar.xz"
+options="!check" # Has no tests
+
+builddir="$srcdir/libkonsoleqml-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=None \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+sha512sums="
+f1ff91bf66ab2f7661204df4a26fa3fdc6cfd075479c282c99b484343fce2bc8f5605213eb7029fa7a64efadcf58bf447a74049646e375e4010046c2661af8cd  libkonsoleqml-bcaacdecb8830d9ae4e6dd17b2d12eadcb036426.tar.xz
+"

@@ -1,0 +1,60 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: Bart Ribbers <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-other
+pkgname=rkward
+pkgver=9999_git20241014
+pkgrel=0
+_commit="760bddae240d6bea7e6af611bc4ca25fe98adbd1"
+# armhf blocked by extra-cmake-modules
+# s390x, ppc64le, riscv64 and loongarch64 blocked by qt5-qtwebengine
+arch="all !armhf !s390x !ppc64le !riscv64 !loongarch64"
+url="https://rkward.kde.org/"
+pkgdesc="Easy extensible and easy-to-use IDE/GUI for R"
+license="GPL-2.0-or-later"
+depends="R"
+makedepends="
+	R-dev
+	extra-cmake-modules
+	kconfig-dev
+	kcoreaddons-dev
+	kdoctools-dev
+	ki18n-dev
+	knotifications-dev
+	kparts-dev
+	ktexteditor-dev
+	kwidgetsaddons-dev
+	kwindowsystem-dev
+	kxmlgui-dev
+	qt6-qtbase-dev
+	qt6-qtwebengine-dev
+	samurai
+	"
+checkdepends="xvfb-run"
+_repo_url="https://invent.kde.org/education/rkward.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/rkward-$_commit.tar.xz"
+subpackages="$pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+	cmake -B build -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	xvfb-run ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+e42a63a4af98dd4fc4e3888afe9979d308d30ac7337bc90844795ee18ac98b05b1b21ee1187b32090954a32ae44e008d53ad00109148188097a7c880957e548d  rkward-760bddae240d6bea7e6af611bc4ca25fe98adbd1.tar.xz
+"

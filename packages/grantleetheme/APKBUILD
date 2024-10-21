@@ -1,0 +1,56 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=grantleetheme
+pkgver=9999_git20241019
+pkgrel=0
+_commit="3e4211d1cc2f6333de822857b56710cdf306dc35"
+pkgdesc="KDE PIM mail related libraries"
+# armhf blocked by extra-cmake-modules
+# s390x and riscv64 blocked by knewstuff
+arch="all !armhf !s390x !riscv64"
+url="https://kontact.kde.org/"
+license="GPL-2.0-or-later AND LGPL-2.1-or-later"
+depends_dev="
+	grantlee-dev
+	ki18n-dev
+	knewstuff-dev
+	ktexttemplate-dev
+	qt6-qtbase-dev
+	"
+makedepends="$depends_dev
+	doxygen
+	extra-cmake-modules
+	graphviz
+	samurai
+	"
+checkdepends="xvfb-run"
+_repo_url="https://invent.kde.org/pim/grantleetheme.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/grantleetheme-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/grantleetheme-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	# grantleethemetest is broken
+	xvfb-run ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+sha512sums="
+229eea36bacc701e3a33d768d117b2120bd02b20680c52702c03056d4ae75d7759d9b579680f78e67bda87c562be644c39b181700007822a9d3676be019f2987  grantleetheme-3e4211d1cc2f6333de822857b56710cdf306dc35.tar.xz
+"

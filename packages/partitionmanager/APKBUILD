@@ -1,0 +1,58 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=partitionmanager
+pkgver=9999_git20241020
+pkgrel=0
+_commit="4e0e918542fbe45934ca3beb41e148b142f64ed9"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://kde.org/applications/system/org.kde.partitionmanager"
+pkgdesc="A KDE utility that allows you to manage disks, partitions, and file systems"
+license="GPL-3.0-or-later"
+makedepends="
+	extra-cmake-modules
+	kconfig-dev
+	kconfigwidgets-dev
+	kcoreaddons-dev
+	kcrash-dev
+	kdbusaddons-dev
+	kdoctools-dev
+	ki18n-dev
+	kiconthemes-dev
+	kio-dev
+	kjobwidgets-dev
+	kpmcore-dev
+	kwidgetsaddons-dev
+	kxmlgui-dev
+	qt6-qtbase-dev
+	samurai
+	"
+_repo_url="https://invent.kde.org/system/partitionmanager.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/partitionmanager-$_commit.tar.xz"
+subpackages="$pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/partitionmanager-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+85a9740fe852f90bab0d4224b21113be9e384250d4b7fa895f3940594d768fe7123d0d86db327863d484dd5333f3fdc385cc8c8c7a4e40ea3e9b77853d3be746  partitionmanager-4e0e918542fbe45934ca3beb41e148b142f64ed9.tar.xz
+"

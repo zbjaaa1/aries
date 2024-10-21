@@ -1,0 +1,63 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=tokodon
+pkgver=9999_git20241019
+pkgrel=0
+_commit="5e636aa6e642004d1a6b186b12faa445f15c12d3"
+pkgdesc="A Mastodon client for Plasma and Plasma Mobile"
+url="https://invent.kde.org/network/tokodon/"
+# armhf blocked by extra-cmake-modules
+# riscv64, ppc64le, s390x: blocked by proposals
+arch="all !armhf !riscv64 !ppc64le !s390x"
+license="GPL-3.0-only AND CC0-1.0"
+depends="
+	kirigami
+	kirigami-addons
+	purpose
+	"
+makedepends="
+	extra-cmake-modules
+	kconfig-dev
+	kcoreaddons-dev
+	kdbusaddons-dev
+	ki18n-dev
+	kio-dev
+	kirigami-addons-dev
+	kirigami-dev
+	knotifications-dev
+	mpvqt-dev
+	purpose-dev
+	qqc2-desktop-style-dev
+	qt6-qtbase-dev
+	qt6-qtmultimedia-dev
+	qt6-qtsvg-dev
+	qt6-qtwebsockets-dev
+	qt6-qtwebview-dev
+	qtkeychain-dev
+	samurai
+	"
+subpackages="$pkgname-lang"
+_repo_url="https://invent.kde.org/network/tokodon.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/tokodon-$_commit.tar.xz"
+options="!check" # No tests
+
+options="!check"
+builddir="$srcdir/tokodon-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr
+	cmake --build build
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+66c7f6ca6e2355bc31718e534ba4e739c3b8c2d29623e5a07272551eafd4a384a5137010e20516ca2662fb4c37873cc3eacaa3c34f362a7b1256b1ca867da9d5  tokodon-5e636aa6e642004d1a6b186b12faa445f15c12d3.tar.xz
+"

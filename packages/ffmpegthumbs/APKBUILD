@@ -1,0 +1,51 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=ffmpegthumbs
+pkgver=9999_git20241006
+pkgrel=0
+_commit="a453dba1a3da4b6227984c63a1d0bd2457b09e38"
+# armhf blocked by extra-cmake-modules
+# not useful on s390x
+arch="all !s390x !armhf"
+url="https://www.kde.org/applications/multimedia/"
+pkgdesc="FFmpeg-based thumbnail creator for video files"
+license="GPL-2.0-or-later"
+makedepends="
+	extra-cmake-modules
+	ffmpeg-dev
+	kconfig-dev
+	ki18n-dev
+	kio-dev
+	qt6-qtbase-dev
+	samurai
+	taglib-dev
+	"
+_repo_url="https://invent.kde.org/multimedia/ffmpegthumbs.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/ffmpegthumbs-$_commit.tar.xz"
+options="!check" # No tests
+
+options="!check"
+builddir="$srcdir/ffmpegthumbs-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=MinSizeRel \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib
+	cmake --build build
+}
+
+check() {
+	ctest --test-dir build --output-on-failure
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+eb7f0b4e163c00238d20ca0bf5fcbb442e5501293e3f777fe196f86b172906d99e6392a00c627ea3a063067b4a917296e60adf2d577811568f09cf36532ec672  ffmpegthumbs-a453dba1a3da4b6227984c63a1d0bd2457b09e38.tar.xz
+"

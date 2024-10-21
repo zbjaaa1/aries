@@ -1,0 +1,56 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Maintainer: team/kde <bribbers@disroot.org>
+
+# The group tag is just to easily find this APKBUILD by some scripts for automation
+# group=kde-applications
+pkgname=kmime
+pkgver=9999_git20241019
+pkgrel=0
+_commit="1e36153f5cb7b0ee2e7051f33a3ec9c94bd7b13c"
+pkgdesc="Library for handling mail messages and newsgroup articles"
+# armhf blocked by extra-cmake-modules
+arch="all !armhf"
+url="https://community.kde.org/KDE_PIM"
+license="LGPL-2.0-or-later"
+depends_dev="
+	kcodecs-dev
+	ki18n-dev
+	qt6-qtbase-dev
+	qt6-qttools-dev
+	"
+makedepends="$depends_dev
+	doxygen
+	extra-cmake-modules
+	graphviz
+	samurai
+	"
+_repo_url="https://invent.kde.org/pim/kmime.git"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-20/kmime-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+
+options="!check"
+builddir="$srcdir/kmime-$_commit"
+
+build() {
+	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
+		-DCMAKE_INSTALL_PREFIX=/usr \
+		-DCMAKE_INSTALL_LIBDIR=lib \
+		-DBUILD_QCH=ON
+	cmake --build build
+}
+
+check() {
+	cd build
+
+	# kmime-headertest and kmime-messagetest are broken
+	CTEST_OUTPUT_ON_FAILURE=TRUE ctest -E "kmime-(header|message)test"
+}
+
+package() {
+	DESTDIR="$pkgdir" cmake --install build
+}
+
+sha512sums="
+1f8948b644a216b259d6af94940a82698b3b2529916df5b79710ac286f6382261249b448aadf14928ad698a594a50e9298bce4873d6787cd303332c1dd901805  kmime-1e36153f5cb7b0ee2e7051f33a3ec9c94bd7b13c.tar.xz
+"

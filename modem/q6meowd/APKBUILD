@@ -1,0 +1,33 @@
+# Maintainer: NekoCWD <nekodevelopper@gmail.com>
+pkgname=q6meowd
+pkgver=1
+_commit="cc2be53f8ee479fb581118e27f3e2d941de2f180"
+pkgrel=0
+pkgdesc="Enable q6voice audio when call is performed with ModemManager"
+url="https://gitlab.postmarketos.org/NekoCWD/q6meowd"
+arch="all"
+license="GPL-3.0-or-later"
+makedepends="meson alsa-lib-dev vala build-base dbus-glib-dev glib-dev"
+subpackages="$pkgname-openrc"
+source="$url/-/archive/$_commit/q6meowd-$_commit.tar.gz
+	q6meowd.initd
+	"
+options="!check" # no tests
+builddir="$srcdir/q6meowd-$_commit"
+replaces="q6voiced"
+provides="q6voiced=$pkgver-r$pkgrel"
+
+build() {
+	abuild-meson . output
+	meson compile ${JOBS:+-j ${JOBS}} -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install -C output
+	install -Dm755 "$srcdir"/q6meowd.initd "$pkgdir"/etc/init.d/q6meowd
+}
+
+sha512sums="
+794d1ebb78038f5ec25e95d35621147c8412793c29c68dc083a0b0c8d588ae1e2cfa24d8edf5c0415895ed48f5f9ea959f59f655878ac573a5f94a5e4a460cb7  q6meowd-cc2be53f8ee479fb581118e27f3e2d941de2f180.tar.gz
+34b4aaead2e36fc1e246b84395ce470461e6385dcac4db7673043fd7fed980cbca08d1018076d3cbe3291b4082572e364a24f8765e37a2e0dc693a01e661adcf  q6meowd.initd
+"

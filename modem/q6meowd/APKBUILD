@@ -1,7 +1,6 @@
 # Maintainer: NekoCWD <nekodevelopper@gmail.com>
 pkgname=q6meowd
 pkgver=1
-_commit="cc2be53f8ee479fb581118e27f3e2d941de2f180"
 pkgrel=0
 pkgdesc="Enable q6voice audio when call is performed with ModemManager"
 url="https://gitlab.postmarketos.org/NekoCWD/q6meowd"
@@ -19,7 +18,7 @@ source="https://gitlab.postmarketos.org/NekoCWD/q6meowd/-/archive/v$pkgver/q6meo
 	q6meowd.initd
 	"
 options="!check" # no tests
-builddir="$srcdir/q6meowd-$_commit"
+builddir="$srcdir/q6meowd-v$pkgver"
 replaces="q6voiced"
 provides="q6voiced=$pkgver-r$pkgrel"
 

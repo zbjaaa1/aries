@@ -7,7 +7,13 @@ pkgdesc="Enable q6voice audio when call is performed with ModemManager"
 url="https://gitlab.postmarketos.org/NekoCWD/q6meowd"
 arch="all"
 license="GPL-3.0-or-later"
-makedepends="meson alsa-lib-dev vala build-base dbus-glib-dev glib-dev"
+makedepends="
+	alsa-lib-dev
+	dbus-glib-dev
+	glib-dev
+	meson
+	vala
+	"
 subpackages="$pkgname-openrc"
 source="https://gitlab.postmarketos.org/NekoCWD/q6meowd/-/archive/v$pkgver/q6meowd-v$pkgver.tar.gz
 	q6meowd.initd

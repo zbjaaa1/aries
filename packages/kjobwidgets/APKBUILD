@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kjobwidgets
-pkgver=9999_git20241013
+pkgver=9999_git20241028
 pkgrel=0
-_commit="7a297c5469247c8391673b1d12d1279ace26ae28"
+_commit="f72649bebabb6e0eb36e8c9d1fa9f7d8d8d9e104"
 pkgdesc="Widgets for tracking KJob instances"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -24,7 +24,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kjobwidgets.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-27/kjobwidgets-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-28/kjobwidgets-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-7f3d5dd54cebd9aa6ac717373f9ce47ebdd4d0f8458099d29d65ea825b85188ee295fefef2a5624457e8a94efe703f703616248fcaa8cf8f38638ae4eaff4035  kjobwidgets-7a297c5469247c8391673b1d12d1279ace26ae28.tar.xz
+1a66961c97f43e890c0a7bd599177ff87ec5fafdb1707f72cdc4b68f05d9fe6003aa0fd21cef57c5dbbde17c0fdb18b7c33d8fd7c1c3d58427583622861d0f58  kjobwidgets-f72649bebabb6e0eb36e8c9d1fa9f7d8d8d9e104.tar.xz
 "

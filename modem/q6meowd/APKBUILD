@@ -1,7 +1,7 @@
 # Maintainer: NekoCWD <nekodevelopper@gmail.com>
 pkgname=q6meowd
 pkgver=1
-pkgrel=0
+pkgrel=1
 pkgdesc="Enable q6voice audio when call is performed with ModemManager"
 url="https://gitlab.postmarketos.org/NekoCWD/q6meowd"
 arch="all"
@@ -14,11 +14,11 @@ makedepends="
 	vala
 	"
 subpackages="$pkgname-openrc"
-source="https://gitlab.postmarketos.org/NekoCWD/q6meowd/-/archive/v$pkgver/q6meowd-v$pkgver.tar.gz
+source="https://gitlab.postmarketos.org/NekoCWD/q6meowd/-/archive/v$pkgver.$pkgrel/q6meowd-v$pkgver.$pkgrel.tar.gz
 	q6meowd.initd
 	"
 options="!check" # no tests
-builddir="$srcdir/q6meowd-v$pkgver"
+builddir="$srcdir/q6meowd-v$pkgver.$pkgrel"
 provides="q6voiced=$pkgver-r$pkgrel"
 
 build() {
@@ -32,6 +32,6 @@ package() {
 }
 
 sha512sums="
-66a72e29e72d76a1bdcef0dbb53c1e1075d3bf0c75e71b74af807e16231192fccf5470a39e6101f369426823f96368faca2af25ebe2aaf5dc937919833bc90f2  q6meowd-v1.tar.gz
+f9420f369849e5f8c606f70de3272df51ecc33760c4310faf31bfae016cb99772d5c481f968244b5a7e6723492ec83b16effdc60d56f7e769573e7edacc21932  q6meowd-v1.1.tar.gz
 34b4aaead2e36fc1e246b84395ce470461e6385dcac4db7673043fd7fed980cbca08d1018076d3cbe3291b4082572e364a24f8765e37a2e0dc693a01e661adcf  q6meowd.initd
 "

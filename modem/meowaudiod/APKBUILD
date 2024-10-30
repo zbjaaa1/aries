@@ -28,7 +28,7 @@ build() {
 }
 
 package() {
-	DESTDIR="$pkgdir" meson install -C output
+	DESTDIR="$pkgdir" meson install -C output --no-rebuild
 }
 
 sha512sums="

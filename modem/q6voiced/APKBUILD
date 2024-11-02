@@ -12,12 +12,13 @@ subpackages="$pkgname-openrc"
 source="https://gitlab.postmarketos.org/postmarketOS/q6voiced/-/archive/$_commit/q6voiced-$_commit.tar.gz
 	q6voiced.initd
 	"
-options="!check" # no tests
+options="!check pmb:cross-native" # no tests
 builddir="$srcdir/q6voiced-$_commit"
 
 build() {
-	gcc -o q6voiced q6voiced.c -I/usr/include/dbus-1.0/ \
-		-I/usr/lib/dbus-1.0/include -ltinyalsa -ldbus-1
+	$CC -o q6voiced q6voiced.c -I$CBUILDROOT/usr/include/dbus-1.0/ \
+		-I$CBUILDROOT/usr/lib/dbus-1.0/include -ltinyalsa -ldbus-1 \
+		$CFLAGS
 }
 
 package() {

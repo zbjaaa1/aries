@@ -5,10 +5,11 @@ pkgver=0.3.1
 pkgrel=0
 url="https://git.sr.ht/~calebccff/pbsplash"
 arch="all"
-options="!check" # no testsuite
+options="!check pmb:cross-native" # no testsuite
 license="GPL-3.0"
 source="$pkgname-$pkgver.tar.gz::https://git.sr.ht/~calebccff/pbsplash/archive/$pkgver.tar.gz"
-makedepends="meson tfblib linux-headers"
+makedepends_build="meson"
+makedepends_host="tfblib linux-headers"
 
 build() {
 	abuild-meson . output

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=knights
-pkgver=9999_git20241020
+pkgver=9999_git20241031
 pkgrel=0
-_commit="1d250bf41e4e878ae8268d912b5b05a11e064d29"
+_commit="c6fb3670c547d06737508d2b09bdb96fc6c797de"
 pkgdesc="Chess board by KDE with XBoard protocol support"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="
 	"
 subpackages="$pkgname-doc $pkgname-lang"
 _repo_url="https://invent.kde.org/games/knights.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-30/knights-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/knights-$_commit.tar.xz"
 options="!check" # No tests
 
 builddir="$srcdir/$pkgname-$_commit"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-119339deb3e7fd62fbda707070316032f942a3f85d158cf3a90a7d25d84e1b4f9c3a1c3edd4a1d3ea3b66225f37b00add7783da5c03d63445418c361765daf7b  knights-1d250bf41e4e878ae8268d912b5b05a11e064d29.tar.xz
+b7d74b2146fa5fa8df3e26e79b7301ac84cdec997988077fc3ef74f6803107f53ccfb0956cb011286b04013be9c1b2317f0d6a29a33b82f8dd35509cbaae04f5  knights-c6fb3670c547d06737508d2b09bdb96fc6c797de.tar.xz
 "

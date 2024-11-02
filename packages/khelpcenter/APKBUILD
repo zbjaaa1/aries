@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=khelpcenter
-pkgver=9999_git20241028
+pkgver=9999_git20241031
 pkgrel=0
-_commit="3a5bf12039b1fac72678c70ee6a5ecdf8d4fcd43"
+_commit="6dd89910b5d4e8477fd73872d4e1198ee263e7e7"
 pkgdesc="Application to show KDE Applications' documentation"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -33,7 +33,7 @@ makedepends="
 	xapian-core-dev
 	"
 _repo_url="https://invent.kde.org/system/khelpcenter.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-30/khelpcenter-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/khelpcenter-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-bda0e9dacaf80e574ba89bfced6026cffdf2920d1a2675cfb965daa9da91021aa37476554c1668a4c15d0c06f290973effbc40a51c097d15f14d3a22580fef4f  khelpcenter-3a5bf12039b1fac72678c70ee6a5ecdf8d4fcd43.tar.xz
+4810dce2d56bfe398882cc22802cae50502fe40211553ee2f620cb45ee7a18f6674396631d5a5ce6bfaf840ffe23374a6d0cf244110c22d41eb1cdfbd82d8712  khelpcenter-6dd89910b5d4e8477fd73872d4e1198ee263e7e7.tar.xz
 "

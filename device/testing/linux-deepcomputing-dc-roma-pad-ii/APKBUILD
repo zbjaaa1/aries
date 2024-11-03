@@ -1,0 +1,95 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: https://forge.giftedmc.com/haui/bianbu-linux-6.6/src/branch/main/arch/riscv/configs/k1_defconfig
+# Maintainer: haui <haui@gifted-minecraft.com>
+
+pkgname=linux-deepcomputing-dc-roma-pad-ii
+pkgver=6.6.36
+pkgrel=0
+pkgdesc="deepcomputing DC-ROMA PAD II kernel fork"
+arch="riscv64"
+_carch="riscv"
+_flavor="deepcomputing-dc-roma-pad-ii"
+url="https://forge.giftedmc.com/haui/bianbu-linux-6.6"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+	u-boot-tools
+"
+
+# Source
+_repository="bianbu-linux-6.6"
+_commit="feed9b0bdccbc7c0d5aed7f80d56ca75fa6148d3"
+_config="config-$_flavor.$arch"
+#_config="k1_defconfig"
+source="
+	$pkgname-$_commit.tar.gz::https://forge.giftedmc.com/haui/$_repository/archive/$_commit.tar.gz
+	$_config"
+#	gcc7-give-up-on-ilog2-const-optimizations.patch
+#	gcc8-fix-put-user.patch
+#	gcc10-extern_YYLOC_global_declaration.patch
+#	kernel-use-the-gnu89-standard-explicitly.patch"
+
+builddir="$srcdir/$_repository"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/config-$_flavor.$arch" .config
+}
+
+build() {
+	echo "BUILD"
+	unset LDFLAGS
+	echo $builddir
+	make ARCH="$_carch" CC="${CC:-gcc}" CARCH=riscv\
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	echo "PACKAGE"
+
+	if [ -e "$builddir/arch/$_carch/boot/vmlinuz.efi" ]; then
+		# ZBOOT EFI decompressor for EFI booting
+		install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
+			"$pkgdir/boot/linux.efi"
+
+		# Old GZIP'd kernel image for boot.img compatibility
+		install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz" \
+			"$pkgdir/boot/vmlinuz"
+	else
+		echo "WARNING: CONFIG_ZBOOT not enabled!"
+		install -Dm644 "$builddir/arch/$_carch/boot/Image.gz" \
+			"$pkgdir/boot/vmlinuz"
+	fi
+
+	make modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs-tmp
+
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
+
+#	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+#		"$_flavor" "$_outdir"
+}
+
+sha512sums="
+c0c0127d227c79d415692039556fce8ba45caf70cdb53106d76be8b44bee6bb22a1fc9ce5270f00976f91548d29696d952619ef5c76e0d74857033bc53a11624  linux-deepcomputing-dc-roma-pad-ii-feed9b0bdccbc7c0d5aed7f80d56ca75fa6148d3.tar.gz
+b06144ca3f700990a678b38dda13649188362482b7f9d85f1929d34ffa5a0c09aea6caa597c6acbed241248c44c97aada5670f8b3d2aeb48c4c67bc52ea51163  config-deepcomputing-dc-roma-pad-ii.riscv64"
+#77eba606a71eafb36c32e9c5fe5e77f5e4746caac292440d9fb720763d766074a964db1c12bc76fe583c5d1a5c864219c59941f5e53adad182dbc70bf2bc14a7  gcc7-give-up-on-ilog2-const-optimizations.patch
+#197d40a214ada87fcb2dfc0ae4911704b9a93354b75179cd6b4aadbb627a37ec262cf516921c84a8b1806809b70a7b440cdc8310a4a55fca5d2c0baa988e3967  gcc8-fix-put-user.patch
+#2b48f1bf0e3f70703d2cdafc47d5e615cc7c56c70bec56b2e3297d3fa4a7a1321d649a8679614553dde8fe52ff1051dae38d5990e3744c9ca986d92187dcdbeb  gcc10-extern_YYLOC_global_declaration.patch
+#ad0182a483791fc88e058838bc331b2f04a75ba291e763767babdb815efadfc3b4fda97e69e2e3f00a426cabea088e35297a92bd287592597d1e309be68ee92c  kernel-use-the-gnu89-standard-explicitly.patch"

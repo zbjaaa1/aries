@@ -1,0 +1,32 @@
+# Maintainer: Caleb Connolly <caleb.connolly@postmarketos.org>
+pkgname=postmarketos-installer
+pkgver=0.0.1
+pkgrel=0
+pkgdesc="postmarketOS installer for devices with bootable removable storage"
+url="https://postmarketos.org"
+arch="all"
+license="GPL-2.0"
+makedepends="cargo"
+#makedepends_build="cargo"
+depends="coreutils" # for dd
+
+_commit="a02735d892837ab650afd204621f774be03f3fc4"
+source="https://gitlab.postmarketos.org/postmarketOS/installer/-/archive/$_commit/installer-$_commit.tar.gz"
+builddir="$srcdir/installer-$_commit"
+
+prepare() {
+	cargo fetch --target="$CTARGET" --locked
+}
+
+build() {
+	cargo build --target="$CTARGET" --release
+}
+
+package() {
+	install -Dm755 target/$CTARGET/release/pmos-installer "$pkgdir/usr/bin/pmos-installer"
+	install -Dm644 $builddir/org.postmarketOS.Installer.desktop "$pkgdir"/etc/xdg/autostart/org.postmarketOS.Installer.desktop
+}
+
+sha512sums="
+1fda41cd10b47a6ffa53c2184cebbce8f5f4839a87bd901cc3d64708736b0f55c8aa4aba0ae054608f47e495e92f29f7416ba9c7f85191e8657d8079f2953cfe  installer-a02735d892837ab650afd204621f774be03f3fc4.tar.gz
+"

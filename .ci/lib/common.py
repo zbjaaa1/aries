@@ -36,7 +36,7 @@ def run_git(parameters, check=True, stderr=None):
 def add_upstream_git_remote():
     """ Add a remote pointing to postmarketOS/pmaports. """
     run_git(["remote", "add", "upstream",
-             "https://gitlab.com/postmarketOS/pmaports.git"], False)
+             "https://gitlab.postmarketos.org/postmarketOS/pmaports.git"], False)
     run_git(["fetch", "-q", "upstream"])
 
 
@@ -44,14 +44,10 @@ def commit_message_has_string(needle):
     return needle in run_git(["show", "-s", "--format=full", "HEAD"])
 
 
-def run_pmbootstrap(parameters, output_return=False):
+def run_pmbootstrap(parameters):
     """ Run pmbootstrap with the pmaports dir as --aports """
     cmd = ["pmbootstrap", "--aports", get_pmaports_dir()] + parameters
-    stdout = subprocess.PIPE if output_return else None
-    result = subprocess.run(cmd, stdout=stdout, universal_newlines=True)
-    result.check_returncode()
-    if output_return:
-        return result.stdout
+    subprocess.run(cmd, universal_newlines=True, check=True)
 
 
 def get_upstream_branch():
@@ -100,7 +96,7 @@ def get_changed_files(removed=True):
     commit_head = run_git(["rev-parse", "HEAD"])[:-1]
     commit_upstream = run_git(["rev-parse", branch_upstream])[:-1]
     print("commit HEAD: " + commit_head)
-    print(f"commit {branch_upstream}: f{commit_upstream}")
+    print(f"commit {branch_upstream}: {commit_upstream}")
 
     # Check if we are HEAD on the upstream branch
     if commit_head == commit_upstream:

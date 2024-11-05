@@ -3,9 +3,9 @@
 # Co-Maintainer: Newbyte <newbyte@postmarketos.org>
 # Contributor: Clayton Craft <clayton@craftyguy.net>
 pkgname=device-purism-librem5
-pkgver=4
-pkgrel=0
-_confver=64
+pkgver=5
+pkgrel=1
+_confver=65
 _purismrel=1
 # <librem5-base ver>.<purism release>
 _purismver=${_confver}pureos$_purismrel
@@ -24,7 +24,9 @@ depends="
 	iw
 	linux-purism-librem5>=6.3
 	mesa-egl
+	millipixels
 	postmarketos-base
+	postprocessd
 	u-boot-librem5
 	u-boot-tools
 "
@@ -52,18 +54,19 @@ source="
 	udev/70-wifi-pm.rules
 "
 subpackages="
-	$pkgname-camera
 	$pkgname-gnome
 	$pkgname-nonfree-firmware:nonfree_firmware
 	$pkgname-pulseaudio
+	$pkgname-openrc
 	$pkgname-smartcard
+	$pkgname-smartcard-openrc:smartcard_openrc
 	$pkgname-tinydm
 	$pkgname-usbguard
 	$pkgname-x11
 "
 # TODO: remove "replaces" when upstream ucm has proper L5 support...
 replaces="alsa-ucm-conf"
-install="$pkgname.post-install $pkgname.post-upgrade"
+
 
 builddir="$srcdir/librem5-base-pureos-$_purismver"
 
@@ -75,16 +78,11 @@ build() {
 gnome() {
 	install_if="$pkgname=$pkgver-r$pkgrel postmarketos-base-ui-gnome"
 	depends="
+
 		wys
 	"
 	install -D -m644 "$builddir"/default/org.freedesktop.ModemManager1.pkla \
 		"$subpkgdir"/var/lib/polkit-1/localauthority/10-vendor.d/org.freedesktop.ModemManager1.pkla
-}
-
-camera() {
-	install_if="$pkgname=$pkgver-r$pkgrel postmarketos-default-camera"
-	depends="millipixels"
-	mkdir -p "$subpkgdir"
 }
 
 pulseaudio() {
@@ -105,15 +103,27 @@ tinydm() {
 		"$subpkgdir"/etc/tinydm.d/env-wayland.d/70-librem5-xwayland-accel.sh
 }
 
+openrc() {
+	install_if="$pkgname=$pkgver-r$pkgrel openrc"
+	install="$subpkgname.post-install $subpkgname.post-upgrade"
+
+	mkdir -p "$subpkgdir"
+}
+
 smartcard() {
 	pkgdesc="OpenPGP SmartCard support for the Librem 5"
 	depends="$pkgname ccid gnupg-scdaemon pcsc-lite pcsc-tools"
 	install_if="$pkgname pcsc-tools"
-	install="$install $subpkgname.post-install"
+
+	mkdir -p "$subpkgdir"
+}
+
+smartcard_openrc() {
+	install_if="$pkgname-smartcard=$pkgver-r$pkgrel openrc"
+	install="$subpkgname.post-install"
 
 	install -D -m644 "$srcdir"/pcscd-librem5-reader.conf \
 		"$subpkgdir"/etc/reader.conf.d/librem5-ttxs-reader
-
 	install -D -m755 "$srcdir"/pcscd-librem5.initd \
 		"$subpkgdir"/etc/init.d/pcscd-librem5
 }
@@ -194,16 +204,16 @@ nonfree_firmware() {
 }
 
 sha512sums="
-46bff1208af87c9b6b2c61daaeeb95c3ff30617dce548a5877ea279ff9ced5338caaa32827bfbd98f3cb7c92d3535c27224c55bf1c03bf82f99e8ca53fe4cf6c  librem5-base-pureos-64pureos1.tar.gz
+4ce01a78016475873535927330a26143170153968cb22214ca606929ffc73ff2df2fcdd044c44d1cd9c514e989c267b5267402f0c047a240d01192d9b29ed57b  librem5-base-pureos-65pureos1.tar.gz
 2e72d9a084ecd6c96cafbbd8fda461ae8b2ebd14ffda601d9f36d73f08f04088213de17da078293ddd958d4c76d33148c7af6e252eb0709f6934855a55578509  00-mesa.sh
 703d12826464eb2bdb6bf4a7d10adb73b37564d3792794523b252f0f7cb66184add150a6938580cc33615281d1c0abd7ff158ae2143b89fa28c0cd3dc367e5ff  deviceinfo
 138ed85e6509e4611bf21a0061c312e6c2ce60f722ee9e4565d19c5f025301d4df3fa321343524219a54b20c5288dc6ed1b058ac66f4d608af22eb5bc83e84c6  modules-initfs
 ccb47fd421c5e35a8def8e6fb61dad99e42cf542690068a68f90c257e41d33f45f1069db0a8d89372d9029681812957033995639a6a8a5e3eed48019325e0f4d  flash_script.lst
-3f62c04eb92d850e32d5e1b17534dec753563342ea6c4f9dc2572700d4f6eeb8ae8cd8e8e4f1b0f5c61f21d87bc61c02212f27313986157220003d78e2d69505  modprobe.d_rsi.conf
+79a7088139629745a19b0465ac632d61ce7c513fc0bb6ea71784cd615f5ab8b32bee5ea903d7d7eb1a4508c4844f90f0435d789ea2642a529dd930d0de631ca5  modprobe.d_rsi.conf
 a0740e405781ec6ef765fdc9f5700c95adbb241c45c97b9384ba68cdece662cb216ca5918640042f6e65a5d1b1a9099936382c99b49a44303f7b6d77a075a471  modules-load.d_librem5.conf
 8ef4ec7a9e9a4fb801d207e7d94b627aacc9243a93b0ec28e0823a6f44b8102416c040e4ddf499f87bb9dfa960cf6f627b008b79f197f6814b3fd881e18ae8ef  pcscd-librem5-reader.conf
 2618b40eebd3602066ee75ab85cbdbb4cfee498def9879c95a304f05a6eeedf1ab28c5dd9fa5efc8f88c790f49c96458c61d5dfe8a3ca0f96bcc0e244313ab01  pcscd-librem5.initd
-976c36b469a5c36e1823c35e4e1bc41d88f12c6710d1d4f8f904349ab06ee58a6c728dc4b705b7578427e322c57ecd4e4c61fc62effc88e25987f6ea3e6ffcc2  uboot-script.cmd
+59634b85867a65191934e365ccde40ae03dbad6cf3dc3cc513daf3265dd1105af7cca7d52ef8e20f40fdbdbeb74aee5a26908ae8de083a80e223d2c275a8135d  uboot-script.cmd
 1cbc65cf2cb8fad4b0332d012a0256a266205b9b64371f5c0dae09dbb7f1e45b254e8c43993b896097e9d7035a72d547d9bce1ab2133addc56a5abdb80b44616  xorg.conf
 fad386071fc45f9880a94cc8004fabd5d98b3e6a12606c98d8e72e0208f22ab54f03b921f5967a959782507e2bff67d2fa92e46d8cd242011a3afcdbda529279  70-librem5-xwayland-accel.sh
 b45749fcddfd65a302b502bcabfa5828d1b63e45d844fd50e44009a756b919db20fe9526102947c0f0dfcdffe4a037e5050fe1b24fb915933ce0837f49759378  0001-udev-cameras-use-correct-path-for-modprobe-on-Alpine.patch

@@ -1,7 +1,7 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-samsung-zerofltexx
 pkgdesc="Samsung Galaxy S6"
-pkgver=1
+pkgver=2
 pkgrel=1
 url="https://postmarketos.org"
 license="MIT"
@@ -13,15 +13,13 @@ depends="
 	linux-samsung-zerofltexx
 	mkbootimg
 	msm-fb-refresher
-	postmarketos-initramfs-minimal
 "
 makedepends="devicepkg-dev"
+subpackages="
+	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-openrc
+	"
 source="deviceinfo"
-
-subpackages="$pkgname-nonfree-firmware:nonfree_firmware"
-
-install="$pkgname.post-install"
-
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -37,7 +35,14 @@ nonfree_firmware() {
 	mkdir "$subpkgdir"
 }
 
+openrc() {
+	install_if="$pkgname=$pkgver-r$pkgrel openrc"
+	install="$subpkgname.post-install"
+
+	mkdir -p "$subpkgdir"
+}
+
 
 sha512sums="
-03ef283af0ad3c5be2ade36c4a6b52129c3bf5d7ac2e26e130d75e003b5ab7f36bb4821fc52f917c0f557a75e537d32ad026e91ff191b9410887c33f43e10ddf  deviceinfo
+a47d9534b3493898c07b396fa70a6b4885697dc1bc1415d48d9f7b2c1ee914a0ea2220d4f440415f40a43c0091fc5d71420fedbf48831ac41a54ee4d420ea468  deviceinfo
 "

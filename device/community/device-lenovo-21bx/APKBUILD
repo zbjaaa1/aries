@@ -5,12 +5,13 @@
 pkgname=device-lenovo-21bx
 pkgdesc="Lenovo ThinkPad X13s"
 pkgver=10
-pkgrel=0
+pkgrel=2
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck !strip"
 depends="
+	alsa-ucm-conf
 	bootmac
 	firmware-lenovo-21bx
 	libmbim-tools
@@ -18,8 +19,6 @@ depends="
 	linux-firmware-qca
 	linux-firmware-qcom
 	linux-lenovo-21bx
-	pd-mapper
-	pd-mapper-openrc
 	postmarketos-base
 	qmi-utils
 	systemd-boot
@@ -36,7 +35,6 @@ subpackages="
 	$pkgname-usbguard
 	$pkgname-vulkan
 "
-install="$pkgname.post-install"
 
 build() {
 	devicepkg_build $startdir $pkgname

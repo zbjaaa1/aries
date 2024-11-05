@@ -3,14 +3,13 @@
 # Co-Maintainer: Jan Jasper de Kroon <jajadekroon@gmail.com>
 pkgname=device-pine64-pinephone
 pkgver=4
-pkgrel=0
+pkgrel=4
 pkgdesc="PINE64 PinePhone"
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 subpackages="
-	$pkgname-camera
 	$pkgname-gnome
 	$pkgname-kirigami:kirigami
 	$pkgname-nonfree-firmware:nonfree_firmware
@@ -30,10 +29,12 @@ depends="
 	eg25-manager-openrc
 	iw
 	linux-postmarketos-allwinner>=5.14
+	megapixels
 	mesa-egl
 	pinephone-callaudiod
 	postmarketos-base
 	postmarketos-base-ui-audio-pipewire
+	postprocessd
 	u-boot-pinephone>=2021.01_git20201228-r2
 	u-boot-tools
 	fwupd>=1.8.6
@@ -167,8 +168,8 @@ nonfree_firmware() {
 	depends="
 		linux-firmware-rtlwifi
 		linux-firmware-rtl_bt
-		firmware-pine64-rtl8723bt
 		firmware-pine64-ov5640
+		firmware-pine64-rtl8723bt
 		"
 	mkdir "$subpkgdir"
 }
@@ -179,12 +180,6 @@ openrc() {
 	depends="eg25-manager-openrc"
 	install -Dm644 "$srcdir"/90-modem-eg25-openrc.rules -t \
 		"$subpkgdir"/usr/lib/udev/rules.d/
-}
-
-camera() {
-	install_if="$pkgname=$pkgver-r$pkgrel postmarketos-default-camera"
-	depends="megapixels"
-	mkdir -p "$subpkgdir"
 }
 
 kirigami() {

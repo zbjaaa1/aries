@@ -1,17 +1,22 @@
 #!/bin/sh
 # This file will be in /init_functions.sh inside the initramfs.
 ROOT_PARTITION_UNLOCKED=0
-ROOT_PARTITION_RESIZED=0
-PMOS_BOOT=""
-PMOS_ROOT=""
+
+# NOTE!!! The file is sourced again in init_2nd.sh, avoid
+# clobbering variables by not setting them if they have
+# a value already!
+PMOS_BOOT="${PMOS_BOOT:-}"
+PMOS_ROOT="${PMOS_ROOT:-}"
+SUBPARTITION_DEV="${SUBPARTITION_DEV:-}"
 
 CONFIGFS="/config/usb_gadget"
 CONFIGFS_ACM_FUNCTION="acm.usb0"
 HOST_IP="${unudhcpd_host_ip:-172.16.42.1}"
 
-deviceinfo_getty=""
-deviceinfo_name=""
-deviceinfo_codename=""
+deviceinfo_getty="${deviceinfo_getty:-}"
+deviceinfo_name="${deviceinfo_name:-}"
+deviceinfo_codename="${deviceinfo_codename:-}"
+deviceinfo_create_initfs_extra="${deviceinfo_create_initfs_extra:-}"
 
 # Redirect stdout and stderr to logfile
 setup_log() {
@@ -90,7 +95,6 @@ setup_firmware_path() {
 	# This should be sufficient on kernel 3.10+, before that we need
 	# the kernel calling udev (and in our case /usr/lib/firmwareload.sh)
 	# to load the firmware for the kernel.
-	echo "Configuring kernel firmware image search path"
 	SYS=/sys/module/firmware_class/parameters/path
 	if ! [ -e "$SYS" ]; then
 		echo "Kernel does not support setting the firmware image search path. Skipping."
@@ -100,19 +104,27 @@ setup_firmware_path() {
 	echo -n /lib/firmware/postmarketos >$SYS
 }
 
-setup_udev() {
-	if ! command -v udevd > /dev/null || ! command -v udevadm > /dev/null; then
-		echo "ERROR: udev not found!"
+# shellcheck disable=SC3043
+load_modules() {
+	local file="$1"
+	local modules="$2"
+	[ -f "$file" ] && modules="$modules $(grep -v ^\# "$file")"
+	# shellcheck disable=SC2086
+	modprobe -a $modules
+}
+
+setup_mdev() {
+	# Start mdev daemon
+	mdev -d
+}
+
+jump_init_2nd() {
+	if ! [ -e /init_2nd.sh ]; then
 		return
 	fi
 
-	# This is the same series of steps performed by the udev,
-	# udev-trigger and udev-settle RC services. See also:
-	# - https://git.alpinelinux.org/aports/tree/main/eudev/setup-udev
-	# - https://git.alpinelinux.org/aports/tree/main/udev-init-scripts/APKBUILD
-	udevd -d --resolve-names=never
-	udevadm trigger --type=devices --action=add
-	udevadm settle
+	echo "  ❬❬ PMOS STAGE 2 ❭❭"
+	exec /init_2nd.sh
 }
 
 get_uptime_seconds() {
@@ -141,6 +153,10 @@ setup_dynamic_partitions() {
 }
 
 mount_subpartitions() {
+	# skip if ran already (unmerged -extra)
+	if [ -n "$PMOS_ROOT" ] && [ -n "$PMOS_BOOT" ]; then
+		return
+	fi
 	try_parts="/dev/disk/by-partlabel/userdata /dev/disk/by-partlabel/system* /dev/mapper/system*"
 	android_parts=""
 	for x in $try_parts; do
@@ -150,21 +166,23 @@ mount_subpartitions() {
 	attempt_start=$(get_uptime_seconds)
 	wait_seconds=10
 	echo "Trying to mount subpartitions for $wait_seconds seconds..."
-	while [ -z "$(find_root_partition)" ]; do
+	while [ -z "$(find_boot_partition)" ] || [ -z "$(find_root_partition)" ]; do
 		partitions="$android_parts $(grep -v "loop\|ram" < /proc/diskstats |\
 			sed 's/\(\s\+[0-9]\+\)\+\s\+//;s/ .*//;s/^/\/dev\//')"
 		for partition in $partitions; do
 			case "$(kpartx -l "$partition" 2>/dev/null | wc -l)" in
 				2)
 					echo "Mount subpartitions of $partition"
+					SUBPARTITION_DEV="$partition"
 					kpartx -afs "$partition"
 					# Ensure that this was the *correct* subpartition
 					# Some devices have mmc partitions that appear to have
 					# subpartitions, but aren't our subpartition.
-					if [ -n "$(find_root_partition)" ]; then
+					if [ -n "$(find_boot_partition)" ] && [ -n "$(find_root_partition)" ]; then
 						break
 					fi
 					kpartx -d "$partition"
+					SUBPARTITION_DEV=""
 					continue
 					;;
 				*)
@@ -349,13 +367,9 @@ check_filesystem() {
 
 	partition="$1"
 	type="$(get_partition_type "$partition")"
+	# btrfs check is not included in that list on purpose. it takes too much time
+	# (as in: multiple minutes) and gets even slower the more the partition is used
 	case "$type" in
-		btrfs)
-			echo "Check 'btrfs' root filesystem ($partition)"
-			if ! btrfs check --readonly "$partition" ; then
-				status="fail"
-			fi
-			;;
 		ext*)
 			echo "Auto-repair and check 'ext' filesystem ($partition)"
 			e2fsck -p "$partition"
@@ -417,13 +431,11 @@ mount_boot_partition() {
 	type="$(get_partition_type "$partition")"
 	case "$type" in
 		ext*)
-			echo "Detected ext filesystem"
 			modprobe ext4
 			# ext2 might be handled by the ext2 or ext4 kernel module
 			# so let mount detect that automatically by omitting -t
 			;;
 		vfat)
-			echo "Detected vfat filesystem"
 			modprobe vfat
 			mount_opts="-t vfat $mount_opts,umask=0077,nosymfollow,codepage=437,iocharset=ascii"
 			;;
@@ -508,71 +520,6 @@ has_unallocated_space() {
 		head -n1 | grep -qi "free space"
 }
 
-resize_root_partition() {
-	partition=$(find_root_partition)
-
-	# Do not resize the installer partition
-	if [ "$(blkid --label pmOS_install)" = "$partition" ]; then
-		echo "Resize root partition: skipped (on-device installer)"
-		return
-	fi
-
-	# Only resize the partition if it's inside the device-mapper, which means
-	# that the partition is stored as a subpartition inside another one.
-	# In this case we want to resize it to use all the unused space of the
-	# external partition.
-	if [ -z "${partition##"/dev/mapper/"*}" ] || [ -z "${partition##"/dev/dm-"*}" ]; then
-		# Get physical device
-		partition_dev=$(dmsetup deps -o blkdevname "$partition" | \
-			awk -F "[()]" '{print "/dev/"$2}')
-		if has_unallocated_space "$partition_dev"; then
-			echo "Resize root partition ($partition)"
-			# unmount subpartition, resize and remount it
-			kpartx -d "$partition"
-			parted -f -s "$partition_dev" resizepart 2 100%
-			kpartx -afs "$partition_dev"
-			ROOT_PARTITION_RESIZED=1
-		else
-			echo "Not resizing root partition ($partition): no free space left"
-		fi
-
-	# Resize the root partition (non-subpartitions). Usually we do not want
-	# this, except for QEMU devices and non-android devices (e.g.
-	# PinePhone). For them, it is fine to use the whole storage device and
-	# so we pass PMOS_FORCE_PARTITION_RESIZE as kernel parameter.
-	elif grep -q PMOS_FORCE_PARTITION_RESIZE /proc/cmdline; then
-		partition_dev="$(echo "$partition" | sed -E 's/p?2$//')"
-		if has_unallocated_space "$partition_dev"; then
-			echo "Resize root partition ($partition)"
-			parted -f -s "$partition_dev" resizepart 2 100%
-			partprobe
-			ROOT_PARTITION_RESIZED=1
-		else
-			echo "Not resizing root partition ($partition): no free space left"
-		fi
-
-	# Resize the root partition (non-subpartitions) on Chrome OS devices.
-	# Match $deviceinfo_cgpt_kpart not being empty instead of cmdline
-	# because it does not make sense here as all these devices use the same
-	# partitioning methods. This also resizes third partition instead of
-	# second, because these devices have an additional kernel partition
-	# at the start.
-	elif [ -n "$deviceinfo_cgpt_kpart" ]; then
-		partition_dev="$(echo "$partition" | sed -E 's/p?3$//')"
-		if has_unallocated_space "$partition_dev"; then
-			echo "Resize root partition ($partition)"
-			parted -f -s "$partition_dev" resizepart 3 100%
-			partprobe
-			ROOT_PARTITION_RESIZED=1
-		else
-			echo "Not resizing root partition ($partition): no free space left"
-		fi
-
-	else
-		echo "Unable to resize root partition: failed to find qualifying partition"
-	fi
-}
-
 unlock_root_partition() {
 	command -v cryptsetup >/dev/null || return
 	partition="$(find_root_partition)"
@@ -587,38 +534,6 @@ unlock_root_partition() {
 		ROOT_PARTITION_UNLOCKED=1
 		PMOS_ROOT=
 		# Show again the loading splashscreen
-		show_splash "Loading..."
-	fi
-}
-
-resize_root_filesystem() {
-	if [ "$ROOT_PARTITION_RESIZED" = 1 ]; then
-		show_splash "Resizing filesystem during initial boot..."
-		partition="$(find_root_partition)"
-		touch /etc/mtab # see https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=673323
-		type="$(get_partition_type "$partition")"
-		case "$type" in
-			ext4)
-				echo "Resize 'ext4' root filesystem ($partition)"
-				modprobe ext4
-				resize2fs -f "$partition"
-				;;
-			f2fs)
-				echo "Resize 'f2fs' root filesystem ($partition)"
-				modprobe f2fs
-				resize.f2fs "$partition"
-				;;
-			btrfs)
-				echo "Resize 'btrfs' root filesystem ($partition)"
-				modprobe btrfs
-				resize_root_filesystem_tmp_btrfs="$(mktemp -d)"
-				mount -t btrfs "$partition" "$resize_root_filesystem_tmp_btrfs"
-				btrfs filesystem resize max "$resize_root_filesystem_tmp_btrfs"
-				umount "$resize_root_filesystem_tmp_btrfs"
-				unset resize_root_filesystem_tmp_btrfs
-				;;
-			*)	echo "WARNING: Can not resize '$type' filesystem ($partition)." ;;
-		esac
 		show_splash "Loading..."
 	fi
 }
@@ -678,7 +593,7 @@ mount_root_partition() {
 run_hooks() {
 	scriptsdir="$1"
 
-	if [ -z "$(ls -A "$scriptsdir")" ]; then
+	if [ -z "$(ls -A "$scriptsdir" 2>/dev/null)" ]; then
 		return
 	fi
 
@@ -692,11 +607,10 @@ setup_usb_network_android() {
 	# Only run, when we have the android usb driver
 	SYS=/sys/class/android_usb/android0
 	if ! [ -e "$SYS" ]; then
-		echo "  /sys/class/android_usb does not exist, skipping android_usb"
 		return
 	fi
 
-	echo "  Setting up an USB gadget through android_usb"
+	echo "  Setting up USB gadget through android_usb"
 
 	usb_idVendor="$(echo "${deviceinfo_usb_idVendor:-0x18D1}" | sed "s/0x//g")"	# default: Google Inc.
 	usb_idProduct="$(echo "${deviceinfo_usb_idProduct:-0xD001}" | sed "s/0x//g")"	# default: Nexus 4 (fastboot)
@@ -709,24 +623,27 @@ setup_usb_network_android() {
 	echo "1" >"$SYS/enable"
 }
 
+get_usb_udc() {
+	local _udc_dev="${deviceinfo_usb_network_udc:-}"
+	if [ -z "$_udc_dev" ]; then
+		# shellcheck disable=SC2012
+		_udc_dev=$(ls /sys/class/udc | head -1)
+	fi
+
+	echo "$_udc_dev"
+}
 
 setup_usb_configfs_udc() {
 	# Check if there's an USB Device Controller
-	local _udc_dev="${deviceinfo_usb_network_udc:-}"
-	if [ -z "$_udc_dev" ]; then
-		_udc_dev=$(ls /sys/class/udc)
-		if [ -z "$_udc_dev" ]; then
-			echo "  No USB Device Controller available"
-			return
-		fi
-	fi
+	local _udc_dev
+	_udc_dev="$(get_usb_udc)"
 
 	# Remove any existing UDC to avoid "write error: Resource busy" when setting UDC again
 	if [ "$(wc -w <$CONFIGFS/g1/UDC)" -gt 0 ]; then
 		echo "" > "$CONFIGFS"/g1/UDC || echo "  Couldn't write to clear UDC"
 	fi
 	# Link the gadget instance to an USB Device Controller. This activates the gadget.
-	# See also: https://gitlab.com/postmarketOS/pmbootstrap/issues/338
+	# See also: https://gitlab.postmarketos.org/postmarketOS/pmbootstrap/issues/338
 	echo "$_udc_dev" > "$CONFIGFS"/g1/UDC || echo "  Couldn't write new UDC"
 }
 
@@ -740,6 +657,11 @@ setup_usb_network_configfs() {
 		return
 	fi
 
+	if [ -z "$(get_usb_udc)" ]; then
+		echo "  No UDC found, skipping usb gadget"
+		return
+	fi
+
 	# Default values for USB-related deviceinfo variables
 	usb_idVendor="${deviceinfo_usb_idVendor:-0x18D1}"   # default: Google Inc.
 	usb_idProduct="${deviceinfo_usb_idProduct:-0xD001}" # default: Nexus 4 (fastboot)
@@ -747,7 +669,7 @@ setup_usb_network_configfs() {
 	usb_network_function="${deviceinfo_usb_network_function:-ncm.usb0}"
 	usb_network_function_fallback="rndis.usb0"
 
-	echo "  Setting up an USB gadget through configfs"
+	echo "  Setting up USB gadget through configfs"
 	# Create an usb gadet configuration
 	mkdir $CONFIGFS/g1 || echo "  Couldn't create $CONFIGFS/g1"
 	echo "$usb_idVendor"  > "$CONFIGFS/g1/idVendor"
@@ -764,12 +686,9 @@ setup_usb_network_configfs() {
 
 	# Create network function.
 	if ! mkdir $CONFIGFS/g1/functions/"$usb_network_function"; then
-		echo "  Couldn't create $CONFIGFS/g1/functions/$usb_network_function"
 		# Try the fallback function next
 		if mkdir $CONFIGFS/g1/functions/"$usb_network_function_fallback"; then
 			usb_network_function="$usb_network_function_fallback"
-		else
-			echo "  Couldn't create $CONFIGFS/g1/functions/$usb_network_function_fallback"
 		fi
 	fi
 
@@ -798,6 +717,7 @@ setup_usb_network() {
 	[ -e "$_marker" ] && return
 	touch "$_marker"
 	echo "Setup usb network"
+	modprobe libcomposite
 	# Run all usb network setup functions (add more below!)
 	setup_usb_network_android
 	setup_usb_network_configfs
@@ -810,7 +730,6 @@ start_unudhcpd() {
 	# Skip if disabled
 	# shellcheck disable=SC2154
 	if [ "$deviceinfo_disable_dhcpd" = "true" ]; then
-		echo "NOTE: start of dhcpd is disabled (deviceinfo_disable_dhcpd)"
 		return
 	fi
 
@@ -928,6 +847,7 @@ debug_shell() {
 	  initrd: $INITRAMFS_PKG_VERSION
 
 	Run 'pmos_continue_boot' to continue booting.
+	Read the initramfs log with 'cat /pmOS_init.log'.
 	EOF
 
 	# Add pmos_logdump message only if relevant
@@ -1002,7 +922,9 @@ debug_shell() {
 	# Getty on the display
 	hide_splash
 	# Spawn buffyboard if the device might not have a physical keyboard
-	if echo "handset tablet convertible" | grep "${deviceinfo_chassis:-handset}" >/dev/null; then
+	# buffyboard is only available with merged initramfs-extra!
+	if command -v buffyboard 2>/dev/null && \
+	   echo "handset tablet convertible" | grep "${deviceinfo_chassis:-handset}" >/dev/null; then
 		modprobe uinput
 		# Set a large font for the framebuffer
 		setfont "/usr/share/consolefonts/ter-128n.psf.gz" -C "/dev/$active_console"
@@ -1192,7 +1114,7 @@ create_logs_disk() {
 	Something went wrong and your device did not boot properly. If this was unexpected
 	then please open a new issue by visiting
 
-	https://gitlab.com/postmarketOS/pmaports/-/issues/new
+	https://gitlab.postmarketos.org/postmarketOS/pmaports/-/issues/new
 
 	and attach the following file by dragging it onto the page:
 

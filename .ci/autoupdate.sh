@@ -1,12 +1,9 @@
 #!/bin/sh -e
-# Description: update a list of packages
-# Options: native slow
-# https://postmarketos.org/pmb-ci
 
 if [ "$(id -u)" = 0 ]; then
 	set -x
 	apk add git openssh-keygen grep curl
-	wget "https://gitlab.com/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
+	wget "https://gitlab.postmarketos.org/postmarketOS/ci-common/-/raw/master/install_pmbootstrap.sh"
 	sh ./install_pmbootstrap.sh
 	exec su "${TESTUSER:-pmos}" -c "sh -e $0 $*"
 fi
@@ -14,11 +11,7 @@ fi
 git config --global --add safe.directory "$CI_PROJECT_DIR"
 git config --global user.name "postmarketOS CI"
 # pmaports
-# The email address is the username of the bot (from the GitLab group members page) @noreply.gitlab.com
-git config --global user.email "project_8065375_bot_13cf44ca4cd2c938688af6e3d500d9cb@noreply.gitlab.com"
-
-# For testing with pmaports-autoupdate-test repo
-# git config --global user.email "project_58002231_bot_be2d4e9e7aba929855726aafe12940d6@noreply.gitlab.com"
+git config --global user.email "project_226_bot_a365eaa0c380d1bee0af03adf42ebea3@noreply.gitlab.postmarketos.org"
 
 # Configure SSH key for signing
 mkdir -p ~/.ssh
@@ -90,9 +83,9 @@ update_linux_next() {
 }
 
 # For testing
-#git remote add gitlab https://pmos-ci:"$PMAPORTS_PUSH_TOKEN"@gitlab.com/postmarketOS/pmaports-autoupdate-test.git
+#git remote add gitlab https://pmos-ci:"$PMAPORTS_PUSH_TOKEN"@gitlab.postmarketos.org/postmarketOS/pmaports-autoupdate-test.git
 
-git remote add gitlab https://pmos-ci:"$PMAPORTS_PUSH_TOKEN"@gitlab.com/postmarketOS/pmaports.git
+git remote add gitlab https://pmos-ci:"$PMAPORTS_PUSH_TOKEN"@gitlab.postmarketos.org/postmarketOS/pmaports.git
 git fetch gitlab
 git checkout --track gitlab/master
 

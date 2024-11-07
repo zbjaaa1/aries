@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plymouth-kcm
-pkgver=9999_git20241031
+pkgver=9999_git20241103
 pkgrel=0
-_commit="46cf29fe93302b3541ae19d8da5196cc53e52491"
+_commit="c153558c394ae34b43d7bcb562e0148c888ac8e5"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://invent.kde.org/plasma/plymouth-kcm"
@@ -33,7 +33,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plymouth-kcm.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/plymouth-kcm-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/plymouth-kcm-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -57,5 +57,5 @@ package() {
 }
 
 sha512sums="
-e9b3d7b4302a3bb756ba08f3bf1acec5ecf63072d2457ca853c63f5d0e7a1bc0f2764e959fe45f5213068a20ab20503ebf3386f4533ec17871d937209f7045c3  plymouth-kcm-46cf29fe93302b3541ae19d8da5196cc53e52491.tar.xz
+36319f9171db14eaa0e81aa9bcde7935a17ff379b7462d6f025ada057426c2e31bf8d7a2d8f54fd51cbe5c01704477fd3de466d15dbfb0d95bc90494cbff166d  plymouth-kcm-c153558c394ae34b43d7bcb562e0148c888ac8e5.tar.xz
 "

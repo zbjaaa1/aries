@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kbruch
-pkgver=9999_git20241031
+pkgver=9999_git20241104
 pkgrel=0
-_commit="1fefe87a6c03a6499719151ec85befb49562a963"
+_commit="456651a5872b770d910be093af622d5b32dcaf78"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://edu.kde.org/kbruch/"
@@ -24,7 +24,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/education/kbruch.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/kbruch-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/kbruch-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-a7008d55c29093c5f92956a72036678a64412a0ac5c73d1aa1bc2595563f611d806fbec3f3d4d8f211f621a63d4a7add68f33c0662731758041980b2fd976315  kbruch-1fefe87a6c03a6499719151ec85befb49562a963.tar.xz
+01dbf6321111b6af91dff0b3b4a51df2ce8737598e4432cd0ade9f2db3204e49d6a45e5289ff0d718710f237fc421260093c1b8e807628d33da931dc3ae43f03  kbruch-456651a5872b770d910be093af622d5b32dcaf78.tar.xz
 "

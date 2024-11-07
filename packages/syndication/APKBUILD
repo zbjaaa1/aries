@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=syndication
-pkgver=9999_git20241013
+pkgver=9999_git20241102
 pkgrel=0
-_commit="0ae483cd0a39a5869c2d8e0e6e91f19158660f24"
+_commit="4d34adfe16afebba27f6bec630f54d4c73a12850"
 pkgdesc="An RSS/Atom parser library"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -23,7 +23,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/syndication.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/syndication-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/syndication-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -47,5 +47,5 @@ package() {
 }
 
 sha512sums="
-51c64c3655fa79971046bc37977fceb36f0867286baebd23f475f3c96deb9c207a07a5eed5ed455f093b59527904c6df8d95d06572fbff7432b4285210b478eb  syndication-0ae483cd0a39a5869c2d8e0e6e91f19158660f24.tar.xz
+b538c66c939de304e7dfe43ef4c4b674af18aca4b39442acad42bf881979402387ecc29558fddf2d604ce2fcb97824f888b541beab2a8db2ca05bab69080cd41  syndication-4d34adfe16afebba27f6bec630f54d4c73a12850.tar.xz
 "

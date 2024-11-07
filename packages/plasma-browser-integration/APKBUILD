@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-browser-integration
-pkgver=9999_git20241031
+pkgver=9999_git20241103
 pkgrel=0
-_commit="858fd65ad76b982cb45a8d1297d6edcd9132bec4"
+_commit="76fc98f32256a12a1402d005a6d8b4428cb11fab"
 pkgdesc="Components necessary to integrate browsers into the Plasma Desktop"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> purpose
@@ -35,7 +35,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-browser-integration.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-01/plasma-browser-integration-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/plasma-browser-integration-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -58,5 +58,5 @@ package() {
 }
 
 sha512sums="
-13a9f29e8af05e8257f108f7d98c1507292c3418bd52297582b0120869254c1893d0028cb639c36cc83f42796b29eddc5abe016a7ecad781423299e57d1d8251  plasma-browser-integration-858fd65ad76b982cb45a8d1297d6edcd9132bec4.tar.xz
+5822c19872a7295669d1e20eb6947ffc39abcd567a7ca37341839ae3026a4b3222d371c1b46a9680bc9a37c35e902989cd01001148dfebe42abcf2e5d36b23e9  plasma-browser-integration-76fc98f32256a12a1402d005a6d8b4428cb11fab.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kpackage
-pkgver=9999_git20241102
+pkgver=9999_git20241107
 pkgrel=0
-_commit="1d7f13341e29da997ccb97c8abc4559d3510349c"
+_commit="d188389b823093b33c58db4acaf7c9e2970c098d"
 pkgdesc="Framework that lets applications manage user installable packages of non-binary assets"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kpackage.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/kpackage-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-08/kpackage-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 options="!check" # Fails due to requiring installed Plasma, which causes a circular dependency
 
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-fe68d2f59f5b14c1a35417ec47957db7486db68e5c30e674bc3025d7f7dd546b4d2032fabd2b1f25b7dab306d233e1915b97184e19d50d9f67db4266db4f64be  kpackage-1d7f13341e29da997ccb97c8abc4559d3510349c.tar.xz
+69e9ae1a9d69568e607b13ab3bcebaad47f05239fe3657ba957531c51587ae70d3291c4f249457fd8a16255c90be81a4760492218c740174dc2410238ff46ce3  kpackage-d188389b823093b33c58db4acaf7c9e2970c098d.tar.xz
 "

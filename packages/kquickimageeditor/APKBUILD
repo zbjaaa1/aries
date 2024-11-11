@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=kquickimageeditor
-pkgver=9999_git20240920
+pkgver=9999_git20241106
 pkgrel=0
-_commit="2c983feccd9051acd14c50c59ab9f6fb2694a864"
+_commit="33ec2eedc3b9f3fd778f445197a887e048c93672"
 pkgdesc="Simple image editor for QtQuick applications"
 url="https://invent.kde.org/libraries/kquickimageeditor"
 # armhf blocked by extra-cmake-modules
@@ -21,7 +21,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/kquickimageeditor.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-06/kquickimageeditor-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-08/kquickimageeditor-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 options="!check" # No tests
 
@@ -40,5 +40,5 @@ package() {
 }
 
 sha512sums="
-201c24f7c48327ae55987a1a27a203558dcd87b4356083f23918f6a6bd20fd979ed701c1835abe651f1469f047b92e16b91deb89289dee0a5843d8fd1298c175  kquickimageeditor-2c983feccd9051acd14c50c59ab9f6fb2694a864.tar.xz
+11fc276edb76baf40418ea4fda01474e3ebb47ed71c1a06342f2ce09151e7b03d26f65444d810710eb73a8124bebdba2a1c924a6578254bb01e02e066ba589c5  kquickimageeditor-33ec2eedc3b9f3fd778f445197a887e048c93672.tar.xz
 "

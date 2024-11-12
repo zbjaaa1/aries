@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=krecorder
-pkgver=9999_git20241031
+pkgver=9999_git20241108
 pkgrel=0
-_commit="da132266c91a1f013e4fd4f6eadd57f6d515aa28"
+_commit="7c7a0c6efc33874c0e00d9267195bda72a381c1b"
 pkgdesc="Audio recorder for Plasma Mobile (and other platforms)"
 url="https://invent.kde.org/plasma-mobile/krecorder"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
@@ -26,7 +26,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/krecorder.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-08/krecorder-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-11/krecorder-$_commit.tar.xz"
 options="!check" # No tests
 
 builddir="$srcdir/$pkgname-$_commit"
@@ -43,5 +43,5 @@ package() {
 }
 
 sha512sums="
-be9e10376bd75b2e22b425dd8b3a7b62f5e1d52374af70e79af69225653fa4e1f097a1ba1d204b85a10f02f6c958a9d543a843bae3f07588fea94b89d8991a08  krecorder-da132266c91a1f013e4fd4f6eadd57f6d515aa28.tar.xz
+93629e3d7a49b3cccae4057274d23c5e197aa96f492562bfe80b35b40f158de34e6e790cd4f6b929bc54081d7d97db2202bcb414c33c41e6b17dd084fa20f7ec  krecorder-7c7a0c6efc33874c0e00d9267195bda72a381c1b.tar.xz
 "

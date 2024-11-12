@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=francis
-pkgver=9999_git20241102
+pkgver=9999_git20241110
 pkgrel=0
-_commit="2d21e8e7353914281423e0a83919ec19abf8f921"
+_commit="a88043ce5f60e6d2d144612b0ae486e10703809a"
 pkgdesc="Track your time"
 url="https://invent.kde.org/utilities/francis"
 # armhf blocked by extra-cmake-modules
@@ -29,7 +29,7 @@ makedepends="
 checkdepends="xvfb-run"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/utilities/francis.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-08/francis-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-11/francis-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/francis-$_commit"
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-5c12c2ae8b1a6ecada006491c79732863f2b1b9d984bd0fbe0c3cf6d323a3e8f00295c7b9309c27bf03b4d4dd6e93686fdd419193bbdb2b7e6871b0f35e1c784  francis-2d21e8e7353914281423e0a83919ec19abf8f921.tar.xz
+e3be249c43358c9842e324a8c3b881bef1fb78ed05b2610e85e65204675a329ce6d748192ce583ff65c3fcdefff90e3614020908c2aad2ccb8830db9b95d7f73  francis-a88043ce5f60e6d2d144612b0ae486e10703809a.tar.xz
 "

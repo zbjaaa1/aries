@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=ksanecore
-pkgver=9999_git20241107
+pkgver=9999_git20241108
 pkgrel=0
-_commit="24ba31df545360d705a2e2473666a546e59ef5ff"
+_commit="5709dc484c319fd71088690d2b4e7d9ad24e3885"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://www.kde.org/applications/graphics/"
@@ -22,7 +22,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/ksanecore.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-08/ksanecore-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-11/ksanecore-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -46,5 +46,5 @@ package() {
 }
 
 sha512sums="
-296bf1fbb31c7550243fb59b9e2d2c82640b3b8b0d7b218a5520b5afd2e5d962056cae17027075c39b1ff348d8f7ecc7c79f67fceb3d152ec935b85680ab82ce  ksanecore-24ba31df545360d705a2e2473666a546e59ef5ff.tar.xz
+71b081eb7310d883adb22d10fe271642498a584e7a95ab9adb4179a7a380e876751eaaa28b5582b269fd5181de45fe149bc0f6c897e4fe58f6c5959d7d1e2971  ksanecore-5709dc484c319fd71088690d2b4e7d9ad24e3885.tar.xz
 "

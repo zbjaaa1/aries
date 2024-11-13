@@ -1,22 +1,27 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-oneplus-kebab
 pkgdesc="OnePlus 8T"
-pkgver=2
+pkgver=3
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-oneplus-kebab
 	mkbootimg
 	postmarketos-base
+	firmware-oneplus-kebab
 "
-makedepends="devicepkg-dev"
-subpackages="$pkgname-weston"
+makedepends="
+	devicepkg-dev
+	dtc
+	"
+subpackages="
+"
 source="
 	deviceinfo
-	weston.ini
+	modules-initfs
+	sm8250-oneplus-kebab-empty.dts
 "
 
 build() {
@@ -24,19 +29,13 @@ build() {
 }
 
 package() {
+	depends="linux-postmarketos-qcom-sm8250"
 	devicepkg_package $startdir $pkgname
+
+	dtc -O dtb -o "$srcdir/dtbo.img" -I dts "$srcdir/sm8250-oneplus-kebab-empty.dts"
+	install -Dm644 "$srcdir/dtbo.img" "$subpkgdir/boot/dtbo.img"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
-
-weston() {
-	install_if="$pkgname weston"
-
-	# weston use drm backend, 2x dpi, don't use virtual output
-	install -Dm644 "$srcdir"/weston.ini \
-		"$subpkgdir"/etc/xdg/weston/weston.ini
-}
-
 
 sha512sums="
-538e17ec6855924865cf1bb2650667232bf6c384e1e8918f40e660ad61c001bace4cc16b46609b067dad5bbf6e9d33339340c273d81aa0550dffe05fdb2f106c  deviceinfo
-4fdc188f9cd5c0316959322568916a6e36e67ff316e90fa7bd7c7b642cb137a9ff7002b0475728c6ba53abcbfe8c50d82112e4943460ee424aee4bbfd0efecfe  weston.ini
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kmime
-pkgver=9999_git20241112
+pkgver=9999_git20241113
 pkgrel=0
-_commit="2d98e287f113815bf4b9a1df2839e2ae27ee8c3d"
+_commit="7aec2456cecb85a1f3d09c2a832b3d84bba857a8"
 pkgdesc="Library for handling mail messages and newsgroup articles"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/pim/kmime.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-12/kmime-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-13/kmime-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -52,5 +52,5 @@ package() {
 }
 
 sha512sums="
-fbe52ca82813781819891178c53cf626793f2a4788e5abbb29f522df861c101b7c9887969b23f9db91064bdcbeb8d6062ff67b3334e12397a09efec029143d4e  kmime-2d98e287f113815bf4b9a1df2839e2ae27ee8c3d.tar.xz
+dafec1d8b5ddc93daa44eeff0c8df9d406034d7450543f11fdf71b95845493db48434595b99818f8dc3252b29b19d26272a930a4167d3074e663ea2e2c525424  kmime-7aec2456cecb85a1f3d09c2a832b3d84bba857a8.tar.xz
 "

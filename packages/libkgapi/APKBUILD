@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=libkgapi
-pkgver=9999_git20241108
+pkgver=9999_git20241113
 pkgrel=0
-_commit="c51d857caf13cce570e4478132853501af26480f"
+_commit="e62ee3cf8d4e2e985ae150d2e01728ebdc76e28b"
 pkgdesc="LibKGAPI is a KDE-based library for accessing various Google services via their public API"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
@@ -30,7 +30,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/libkgapi.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-12/libkgapi-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-13/libkgapi-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-4f1988a897e6c4ffd53a5ca36ab7050f9b2c815620f5b99708ec2ac32922f7c77b5491cf8379574b51cff153253df72f678f446512518390d0550ca8a1d81d5f  libkgapi-c51d857caf13cce570e4478132853501af26480f.tar.xz
+4465ac91c36204005c614a04abb3e448d283ab3dee643af2e4f5861dd8d5406effc299f4ff841dbaeeb014053d97336c85bfc726bf35741c8cf40f26e0dbe7fe  libkgapi-e62ee3cf8d4e2e985ae150d2e01728ebdc76e28b.tar.xz
 "

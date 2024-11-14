@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=libksysguard
-pkgver=9999_git20241112
+pkgver=9999_git20241113
 pkgrel=0
-_commit="52067e7ebb580b00f21031f22bb84a2eccaa6938"
+_commit="13e3bd3ec17ed152abbcd9ffa69d0c851df00d62"
 pkgdesc="KDE system monitor library"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -46,7 +46,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/libksysguard.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-12/libksysguard-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-13/libksysguard-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 replaces="ksysguard<5.22"
@@ -71,5 +71,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-966634298bdc71f600c5bb290527e01732e50008330b95863fe8efdee74c25e3df8faf75b470bb32c80a12368cd5220a8b064dca4fa56d5a187db8c5be53a03e  libksysguard-52067e7ebb580b00f21031f22bb84a2eccaa6938.tar.xz
+cac1e4a6439d6df818be1b2c0adceb854a4aada55c07d5780cca71c68101589acda0b68829eec0e2c9f53b9a38c72fe29e1c27d817440f34e06b07eea729a715  libksysguard-13e3bd3ec17ed152abbcd9ffa69d0c851df00d62.tar.xz
 "

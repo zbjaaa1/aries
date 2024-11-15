@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=ksystemlog
-pkgver=9999_git20241111
+pkgver=9999_git20241114
 pkgrel=0
-_commit="b3406902abfdca1347c9570397b4ba9a234f6fe0"
+_commit="2d6b013964fa6efe90ecef456ac7e1727b819a9c"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://apps.kde.org/ksystemlog/"
@@ -34,7 +34,7 @@ makedepends="$depends_dev
 checkdepends="xvfb-run"
 subpackages="$pkgname-lang $pkgname-doc"
 _repo_url="https://invent.kde.org/system/ksystemlog.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-13/ksystemlog-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-14/ksystemlog-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/ksystemlog-$_commit"
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-c6de40ac4354eacb4d836dcab8f1723119d2e28e61bf2b4c9798c1b0008fbe635380a56eb56da1c1b70ccd0693a3b5c626a18780346a8fd6fa0589ec5e4baf27  ksystemlog-b3406902abfdca1347c9570397b4ba9a234f6fe0.tar.xz
+7a32bd0124cd21e0c85407f69e43616b1388b6834ba34a770846ce3ff2f4a29c9b8415f14aba711a6922a338745fc3d5e274022a29f9ebe92d929d14ce4f4bdc  ksystemlog-2d6b013964fa6efe90ecef456ac7e1727b819a9c.tar.xz
 "

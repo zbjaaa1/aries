@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kbookmarks
-pkgver=9999_git20241112
+pkgver=9999_git20241113
 pkgrel=0
-_commit="c2d119711925b35cebed0af085e63cfa79bc7eac"
+_commit="c17d50162057e34e3f19bb14600c87441587ab3a"
 pkgdesc="Support for bookmarks and the XBEL format"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -29,7 +29,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kbookmarks.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-13/kbookmarks-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-14/kbookmarks-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -53,5 +53,5 @@ package() {
 }
 
 sha512sums="
-a45332e07b1b58ad81d0d49e967338963b9fc205020a0c997c752ce6764f94bf198e76c7e8004ce3fc47db49e9b18771f72005e794d322791cef5d2dc01d4f3b  kbookmarks-c2d119711925b35cebed0af085e63cfa79bc7eac.tar.xz
+93959552599eff0670ec8991c9a4e281f53fa86c011e0a9bb9ae730bccd9d266a783268acd8e24ae59e5a4bdee8884ae995df5e12b831d5a6ef4ce5169801681  kbookmarks-c17d50162057e34e3f19bb14600c87441587ab3a.tar.xz
 "

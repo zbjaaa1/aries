@@ -1,0 +1,26 @@
+#!/bin/sh -e
+
+new=$1
+old=$2
+release="$(cat /usr/share/kernel/next-$old/kernel.release)"
+
+# Backup the old kernel so apk doesn't remove it
+backup="/usr/share/kernel/next-$old /lib/modules/$release /boot/linux-$release.efi"
+
+# If a specific DTB is configured then it will be loader by absolute path and versioned
+# per kernel release. If not, we assume it will be auto-detected by dtbloader. In which
+# case there is no way to know the version, so we just move the latest DTBs to /boot/dtbs
+# in the post-upgrade script. So the current kernel version we're upgrading FROM will either
+# have dtbs in /boot/dtbs-$release or /boot/dtbs.
+if [ -d "/boot/dtbs" ]; then
+	backup="$backup /boot/dtbs"
+else
+	backup="$backup /boot/dtbs-$release"
+fi
+
+for i in $backup; do
+	if [ -e $i ]; then
+		echo "Moving $i to $i.tmp"
+		mv $i $i.tmp
+	fi
+done

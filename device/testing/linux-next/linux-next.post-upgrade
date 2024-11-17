@@ -1,0 +1,36 @@
+#!/bin/sh
+
+. /usr/share/misc/source_deviceinfo
+
+new=$1
+old=$2
+release="$(cat /usr/share/kernel/next-$old.tmp/kernel.release)"
+new_release="$(cat /usr/share/kernel/next-$new/kernel.release)"
+
+cmd="mv"
+if [ "$release" = "$new_release" ]; then
+	echo "Kernel release is the same, not preserving old kernel"
+	cmd="rm"
+fi
+
+# Backup the old kernel so apk doesn't remove it
+backup="/usr/share/kernel/next-$old /lib/modules/$release /boot/linux-$release.efi /boot/dtbs-$release"
+
+for i in $backup; do
+	if [ -e $i.tmp ]; then
+		case $cmd in
+			mv)
+				echo "Restoring $i"
+				mv $i.tmp $i
+				;;
+			rm)
+				rm -r $i.tmp
+				;;
+		esac
+	fi
+done
+
+if [ -z "$deviceinfo_dtb" ]; then
+	echo "No DTB specified, moving latest DTBs to /boot/dtbs"
+	mv /boot/dtbs-$new_release /boot/dtbs
+fi

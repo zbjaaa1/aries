@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kstatusnotifieritem
-pkgver=9999_git20241113
+pkgver=9999_git20241114
 pkgrel=0
-_commit="d403c4036e46019e5ba9a6da405827221b2ab8d1"
+_commit="dbd14f260e0809ffceacdfeb0a6091104caa0efd"
 pkgdesc="Implementation of Status Notifier Items"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -21,7 +21,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kstatusnotifieritem.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-14/kstatusnotifieritem-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-15/kstatusnotifieritem-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -44,5 +44,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-2bf8023ca23c2da84f141d6489274bdcfe20af5324afcde6d7b970fdbf9629a762c43ad5af9a4f9fd86971699ec4d0aabf4391988ae24baabba471b195b7df34  kstatusnotifieritem-d403c4036e46019e5ba9a6da405827221b2ab8d1.tar.xz
+e8f10a3fd59cb47fd1f8f85f46db3774567b1b4bc9c64dd8e75cc072ac6b0b2ac7f206354fe816aac91ccc13e6b008bbadd72d61f0a3b556b8c3fd3271c102a3  kstatusnotifieritem-dbd14f260e0809ffceacdfeb0a6091104caa0efd.tar.xz
 "

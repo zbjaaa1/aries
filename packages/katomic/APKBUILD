@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=katomic
-pkgver=9999_git20241111
+pkgver=9999_git20241116
 pkgrel=0
-_commit="b89d310465ea83dfff8a5a72bb3724d91e00f066"
+_commit="0f778ee08e6c9bfafc5f30e66f948d23f376db34"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/games/org.kde.katomic"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/games/katomic.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-15/katomic-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-18/katomic-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -52,5 +52,5 @@ package() {
 }
 
 sha512sums="
-b2c48b330a65a9739fa026910fd3e27af4db2ce9e57759f77fe02f25304f3a01247bb16daef5d432e13a1471468a1c39481444424e320fdd113d9315ea4ffab7  katomic-b89d310465ea83dfff8a5a72bb3724d91e00f066.tar.xz
+100d2f2abfb2ded43232a4bedd67a29526b787722dfed649794bf3175b3a3dc16f2b349d1f6a632f90474d62d3efdf0d4383bbec6d1e754cbf6db1839c67b81a  katomic-0f778ee08e6c9bfafc5f30e66f948d23f376db34.tar.xz
 "

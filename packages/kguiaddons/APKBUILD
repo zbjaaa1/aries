@@ -4,9 +4,9 @@
 # The group tag is just to easily find this apkbuild by some scripts for automation
 # group=kde-frameworks
 pkgname=kguiaddons
-pkgver=9999_git20241113
+pkgver=9999_git20241115
 pkgrel=0
-_commit="c37a36c70ebc4d7c68c9b2b9bade2fb42b1d8de6"
+_commit="0971293dbe8115cbfde021a83d780c7fcbe48058"
 pkgdesc="Addons to QtGui"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -26,7 +26,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kguiaddons.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-15/kguiaddons-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-18/kguiaddons-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-bin"
 
 options="!check"
@@ -55,5 +55,5 @@ bin() {
 }
 
 sha512sums="
-52342ebf6e4c1d2a0f5dacb66f70b371381510a7ee9c42d2ee944247714382d9c2584dc51a568a95e22595a4d8112f4c1d3529c5de9197b91621ec05745bb27b  kguiaddons-c37a36c70ebc4d7c68c9b2b9bade2fb42b1d8de6.tar.xz
+fdbbb0911ea9314f7cb10635cebcd39a8d17632d2bbb79d3ba28cc9b19727a9530d95506d27bac14200c8d5e0d470591613966ee80f29e499a493651a4ac7cdd  kguiaddons-0971293dbe8115cbfde021a83d780c7fcbe48058.tar.xz
 "

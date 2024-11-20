@@ -1,14 +1,15 @@
 # Maintainer: Clayton Craft <clayton@craftyguy.net>
 pkgname=boot-deploy
-pkgver=0.18
+pkgver=999.18
 pkgrel=2
 pkgdesc="tool for finalizing and deploying boot related files"
 url="https://gitlab.com/postmarketos/boot-deploy"
 arch="noarch"
 license="GPL-2.0-or-later"
+_commit="e3d496d3bb88668fd53f293d311add788d83b64b"
 source="
 	os-customization
-	https://gitlab.postmarketos.org/postmarketOS/boot-deploy/-/archive/$pkgver/boot-deploy-$pkgver.tar.gz
+	https://gitlab.postmarketos.org/postmarketOS/boot-deploy/-/archive/$_commit/boot-deploy-$_commit.tar.gz
 	"
 
 check() {
@@ -28,5 +29,5 @@ package() {
 }
 sha512sums="
 a243975b9850d9933e0f917f7eb38fc4a76ea658c3dcc56f035f60ee6c62d6740c1107143b8210bdc0231d4c9b6b2003e458120985604eb09649322d359ae89f  os-customization
-e4b059c149a96f896804c7971107f738852bf1dfadd5832e4e2b3ebf2bf00f05570bd45f0f2bea69f54755fbf6bffc9091a1d6baed7b1537679afef5c44a5fd0  boot-deploy-0.18.tar.gz
+11d5b2033aa789cc52fe9214cdb2083449438b67d64f2a12ca340791adb968e570d0848c794b3056937e57e35a6378562dcae200992dab1a88592241a7560121  boot-deploy-e3d496d3bb88668fd53f293d311add788d83b64b.tar.gz
 "

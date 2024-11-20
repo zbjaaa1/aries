@@ -3,7 +3,7 @@
 
 pkgname=linux-next
 pkgver=6.12_git20241115
-pkgrel=3
+pkgrel=4
 _nextver="${pkgver#*_git}"
 pkgdesc="Linux next kernel"
 arch="aarch64"
@@ -13,6 +13,7 @@ url="https://kernel.org"
 license="GPL-2.0-only"
 # FIXME: kconfigcheck isn't supported since we use fragments
 options="!strip !check !tracedeps pmb:cross-native"
+install="$pkgname.pre-upgrade $pkgname.post-upgrade"
 source="
 	https://gitlab.com/linux-kernel/linux-next/-/archive/next-$_nextver/linux-next-next-$_nextver.tar.gz
 	devices.config
@@ -32,6 +33,7 @@ makedepends="
 	zstd
 "
 builddir="$srcdir/linux-next-next-$_nextver"
+_outdir=".output"
 
 prepare() {
 	default_prepare
@@ -40,32 +42,35 @@ prepare() {
 
 	# Generate .config
 	unset LDFLAGS
-	make ARCH="$_carch" CC="${CC:-gcc}" \
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-next-$_nextver" \
 		defconfig pmos.config devices.config
 }
 
 build() {
 	unset LDFLAGS
-	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+	make O="$_outdir" V=1 ARCH="$_carch" CC="${CC:-gcc}" \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
 }
 
 package() {
-	install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
-			"$pkgdir/boot/linux.efi"
+	release="$(cat "$builddir/$_outdir"/include/config/kernel.release)"
+	install -Dm644 "$builddir/$_outdir/arch/$_carch/boot/vmlinuz.efi" \
+			"$pkgdir/boot/linux-${release}.efi"
 
-	make modules_install dtbs_install \
+	make O="$_outdir" modules_install dtbs_install \
 		ARCH="$_carch" \
 		INSTALL_PATH="$pkgdir"/boot/ \
 		INSTALL_MOD_PATH="$pkgdir" \
 		INSTALL_MOD_STRIP=1 \
-		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs-"${release}"
 
 	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
 
-	install -D "$builddir"/include/config/kernel.release \
-		"$pkgdir"/usr/share/kernel/next-"$_nextver"/kernel.release
+	# The kernel directory MUST be in the format of:
+	# /usr/share/kernel/<flavor>-<pkgver>-r<pkgrel>/
+	install -D "$builddir/$_outdir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/next-"$pkgver"-r"$pkgrel"/kernel.release
 }
 
 sha512sums="

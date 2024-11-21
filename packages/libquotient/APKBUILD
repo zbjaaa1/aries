@@ -3,9 +3,9 @@
 
 # group=3rdparty
 pkgname=libquotient
-pkgver=9999_git20241116
+pkgver=9999_git20241119
 pkgrel=0
-_commit="2092ebc175706d086c4f0da6e1e3ee711c33a101"
+_commit="09147f92f3f6f6071285224482a0d34b970fae95"
 pkgdesc="Qt library for cross-platform clients for Matrix"
 url="https://github.com/quotient-im/libQuotient"
 arch="all !armhf" # blocked by qt5-qtmultimedia
@@ -21,7 +21,7 @@ makedepends="$depends_dev
 	"
 subpackages="$pkgname-dev"
 _repo_url="https://github.com/quotient-im/libquotient.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-18/libquotient-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-20/libquotient-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/libquotient-$_commit"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-e92c92b9ca681536abae830094ac324f622c2393c596e363828b65384d9ebcbee7fa9e65647be4941c202fea059f696cf885cfc1f5d25192fd549f3dabe1dbb3  libquotient-2092ebc175706d086c4f0da6e1e3ee711c33a101.tar.xz
+1ef2a728aa304e0f6b7dc790e494c2655ae3ea16860e627479bf4783103c3e1cc671142def137dd7b48b326eef796562552dd33f3782df51c2281983e5a5387c  libquotient-09147f92f3f6f6071285224482a0d34b970fae95.tar.xz
 "

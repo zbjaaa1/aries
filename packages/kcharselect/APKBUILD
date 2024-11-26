@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kcharselect
-pkgver=9999_git20241116
+pkgver=9999_git20241120
 pkgrel=0
-_commit="7f1c7d8fcbb83348c652f83cf0374036fb8fc02a"
+_commit="6eed2c2e1c211b3d9d03ea4869f5e0587c719ec7"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/utilities/org.kde.kcharselect"
@@ -24,7 +24,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/kcharselect.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-20/kcharselect-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-22/kcharselect-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-1751a0428a573211d87e386f3b4e4963b2187b5aaee0439f772c5b2e82a01fe350848ab168ebeb9bba987797e8779e6f9f573142f5acd6814b2023faf7f10005  kcharselect-7f1c7d8fcbb83348c652f83cf0374036fb8fc02a.tar.xz
+4d9a3f01d7558cefce38fe7a6301d46899b4213263e11724ca210919d9fcd72c29a3ba3cf528eeb7cfc59539a84a62a8292f561225d7920e27a9c8bdf84967b6  kcharselect-6eed2c2e1c211b3d9d03ea4869f5e0587c719ec7.tar.xz
 "

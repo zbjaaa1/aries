@@ -5,7 +5,7 @@
 # Co-Maintainer: Peter John Hartman <peterjohnhartman@gmail.com>
 pkgname=postmarketos-ui-sxmo-de-sway
 pkgver=1.16.3
-pkgrel=0
+pkgrel=1
 pkgdesc="Simple Mobile: Mobile environment based on SXMO and running on sway"
 url="http://sr.ht/~mil/Sxmo"
 # riscv64: builder currently stuck, libphonenumber needs rebuild
@@ -47,7 +47,7 @@ _pmb_recommends="
 	"
 provides="postmarketos-ui-sxmo"
 provider_priority=10
-options="!check pmb:systemd-never"
+options="!check pmb:systemd"
 
 package() {
 	mkdir -p "$pkgdir"

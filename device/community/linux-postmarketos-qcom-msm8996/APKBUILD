@@ -3,8 +3,8 @@
 
 _flavor="postmarketos-qcom-msm8996"
 pkgname=linux-$_flavor
-pkgver=6.3.1
-pkgrel=7
+pkgver=6.12.1
+pkgrel=0
 pkgdesc="Kernel close to mainline with extra patches for Qualcomm MSM8996 devices"
 arch="aarch64"
 _carch="arm64"
@@ -14,7 +14,7 @@ options="!strip !check !tracedeps
 	pmb:cross-native
 	pmb:kconfigcheck-community
 "
-makedepends="bash bison findutils flex installkernel openssl-dev perl"
+makedepends="bash bison findutils flex installkernel openssl-dev perl python3"
 
 # Source
 _tag=v${pkgver//_/-}-msm8996
@@ -31,10 +31,8 @@ prepare() {
 
 build() {
 	unset LDFLAGS
-	# V=1: workaround for pma#1990
 	make ARCH="$_carch" CC="${CC:-gcc}" \
-		KBUILD_BUILD_VERSION=$((pkgrel + 1 )) \
-		V=1
+		KBUILD_BUILD_VERSION=$((pkgrel + 1 ))
 }
 
 package() {
@@ -51,6 +49,6 @@ package() {
 		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
 }
 sha512sums="
-3d842c6fa3e1f93875f9c8d4f51e66b267bbd6b0eabccc25b461cbc0616a632ee6f1f2001b77bef2aff6aa36a788277ab9fc930fcd6e71732e5cbffec2dcb269  linux-v6.3.1-msm8996.tar.gz
-f03ecc0a0656fc27ecaefd522567ea86ab934746069b5fc88ffea5be1e3f27ff79df3d063fd984a1159f9f4d5c5b99c396127ca75370a27a438190d175037905  config-postmarketos-qcom-msm8996.aarch64
+46511a1eb30b5d4ebb6f294f7c8215826dba9b93c793e306ac7f3301f42a17f49f270cf859fed7d07a510bd16e88c0e9e58c337a52861f07bc148d63f5491db8  linux-v6.12.1-msm8996.tar.gz
+96e279ae16a40f745e72b00c9b42058c0c179cdccfef6b53d9bcbc179c62885938e031a3d69c02c083346493a8d8210a791c3c53160d253ed144fcb93d8357ee  config-postmarketos-qcom-msm8996.aarch64
 "

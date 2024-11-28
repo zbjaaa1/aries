@@ -1,0 +1,44 @@
+# Forked from Alpine to add systemd!
+
+pkgname=pantheon-settings-daemon
+pkgver=8.1.0
+pkgrel=0
+pkgdesc="Pantheon settings daemon"
+url="https://github.com/elementary/settings-daemon"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="
+	gala
+	"
+makedepends="
+	gala-dev
+	libgee-dev
+	glib-dev
+	granite-dev
+	meson
+	mutter46-dev
+	vala
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/settings-daemon/archive/refs/tags/$pkgver.tar.gz
+	fwupd-2.0-compat.patch
+"
+builddir="$srcdir/settings-daemon-$pkgver"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums="
+21f1120cffbfa9f4c5c70401def6602daf924dfa6664bdb0a18af4c26330b5b47016f9f4753029307a64fbd44b4642383bde364129fc79931cf3b66db1265dcb  pantheon-settings-daemon-8.1.0.tar.gz
+62300fe5f05581d19e53875a2038862101c387689ee8973a67e7c2dfbf10c21cda19406563a00d65015acda882c87f068d4f96ca2142e7479dcb4ab1054645c5  fwupd-2.0-compat.patch
+"

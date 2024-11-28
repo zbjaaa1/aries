@@ -1,0 +1,42 @@
+# Forked from Alpine to add systemd!
+
+pkgname=wingpanel
+pkgver=8.0.1
+pkgrel=0
+pkgdesc="Pantheon top panel"
+url="https://github.com/elementary/wingpanel"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="
+	gala
+	"
+makedepends="
+	gala-dev
+	libgee-dev
+	glib-dev
+	granite-dev
+	meson
+	mutter46-dev
+	vala
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/wingpanel/archive/refs/tags/$pkgver.tar.gz"
+subpackages="$pkgname-dev"
+builddir="$srcdir/$pkgname-$pkgver"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums="
+c79408b2ebac0938ea03e7ef9753f51a106274bd3ccaddd567b3041ed8c81656853e0240e93ff73ab45ab98539817410215d49775fc5d1c1d93aba6155014bb2  wingpanel-8.0.1.tar.gz
+"

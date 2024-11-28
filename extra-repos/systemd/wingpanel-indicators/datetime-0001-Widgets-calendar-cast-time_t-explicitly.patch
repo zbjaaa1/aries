@@ -1,0 +1,30 @@
+From 8fd7e6390dec296a6832b5ede0b42b376ac769c0 Mon Sep 17 00:00:00 2001
+From: Caleb Connolly <caleb@postmarketos.org>
+Date: Thu, 28 Nov 2024 03:06:02 +0100
+Subject: [PATCH] Widgets: calendar: cast time_t explicitly
+
+Avoids "cannot convert from int64 to time_t" error
+---
+ src/Widgets/calendar/Util.vala | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/Widgets/calendar/Util.vala b/src/Widgets/calendar/Util.vala
+index 090912aca992..3be5de0cbc18 100644
+--- a/src/Widgets/calendar/Util.vala
++++ b/src/Widgets/calendar/Util.vala
+@@ -190,10 +190,10 @@ namespace Util {
+                 start_time = due_time;
+             }
+         }
+ 
+-        time_t start_unix = start_time.as_timet_with_zone (system_timezone);
+-        time_t end_unix = end_time.as_timet_with_zone (system_timezone);
++        time_t start_unix = (time_t)start_time.as_timet_with_zone (system_timezone);
++        time_t end_unix = (time_t)end_time.as_timet_with_zone (system_timezone);
+ 
+         /* If the selected date is inside the event */
+         if (start_unix < selected_date_unix && selected_date_unix_next < end_unix) {
+             return true;
+-- 
+2.47.0
+

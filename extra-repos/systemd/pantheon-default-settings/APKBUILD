@@ -1,0 +1,35 @@
+# Forked from Alpine to add systemd!
+
+pkgname=pantheon-default-settings
+pkgver=8.0.2
+pkgrel=0
+pkgdesc="Pantheon default settings"
+url="https://github.com/elementary/default-settings"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+# uses fat ln
+makedepends="
+	meson
+	coreutils
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/default-settings/archive/refs/tags/$pkgver.tar.gz"
+builddir="$srcdir/default-settings-$pkgver"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+	rm "${pkgdir}"/usr/share/cups/data/default-testpage.pdf
+}
+
+sha512sums="
+91b154a3449d547117a7898396da719cbe080319daf6b03f4dcadee7025de1dbbc8397acdc1088cdb8855bae9a98e8bf576a462fa71f0e6688c11800f3761293  pantheon-default-settings-8.0.2.tar.gz
+"

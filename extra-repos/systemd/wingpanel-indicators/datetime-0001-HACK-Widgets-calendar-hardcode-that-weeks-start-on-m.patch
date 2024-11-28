@@ -1,0 +1,30 @@
+From b01c6f0d6274eb9b0581f4c721ff8d25721b115d Mon Sep 17 00:00:00 2001
+From: Caleb Connolly <caleb@postmarketos.org>
+Date: Thu, 28 Nov 2024 03:20:22 +0100
+Subject: [PATCH] HACK: Widgets: calendar: hardcode that weeks start on monday
+
+NL_TIME_FIRST_WEEKDAY isn't available on musl.
+
+Signed-off-by: Caleb Connolly <caleb@postmarketos.org>
+---
+ src/Widgets/calendar/CalendarModel.vala | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/Widgets/calendar/CalendarModel.vala b/src/Widgets/calendar/CalendarModel.vala
+index 9301281a6a64..ce2e07136cb8 100644
+--- a/src/Widgets/calendar/CalendarModel.vala
++++ b/src/Widgets/calendar/CalendarModel.vala
+@@ -73,9 +73,9 @@ namespace DateTime.Widgets {
+             source_client = new HashTable<string, ECal.Client> (str_hash, str_equal);
+             source_components = new HashTable<E.Source, Gee.TreeMultiMap<string, ECal.Component> > (Util.source_hash_func, Util.source_equal_func);
+             source_view = new HashTable<string, ECal.ClientView> (str_hash, str_equal);
+ 
+-            int week_start = Posix.NLTime.FIRST_WEEKDAY.to_string ().data[0];
++            int week_start = 2;
+             if (week_start >= 1 && week_start <= 7) {
+                 week_starts_on = (GLib.DateWeekday) (week_start - 1);
+             }
+ 
+-- 
+2.47.0
+

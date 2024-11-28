@@ -1,0 +1,142 @@
+# Forked from Alpine to add systemd!
+
+pkgname=switchboard-plugs
+pkgver=8.0.0
+pkgrel=0
+pkgdesc="The Pantheon control center plugins"
+url="https://github.com/elementary/switchboard"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="switchboard"
+makedepends="
+	glib-dev
+	gtk4.0-dev
+	libadwaita-dev
+	libgee-dev
+	granite7-dev
+	switchboard-dev
+	meson
+	fwupd-dev
+	flatpak-dev
+	ibus-dev
+	accountsservice-dev
+	libnma-dev
+	polkit-dev
+	cups-dev
+	lightdm-dev
+	gnome-user-share
+	pulseaudio-dev
+	libcanberra-dev
+	gexiv2-dev
+	libpwquality-dev
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+# Missing packagekit-glib2
+# _plug_about=8.0.0
+_plug_applications=8.0.0
+_plug_bluetooth=8.0.0
+_plug_datetime=8.0.0
+_plug_pantheon_shell=8.1.0
+_plug_display=8.0.0
+_plug_keyboard=8.0.0
+_plug_locale=8.0.0
+_plug_mouse_touchpad=8.0.0
+_plug_network=8.0.0
+_plug_notifications=8.0.0
+# Missing camel-1.2 --  evolution-data-server ?
+# _plug_onlineaccounts=8.0.1
+# Missing libmalcontent
+#_plug_parental_controls=8.0.0
+_plug_power=8.0.0
+_plug_printers=8.0.0
+# Missing light-locker
+#_plug_security_privacy=8.0.0
+_plug_sharing=8.0.0
+_plug_sound=8.0.0
+_plug_useraccounts=8.0.0
+# eh
+#_plug_wacom=8.0.0
+
+_plugs="$(set | grep ^_plug_ | sed -E s/_plug_\(.+\)=\'\(.+\)\'/switchboard-plug-\\1:\\2/ | sed s/_/-/g)"
+
+plugsource() {
+	local name
+	local ver
+	local plug
+
+	for plug in $1; do
+		name="${plug%%:*}"
+		ver="${plug##$name:}"
+
+		echo "$name-$ver.tar.gz::https://github.com/elementary/${name}/archive/refs/tags/${ver}.tar.gz"
+	done
+}
+
+plugpkgs() {
+	local name
+	local plug
+
+	for plug in $1; do
+		name="${plug%%:*}"
+		echo "$name":_subpackage
+	done
+}
+
+source="$(plugsource "$_plugs")"
+subpackages="$(plugpkgs "$_plugs")"
+
+plug_builddir() {
+	local ver
+	local name
+	local name_var
+
+	name="${1%%:*}"
+	ver="${plug##$name:}"
+	if [ -z "$ver" ]; then
+		name_var="$(echo _plug_${name##switchboard-plug-} | sed s/-/_/g)"
+		ver="$(eval echo \$$name_var)"
+	fi
+
+	echo $srcdir/$name-$ver
+}
+
+build() {
+	for plug in $_plugs; do
+		cd $(plug_builddir $plug)
+		msg "Building $plug"
+		abuild-meson \
+			--prefix=/usr \
+			. output
+		meson compile -C output
+	done
+}
+
+_subpackage() {
+	install_if="switchboard-plugs"
+	cd $(plug_builddir $subpkgname)
+	DESTDIR="$subpkgdir" meson install --no-rebuild -C output
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+sha512sums="
+1e7fc544d292f722027f0d03e2c7001d4981af2f3570b5064b9f228f9dce1ff8676389a348dd3d32c6bf49dfed747fe2ba50f8ab17f10a91bda1e41a97fe10d7  switchboard-plug-applications-8.0.0.tar.gz
+b76004ece7df0f0f80e2a8529ed805a5554a797198639739f70b766ea8563d38f50291f24ac181b951c480fbc7cf18b2399b0d2f62a2b462bfa2a5d8176b6537  switchboard-plug-bluetooth-8.0.0.tar.gz
+51dd734a6e69fd71bfb39c1c5b1da27a4c77032dc1df9ff2e4c9202255ddeccc831da53d9d29acf3f576397dcb4b2c4a8e523fdcd51947f58ffc9219cfe93181  switchboard-plug-datetime-8.0.0.tar.gz
+001449291f97a52ec9fd8ce9f762f015ad8db791ca1cf52a218ca84a50eef4110b5539e5cf1f761c59a2bcbd7a21d5518bdd60beb00c99c2d54bb0af80377a50  switchboard-plug-display-8.0.0.tar.gz
+5be613ed9af370d6419b486917cf280101da6b1d3b55eef29e47311eb1c5dd739b974ab68664838d2fbba1a762ce185f5b025fe494853ada7fb409b98d8e81a9  switchboard-plug-keyboard-8.0.0.tar.gz
+97bde88c600f2153fe36f08e038fa69d229dba8b3e9a09cc017c008f97e156435dbd899f5044d974ff6499491e1448161ec91b1b7598b7cd998d7ac9aa397aac  switchboard-plug-locale-8.0.0.tar.gz
+51c495c8acd4a8da5920fc286ba73e414fd5b4acd96ce4ab2ad4b4d4c58d06d71029c049fdfddd404acae99afddda8b40570bdf0db3ce9b3d7b5cbc3a5978119  switchboard-plug-mouse-touchpad-8.0.0.tar.gz
+12a5abcfd4a8ab6e63f351e9c606e9c7c61c5b41ff34847026d6f5b910dbba869b2301b8800b0041610ac67cfc970521f3e3f5fe0b5ab2d4f4d1ece1c97194b4  switchboard-plug-network-8.0.0.tar.gz
+21ebdcfe2546e38c346cff1068b51bf540190ff8787fe31193744a424dff43a7724c5ec573d15af84c89ef35284dab5a53b39c9e1f04bddf2369d7880b124e5b  switchboard-plug-notifications-8.0.0.tar.gz
+d6717282a3a7b7e73ab13c00089f486c29e5e5ca6c0132f810f6888e7a293048f15811cc6be622ee3be9f02f0bc0687fbc1dfd64a8c82e710c49a33517e45288  switchboard-plug-pantheon-shell-8.1.0.tar.gz
+f0ccf33384b9a14f7b363020538e5be29b6b1fcea6f2a60a7764f499fe1e1f89eb90fbe82ef0ea5be8f55410de46f3e41ef055f82809e0df417bdf60686f9a33  switchboard-plug-power-8.0.0.tar.gz
+584db15a20d1c41359005b1d95da922259b4eaab33d152c045f3962ead6b24ad4b36ec2b14c658b44b22d4244a0b9c3d2401f11dd1446e94d336986381237fad  switchboard-plug-printers-8.0.0.tar.gz
+00fb204d636888705623e52c848c824a4221c9e1920a1657c36e618026114413b47cb0c286a37f30d7a999172c1b0eda23bd925278e48133010fb59993bd0a21  switchboard-plug-sharing-8.0.0.tar.gz
+4ce8ce43229eae7c50fae7a6212b5f0e48a36a8b4d9c8a96ff4874edd548f8131f3143fbebc513a8c265703cac854866e458d40eff4e3a6f8920137d8b7be804  switchboard-plug-sound-8.0.0.tar.gz
+4605e8be0db19bf1bf2a9ad561dc45e9c333a589965977cc0deb22f914260fbc6c9460980022c5da8ad3787562366c381bbf47d89e25bc5141a1d913a79a48d7  switchboard-plug-useraccounts-8.0.0.tar.gz
+"

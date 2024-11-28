@@ -1,0 +1,79 @@
+# Forked from Alpine to add systemd!
+
+pkgname=gala
+pkgver=8.0.3
+pkgrel=0
+pkgdesc="clutter-based window manager and compositor"
+url="https://github.com/elementary/gala"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="
+	cairo
+	dconf
+	graphene
+	gtk4.0
+	libcanberra
+	libgee
+	libhandy1
+	libxfixes
+	mutter46
+	sqlite
+	systemd-libs
+	wayland
+	"
+makedepends="
+	cairo-dev
+	desktop-file-utils
+	dbus-dev
+	glib-dev
+	gnome-desktop-dev
+	gnome-settings-daemon-dev
+	gobject-introspection-dev
+	graphene-dev
+	gtk+3.0-dev
+	gtk4.0-dev
+	json-glib-dev
+	lcms2-dev
+	libcanberra-dev
+	libei-dev
+	granite-dev
+	granite7-dev
+	libgee-dev
+	libgudev-dev
+	libhandy1-dev
+	libice-dev
+	libinput-dev
+	libsm-dev
+	libx11-dev
+	libxau-dev
+	libxcb-dev
+	libxfixes-dev
+	meson
+	mutter46-dev
+	cmake
+	wayland-dev
+	wayland-protocols
+	xwayland-dev
+	systemd-dev
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+subpackages="$pkgname-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/gala/archive/refs/tags/$pkgver.tar.gz"
+builddir="$srcdir/$pkgname-$pkgver"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums="
+0a3e5e073279041652f4d9114f7389f3aa190ee2150d12b818f726eaebf46acf53b15281c959f62ae212867075452642265b599a0f5506743e83c6eb43d0a362  gala-8.0.3.tar.gz
+"

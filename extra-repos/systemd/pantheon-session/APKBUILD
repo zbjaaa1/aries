@@ -1,0 +1,46 @@
+# Forked from Alpine to add systemd!
+
+pkgname=pantheon-session
+pkgver=8.0.1
+pkgrel=0
+pkgdesc="Pantheon settings daemon"
+url="https://github.com/elementary/session-settings"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="
+	gala
+	gnome-session
+	gnome-settings-daemon
+	pantheon-applications-menu
+	orca
+	plank
+	wingpanel
+	xdg-user-dirs-gtk
+	onboard
+	"
+makedepends="
+	onboard
+	meson
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/session-settings/archive/refs/tags/$pkgver.tar.gz"
+builddir="$srcdir/session-settings-$pkgver"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		-Dfallback-session=gnome \
+		-Dwayland=true \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums="
+119bb339b14fd52cbdc56ca001536dafa7ba814caa167b1bda7a803f0ccf4ca5db76acf22220852e44b0680b8f89ac3258663fa0ad9c59c39fd77fd5bbd93c1a  pantheon-session-8.0.1.tar.gz
+"

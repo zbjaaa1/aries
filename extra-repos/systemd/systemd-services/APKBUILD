@@ -34,6 +34,7 @@ subpackages="
 	kactivitymanagerd-systemd:_service
 	kded-systemd:_service
 	kglobalacceld-systemd:_service
+	lightdm-systemd:_service
 	lxc-systemd:_service
 	mmsd-tng-systemd:_service
 	modemmanager-systemd:_service
@@ -87,6 +88,7 @@ _iwd_sources="system/iwd.service" # From https://git.kernel.org/pub/scm/network/
 _kactivitymanagerd_sources="user/plasma-kactivitymanagerd.service"
 _kded_sources="user/kded.service" # From https://invent.kde.org/frameworks/kded/-/blob/master/src/plasma-kded6.service.in
 _kglobalacceld_sources="user/plasma-kglobalaccel.service"
+_lightdm_sources="system/lightdm.service"
 _lxc_sources="system/lxc@.service"
 _mmsd_tng_sources="user/mmsd-tng.service"
 _modemmanager_sources="system/ModemManager.service"
@@ -141,6 +143,7 @@ source="$(flatpath \
 	$_kactivitymanagerd_sources \
 	$_kded_sources \
 	$_kglobalacceld_sources \
+	$_lightdm_sources \
 	$_lxc_sources \
 	$_mmsd_tng_sources \
 	$_modemmanager_sources \

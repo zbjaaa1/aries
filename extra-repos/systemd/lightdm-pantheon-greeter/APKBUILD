@@ -1,0 +1,67 @@
+# Forked from Alpine to add systemd!
+
+pkgname=lightdm-pantheon-greeter
+pkgver=8.0.0
+pkgrel=0
+pkgdesc="The Pantheon control center"
+url="https://github.com/elementary/greeter"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="
+	cairo
+	dconf
+	graphene
+	gtk4.0
+	"
+makedepends="
+	accountsservice-dev
+	lightdm-dev
+	cairo-dev
+	desktop-file-utils
+	dbus-dev
+	glib-dev
+	gnome-desktop-dev
+	gnome-settings-daemon-dev
+	gobject-introspection-dev
+	graphene-dev
+	gtk+3.0-dev
+	gtk4.0-dev
+	json-glib-dev
+	lcms2-dev
+	libcanberra-dev
+	libei-dev
+	granite-dev
+	granite7-dev
+	libadwaita-dev
+	libgee-dev
+	libgudev-dev
+	sassc
+	libhandy1-dev
+	meson
+	wayland-dev
+	mutter46-dev
+	wayland-protocols
+	xwayland-dev
+	systemd-dev
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+source="$pkgname-$pkgver.tar.gz::https://github.com/elementary/greeter/archive/refs/tags/$pkgver.tar.gz"
+builddir="$srcdir/greeter-$pkgver"
+install_if="pantheon-session lightdm"
+
+build() {
+	abuild-meson \
+		--prefix=/usr \
+		. output
+	meson compile -C output
+}
+
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+}
+
+sha512sums="
+eb45fffb7da586948218184e2296c089d245add5674edbf594a9b90c858d97e106f992fe1d349b7367949207814de976a83a1c447d7f6d1a32d93ae4b4647bba  lightdm-pantheon-greeter-8.0.0.tar.gz
+"

@@ -1,0 +1,132 @@
+# Forked from Alpine to add systemd!
+
+pkgname=wingpanel-indicators
+pkgver=8.0.0
+pkgrel=0
+pkgdesc="Wingpanel indicators"
+url="https://github.com/elementary/wingpanel"
+arch="all !s390x" # no libei-dev for s390x
+license="GPL-2.0-or-later"
+depends="wingpanel"
+makedepends="
+	glib-dev
+	gtk4.0-dev
+	libadwaita-dev
+	libgee-dev
+	evolution-data-server-dev
+	granite7-dev
+	wingpanel-dev
+	meson
+	polkit-dev
+	gnome-user-share
+	pulseaudio-dev
+	libcanberra-dev
+	gexiv2-dev
+	libpwquality-dev
+	"
+# TODO: crossdirect disabled due to armv7 crosscompile failure on x86_64, see
+# https://gitlab.com/postmarketOS/pmaports/-/merge_requests/5115#note_1899890119
+options="!check !pmb:crossdirect" # Can't be run with release builds
+
+_indicator_a11y=1.0.2
+_indicator_bluetooth=8.0.0
+_indicator_datetime=2.4.2
+_indicator_keyboard=2.4.2
+_indicator_network=7.1.1
+_indicator_nightlight=2.1.3
+_indicator_notifications=7.1.1
+_indicator_power=8.0.0
+_indicator_session=2.3.1
+_indicator_sound=8.0.0
+
+_indicators="$(set | grep ^_indicator_ | sed -E s/_indicator_\(.+\)=\'\(.+\)\'/wingpanel-indicator-\\1:\\2/ | sed s/_/-/g)"
+
+prepare() {
+	:
+}
+
+indicatorsource() {
+	local name
+	local ver
+	local indicator
+
+	for indicator in $1; do
+		name="${indicator%%:*}"
+		ver="$(eval echo ${indicator##$name:})"
+
+		echo "$name-$ver.tar.gz::https://github.com/elementary/${name}/archive/refs/tags/${ver}.tar.gz"
+	done
+}
+
+indicatorpkgs() {
+	local name
+	local indicator
+
+	for indicator in $1; do
+		name="${indicator%%:*}"
+		echo "$name":_subpackage
+	done
+}
+
+source="$(indicatorsource "$_indicators")
+	datetime-0001-Widgets-calendar-cast-time_t-explicitly.patch
+"
+subpackages="$(indicatorpkgs "$_indicators")"
+
+indicator_builddir() {
+	local ver
+	local name
+	local name_var
+
+	name="${1%%:*}"
+	ver="$(eval echo ${indicator##$name:})"
+	if [ -z "$ver" ]; then
+		name_var="$(echo _indicator_${name##wingpanel-indicator-} | sed s/-/_/g)"
+		ver="$(eval echo \$$name_var)"
+	fi
+
+	echo $srcdir/$name-$ver
+}
+
+build() {
+	local name
+	local indicator
+	for indicator in $_indicators; do
+		name="${indicator%%:*}"
+		name="${name##wingpanel-indicator-}"
+		cd $(indicator_builddir $indicator)
+		msg "Building $name"
+		for _patch in $(find $srcdir/../ -type f -name "$name-*.patch"); do
+			msg "Applying patch $_patch"
+			patch -p1 < $_patch
+		done
+		abuild-meson \
+			--prefix=/usr \
+			. output
+		meson compile -C output
+	done
+}
+
+_subpackage() {
+	install_if="wingpanel-indicators"
+	cd $(indicator_builddir $subpkgname)
+	DESTDIR="$subpkgdir" meson install --no-rebuild -C output
+}
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+sha512sums="
+eea76c19720a81e8d0f6dac0d6fa88338d04d472c46396a7786a5473a1e3a85ccea4d9a25630be42f2e59f569bf0347541c28ee27ee2b6e36e5ac2035a19f00e  wingpanel-indicator-a11y-1.0.2.tar.gz
+e462e1e0717a81720757745f57fc10860e23a176a189ba49401355520b5de2bee03eca227f7221fbc6abf48449df3448773e5e750b9f58f8f66eb3ff39bbb3cc  wingpanel-indicator-bluetooth-8.0.0.tar.gz
+5852e0e41be485296c2d766cb5cbdfee8232ff0296c34961d899a75ce01c00110488f8440ccfbb731d46ee287b2557729bdf66ba2d905c049349bddacb08085f  wingpanel-indicator-datetime-2.4.2.tar.gz
+7d0a59805c34d1c64df6728925ce73a6d2006f35e520f9f94b48afd47ba1cab927ff6e281e8c84a23364edcb2aed7ed6908976244fbdb992ce8970c104ddb4c8  wingpanel-indicator-keyboard-2.4.2.tar.gz
+6d1911ae9282e221346a5d8352c336e6eb13814fbb5e4e7a4fc1d899120d5b8f0fac323061bd0e0ebcc4206c5e26fdc2fd937f6e5f3fd784c9ab07cf79c9412b  wingpanel-indicator-network-7.1.1.tar.gz
+58c25d696d799bfa330cb6b61b6a2b1d344c63a6291a7323b37d972f8ccfc29c2fb4b13876ec3d2bdf92abbb13d8938f1a0da33444ef575c997ae1ad755baa31  wingpanel-indicator-nightlight-2.1.3.tar.gz
+fcd4f39af730f86ae2840092946be80b24878c929f0866bf8eb8583b60518e2d1d3e7cd86f80e42fcefc791cee62e420852f32533ef55704abcf5f34a52b6319  wingpanel-indicator-notifications-7.1.1.tar.gz
+7f643b76ceff824a6c21d98baf67843ceec986c8583ffdb1170fd845915afcb9ea6f8ab801c07ee6aa521d917fe73bd6dd2901dfad6476ece2883a18fd133532  wingpanel-indicator-power-8.0.0.tar.gz
+999ca2189ae099150a036a5865b34b16cfa937dde802dffd0a240fdb9eab8741b8d86a03d0dbe85b22a855167540ae920ad9a4e44f3df8cef7ca83d3244e5683  wingpanel-indicator-session-2.3.1.tar.gz
+1e29fe199f9725d7eb7270bfcb98ecc0497d61f1f9dd9f8997b330ad6ec22d3e4a7b6e412537d577c72cf1604b617d57f9306ee441c421d18cd9d9a0d494e5e7  wingpanel-indicator-sound-8.0.0.tar.gz
+6a09e4f08cd0c77478cf6239e9e2109eaf72cc59663c23115a2bd46475c2cfdb427a72ebedfe03071a837ebf524dd48f1b95f1bfb28e018e84cdb00ad0cf1f0a  datetime-0001-Widgets-calendar-cast-time_t-explicitly.patch
+"

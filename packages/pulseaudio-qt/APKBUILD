@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=pulseaudio-qt
-pkgver=9999_git20241114
+pkgver=9999_git20241129
 pkgrel=0
-_commit="4156e5519a49298c65072bfdf3bb630e250ff017"
+_commit="adcd5f85311878bd872114a3040f0c013c036f6d"
 arch="all !armhf" # armhf blocked by qt6-qtdeclarative
 url="https://invent.kde.org/libraries/pulseaudio-qt"
 pkgdesc="Pulseaudio bindings for Qt"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/pulseaudio-qt.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-11-29/pulseaudio-qt-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/pulseaudio-qt-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-4f60700b7d70d874a72fecb1c3cd1e4b28e2a03a1098a49925bf65dbd793e079dee8bd874f7d41b426ada6b9931eb4231e87afb8444fa7b5fb72f5eeb492d569  pulseaudio-qt-4156e5519a49298c65072bfdf3bb630e250ff017.tar.xz
+c52e043274af4bf9f7b49b06fdfd321dd2b58aa501040bdbfd77a6667808c7183a691bcb05a6bac017268fab1236e2546bdcdb6e0433c863c9e87e527c9760c8  pulseaudio-qt-adcd5f85311878bd872114a3040f0c013c036f6d.tar.xz
 "

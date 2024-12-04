@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=phonon-backend-vlc
-pkgver=9999_git20240907
+pkgver=9999_git20241202
 pkgrel=0
-_commit="3cfd7d55fb095d0a2388c9369a3c06fec1c6cfc6"
+_commit="deb298e9286d7f17a3e8ed85398b0fabd17ab639"
 pkgdesc="Phonon VLC backend"
 url="https://userbase.kde.org/Phonon"
 # armhf blocked by extra-cmake-modules
@@ -25,7 +25,7 @@ makedepends="
 	"
 subpackages="$pkgname-qt5 $pkgname-qt6"
 _repo_url="https://invent.kde.org/libraries/phonon-vlc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/phonon-vlc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/phonon-vlc-$_commit.tar.xz"
 options="!check" # No tests available
 
 options="!check"
@@ -56,5 +56,5 @@ qt6() {
 }
 
 sha512sums="
-5e962a2dad53257104f6d2eeda77d9617cf7380db5ff58641c460d970c5fa3bafa28b5c162af2f4dbcb61c67c0c8449c33a8aac3fd3f0a5872e5e0fbb01425a2  phonon-vlc-3cfd7d55fb095d0a2388c9369a3c06fec1c6cfc6.tar.xz
+339299219cd89687c8d9ca98e31fa02caa1959cb4b6b12f20c9e7a32a794a5182e0881865329621877cf6cd0647cc2df6684060559391a06e5900eb004304330  phonon-vlc-deb298e9286d7f17a3e8ed85398b0fabd17ab639.tar.xz
 "

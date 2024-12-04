@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kmousetool
-pkgver=9999_git20241108
+pkgver=9999_git20241203
 pkgrel=0
-_commit="fb4085c416ec55499a5aa1a1a8e3a2c2ae06a5c7"
+_commit="4d0794b8f048a46afa5763dc6e02dee16c21c8ac"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/utilities/org.kde.kmousetool"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/accessibility/kmousetool.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/kmousetool-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/kmousetool-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-9b0f4833a8c345288b56953ae9bf843e8d0f224bd8e6a89e20e3d5189cf233d0693e4ae408aff6ff1761dc0993a3a7b3f88620cf8cb4ce386695a9385fa26dcb  kmousetool-fb4085c416ec55499a5aa1a1a8e3a2c2ae06a5c7.tar.xz
+1c749c20b5e22328ff209e3c87a13b38eb449a8e0882d999b6b25f97dceca095a3bd5096a1b1c54ecc0977706948a141f450464af9ebd4f871ed583580640846  kmousetool-4d0794b8f048a46afa5763dc6e02dee16c21c8ac.tar.xz
 "

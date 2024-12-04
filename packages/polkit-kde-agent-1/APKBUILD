@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=polkit-kde-agent-1
-pkgver=9999_git20241027
+pkgver=9999_git20241202
 pkgrel=0
-_commit="86c65ea538a5618b97f0f4cca4291c2fc3c2c4e7"
+_commit="b7528a0a9485fb8a46152886f1585f803278b7f4"
 pkgdesc="Daemon providing a polkit authentication UI for KDE"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -32,7 +32,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/polkit-kde-agent-1.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/polkit-kde-agent-1-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/polkit-kde-agent-1-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-dd88dbf4d50c0df9dd98ff7f6263840ee5fc09ac6a4d44c5cb9b3686938e04220d51d7c485c64095dd975cef6bada8fa820c0239604cf15f60527f8254b89486  polkit-kde-agent-1-86c65ea538a5618b97f0f4cca4291c2fc3c2c4e7.tar.xz
+fe864da8835e97219683f5aa36223620f8c8fb530c08cbd8b9d1741f2a44690c3bab9f3d2ffa225147ac5e973f19618d0be3dbb5f347cf84605f27f5329ecf88  polkit-kde-agent-1-b7528a0a9485fb8a46152886f1585f803278b7f4.tar.xz
 "

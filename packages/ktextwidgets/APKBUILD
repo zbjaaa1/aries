@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=ktextwidgets
-pkgver=9999_git20241120
+pkgver=9999_git20241202
 pkgrel=0
-_commit="a0f63508c1e50f83819feb877add641adfc377b7"
+_commit="7ddbaf3b5a15279ce7a7940e7478f0573e0d7c4b"
 pkgdesc="Advanced text editing widgets"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/ktextwidgets.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/ktextwidgets-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/ktextwidgets-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-1675717304d0fe4dfeedecfb732a23248e62be2735c4b4b1e977f2d17b06d1f7e886315ab0a915b911f65aef4281ee6aefdb14dc1f1fd6c4c6fe9db86e926cd3  ktextwidgets-a0f63508c1e50f83819feb877add641adfc377b7.tar.xz
+f0ceea96e299191c00217fd71c7d2ef04f57393866a9ec1ad648b40cb44805eca4f7f7307a18d0730a2f884e0a02f576b3336f8eb5e7c8cf208d766379d867b7  ktextwidgets-7ddbaf3b5a15279ce7a7940e7478f0573e0d7c4b.tar.xz
 "

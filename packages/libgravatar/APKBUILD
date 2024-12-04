@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=libgravatar
-pkgver=9999_git20241129
+pkgver=9999_git20241202
 pkgrel=0
-_commit="cf86c52acb7089d3075b5139d7b2673f7a79c6cc"
+_commit="e05b5096933fca71ebe08df37083797f020ea3a6"
 pkgdesc="KDE PIM library providing Gravatar support"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> pimcommon
@@ -28,7 +28,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/libgravatar.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/libgravatar-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/libgravatar-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="net" # net required for tests
 
@@ -51,5 +51,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-dd41f6d88bef7771e74e18df39744cc3ea53257ed80e663211ca1b568e08347fbc38efc0631b9c2726f5936fe509db78c6dee60185a1981fc3c6691c389e81e1  libgravatar-cf86c52acb7089d3075b5139d7b2673f7a79c6cc.tar.xz
+06c5f43e5f54cfabb6350c8ea325e9c50d300e543f9bdd63299c609361a89ad09a301e818290606622b7fbbbdcf949033d0e38f16b4664aa0d824f238daa8fc2  libgravatar-e05b5096933fca71ebe08df37083797f020ea3a6.tar.xz
 "

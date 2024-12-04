@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kio-admin
-pkgver=9999_git20241108
+pkgver=9999_git20241203
 pkgrel=0
-_commit="469abea63842f89e730e4e2ba4a1a26b5dc99124"
+_commit="f833d2e9a831abaa451b0b042d826335376c735a"
 pkgdesc="Manage files as administrator using the admin:// KIO protocol"
 url="https://invent.kde.org/system/kio-admin"
 # armhf blocked by extra-cmake-modules
@@ -23,7 +23,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/system/kio-admin.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/kio-admin-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/kio-admin-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/kio-admin-$_commit"
@@ -45,5 +45,5 @@ package() {
 }
 
 sha512sums="
-f20f922ab345aa2f24e6b404c219dc840399271ff3be0ced8c26c7fc241b5bf45c6836e4b9ef6f352a0bcae29d78dd02f3687782698e418d25f93310401cbfa4  kio-admin-469abea63842f89e730e4e2ba4a1a26b5dc99124.tar.xz
+46f8917dc5cc1b61697b01ca05ff5499764b9b3af0c77428a9e3fa7f0a97aede2e84744fb8c98d04499ba20ce217cff2d36a079ec41e64c32c7b7ebe09f09b3a  kio-admin-f833d2e9a831abaa451b0b042d826335376c735a.tar.xz
 "

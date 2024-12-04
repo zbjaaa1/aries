@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kweather
-pkgver=9999_git20241118
+pkgver=9999_git20241203
 pkgrel=0
-_commit="e4ae0f39d9e74792d11da69d5e44426e6a23f9c7"
+_commit="ebd509e0572148f5bf9abee55b7fd44db30f6b4b"
 pkgdesc="Weather application for Plasma Mobile"
 url="https://invent.kde.org/plasma-mobile/kweather"
 # armhf blocked by qt6-qtdeclarative
@@ -36,7 +36,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/utilities/kweather.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/kweather-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/kweather-$_commit.tar.xz"
 options="!check" # No tests
 
 options="!check"
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-b1e930bf57a01fb1854bcfce0b8d3d8020e776d0c5f67ab178d3a464586dcde8a90b98266e50c18a2ce99748d8fa8b2f9cca9fe4a93a8c813d6d4384a6ebb2d3  kweather-e4ae0f39d9e74792d11da69d5e44426e6a23f9c7.tar.xz
+52fad5ed30b852291833133d1eb9292dc1db2f80883b810bba9aab1d85d08de4c6c081e01771bba8bbc3fe740974e48dd7d0b2f9914c57a83bf48c856ed32d1d  kweather-ebd509e0572148f5bf9abee55b7fd44db30f6b4b.tar.xz
 "

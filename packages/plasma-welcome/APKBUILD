@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-welcome
-pkgver=9999_git20241201
+pkgver=9999_git20241202
 pkgrel=0
-_commit="52962c1b44244f02932a4ebffe1aa5c53a11a8fd"
+_commit="0eaa7da79dd03b09167fe97662337b6a05051a61"
 pkgdesc="A friendly onboarding wizard for Plasma"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> kaccounts-integration
@@ -43,7 +43,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-welcome.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-01/plasma-welcome-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-04/plasma-welcome-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -66,5 +66,5 @@ package() {
 }
 
 sha512sums="
-2bb4d4fe230291e8acd4eccd0d28f304703f45788c6de2f14770f9b90f4984cb007bc070fd0e48fdf1c096eec5426c2b7a948b88cbadce1c557d40a8f9bd7508  plasma-welcome-52962c1b44244f02932a4ebffe1aa5c53a11a8fd.tar.xz
+a8b7d0303f7a496c2b159e0e363458d9b287876b6a172c4c3b4e54a1663bf9e98d0125f4e7fd45e376f544784955cedccff86c33e2aad6e041e8de06ca14051f  plasma-welcome-0eaa7da79dd03b09167fe97662337b6a05051a61.tar.xz
 "

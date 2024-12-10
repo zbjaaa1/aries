@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=attica
-pkgver=9999_git20241114
+pkgver=9999_git20241206
 pkgrel=0
-_commit="c1980d615a99dce67c8e8e5747ec98ad011ed1d9"
+_commit="698590dbe374cb793e812f333f452b0e3d82dd15"
 pkgdesc="Freedesktop OCS binding for Qt"
 url="https://www.kde.org/"
 arch="all !armhf" # Blocked by extra-cmake-modules
@@ -20,7 +20,7 @@ makedepends="
 	"
 subpackages="$pkgname-dev $pkgname-doc"
 _repo_url="https://invent.kde.org/frameworks/attica.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-05/attica-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/attica-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/attica-$_commit"
@@ -44,5 +44,5 @@ package() {
 }
 
 sha512sums="
-02c2e5615c2becf008be852f2e99530c8ac2806ba2c5a6a1ea73f1f288049b395c8b5abec8a8520a69e85f56fd84bdab809f5ab455a638093b204d75c5cf6125  attica-c1980d615a99dce67c8e8e5747ec98ad011ed1d9.tar.xz
+94d0638dbfb78eb9dd6ddf8fbd3f5cccfd89ef8cd0555f316a970b7baaf40fdb73f298d6b2bcb43e18bc326d973be581127199b3001f0e4c6e82467a3294df36  attica-698590dbe374cb793e812f333f452b0e3d82dd15.tar.xz
 "

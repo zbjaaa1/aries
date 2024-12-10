@@ -1,12 +1,10 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-workspace
-pkgver=9999_git20241204
+pkgver=9999_git20241207
 pkgrel=0
-_commit="1d0735ac66df0d0578a1788366ba446e7680dc6e"
+_commit="4d71f3bc60fcabf343e7448bc220e14a933d3946"
 pkgdesc="KDE Plasma Workspace"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -105,9 +103,16 @@ case "$pkgver" in
 	*.90*) _rel=unstable;;
 	*) _rel=stable;;
 esac
-subpackages="$pkgname-dbg $pkgname-dev $pkgname-libs $pkgname-doc $pkgname-lang $pkgname-zsh-completion"
+subpackages="
+	$pkgname-dbg
+	$pkgname-dev
+	$pkgname-libs
+	$pkgname-doc
+	$pkgname-lang
+	$pkgname-zsh-completion
+	"
 _repo_url="https://invent.kde.org/plasma/plasma-workspace.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-05/plasma-workspace-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/plasma-workspace-$_commit.tar.xz"
 
 replaces="plasma5support"
 
@@ -117,11 +122,12 @@ builddir="$srcdir/plasma-workspace-$_commit"
 build() {
 	# reduce size of debug syms
 	CFLAGS="$CFLAGS -O2 -g1" CXXFLAGS="$CXXFLAGS -O2 -g1" \
-	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+	cmake -B build -G Ninja \
 		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \
-		-DPLASMA_WAYLAND_DEFAULT_SESSION=TRUE
+		-DPLASMA_X11_DEFAULT_SESSION=OFF \
+		-DINSTALL_SDDM_WAYLAND_SESSION=ON
 	cmake --build build
 }
 
@@ -130,9 +136,8 @@ check() {
 	# testdesktop, lookandfeel-kcmTest, test_kio_fonts, servicerunnertest systemtraymodeltest are broken
 	# tst_triangleFilter requires plasma-workspace to be installed
 	# locationsrunnertest requires a running Wayland environment
-	local skipped_tests="("
+	local skipped_tests="(nightcolortest"
 	local tests="
-		nightcolortest
 		testdesktop
 		lookandfeel-kcmTest
 		test_kio_fonts
@@ -148,7 +153,7 @@ check() {
 		skipped_tests="$skipped_tests|$test"
 	done
 	skipped_tests="$skipped_tests)"
-	xvfb-run ctest --test-dir build --output-on-failure -E "$skipped_tests"
+	xvfb-run ctest --test-dir build -E "$skipped_tests"
 }
 
 package() {
@@ -156,8 +161,17 @@ package() {
 
 	# We don't ship systemd
 	rm -r "$pkgdir"/usr/lib/systemd
+
+	if [ -d "$pkgdir"/home ]; then
+		rm -r "${pkgdir:?}"/home
+	fi
+
+	# Remove X11 support
+	rm \
+		"$pkgdir"/usr/bin/startplasma-x11 \
+		"$pkgdir"/usr/share/xsessions/plasmax11.desktop
 }
 
 sha512sums="
-fbf4b212316a324f2af6d78b8d6a5c995deb452c9beae1d994a445b65ebe41c6cf4b03deb1c3adcae1a3d4b412d73b7b5844b5832f372de7935d30109eed1a89  plasma-workspace-1d0735ac66df0d0578a1788366ba446e7680dc6e.tar.xz
+ee396f85e88fe6a5be0daf7daa174ef093d04ade13a69ce174e9191f3203eeacef37a5bf4cb9ae70848c72711bb3a79802754945c848f6a3068ed085ce24d71e  plasma-workspace-4d71f3bc60fcabf343e7448bc220e14a933d3946.tar.xz
 "

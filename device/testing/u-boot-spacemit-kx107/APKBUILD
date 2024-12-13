@@ -33,11 +33,12 @@ build() {
 	make O="$BUILD_DIR" HOSTCC=gcc ARCH=riscv all
 }
 
-#package() {
+package() {
+echo "packaging... test"
 #	install -D -m644 build/u-boot-sunxi-with-spl.bin \
 #		"$pkgdir"/usr/share/u-boot/mangopi_mq_pro/u-boot-sunxi-with-spl.bin
 #	install -D -m755 "$srcdir"/update-u-boot "$pkgdir"/usr/sbin/update-u-boot
-#}
+}
 
 
 

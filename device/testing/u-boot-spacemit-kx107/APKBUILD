@@ -10,9 +10,12 @@ license="GPL-2.0-or-later OFL-1.1 BSD-2-Clause BSD-3-Clause eCos-2.0 IBM-pibs
 makedepends="$depends_dev py3-setuptools bc dtc python3-dev swig bison flex openssl-dev opensbi"
 options="!check"
 source="
-	u-boot.tar.gz::https://forge.giftedmc.com/haui/u-boot/archive/bl-v1.0.y.tar.gz
-	"
-builddir="$srcdir"/u-boot
+	spacemit-u-boot-2022.10-k1.zip::https://github.com/orangecms/spacemit-u-boot/archive/refs/heads/v2022.10-k1.zip
+"
+	# u-boot.tar.gz::https://forge.giftedmc.com/haui/u-boot/archive/bl-v1.0.y.tar.gz
+
+# builddir="$srcdir"/u-boot
+builddir="$srcdir"/spacemit-u-boot-2022.10-k1
 build() {
 	ls -al
 	touch include/config.h
@@ -31,5 +34,5 @@ echo "packaging... test"
 }
 
 sha512sums="
-254f9c283a35779f8550535e3ed837dce311d887ff40104805a61bbe3f8047314cada45d0b5fac775dab2a60f2a1f6235d08a8a8a7de21ad4575d28886426672  u-boot.tar.gz
+eeb542a823f2f7e5fed95eab01ed3d3d3085fe68dbad6aee7856588590b4c9849dc134c79d599da0d1fd57ae6482925361ffb7590993a8adb3789eaec7a97591  spacemit-u-boot-2022.10-k1.zip
 "

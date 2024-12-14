@@ -28,14 +28,9 @@ makedepends="
 _repository="bianbu-linux-6.6"
 _commit="feed9b0bdccbc7c0d5aed7f80d56ca75fa6148d3"
 _config="config-$_flavor.$arch"
-#_config="k1_defconfig"
 source="
 	$pkgname-$_commit.tar.gz::https://forge.giftedmc.com/haui/$_repository/archive/$_commit.tar.gz
 	$_config"
-#	gcc7-give-up-on-ilog2-const-optimizations.patch
-#	gcc8-fix-put-user.patch
-#	gcc10-extern_YYLOC_global_declaration.patch
-#	kernel-use-the-gnu89-standard-explicitly.patch"
 
 builddir="$srcdir/$_repository"
 _outdir="out"
@@ -82,8 +77,6 @@ package() {
 	install -D "$builddir"/include/config/kernel.release \
 		"$pkgdir"/usr/share/kernel/$_flavor/kernel.release
 
-#	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
-#		"$_flavor" "$_outdir"
 }
 
 sha512sums="

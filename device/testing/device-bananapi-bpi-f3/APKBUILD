@@ -1,0 +1,29 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-bananapi-bpi-f3
+pkgdesc="Banana Pi F3"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="riscv64"
+options="!check !archcheck"
+depends="
+	linux-bananapi-bpi-f3
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="
+	deviceinfo
+"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+c249a282552bc3cb2d103ca946b7cb1d812ae29e6f986a7663e9da2925c739e85df43cd7d562094e68e74f0870184867962403275b1d84dea3f2960b2670f2a5  deviceinfo
+"

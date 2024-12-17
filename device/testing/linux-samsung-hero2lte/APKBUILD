@@ -3,7 +3,7 @@
 
 pkgname=linux-samsung-hero2lte
 pkgver=3.18.140
-pkgrel=3
+pkgrel=4
 pkgdesc="Samsung Galaxy S7 edge kernel fork"
 arch="aarch64"
 _carch="arm64"
@@ -21,6 +21,7 @@ source="
 	$_config
 	01-kstrtobool_from_user.patch
 	02-fix-wifi-firmware-path.patch
+	linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
 "
 builddir="$srcdir/$_repository-$_commit"
 
@@ -55,4 +56,5 @@ e7337d87dbc067a0a9cfe8fab8aac41408e5d54b8b138ca01309f5b9a65477ff8faaa995ee1957b6
 45186d9244237eb582c049a126bcd0dce7a245008f2476f02c187f304d64ae22875100d2b2a3bbcfe0719b281d4a6449af5a6128288813412e5209a93b2940e8  config-samsung-hero2lte.aarch64
 7b0687165fa854c9c60944487cc7ea87758af8612f10125c22643743284d9abcc17c6a40853d05da2e27313a4e830c995a876b306f1488a2fcb72c3cbed3a8ae  01-kstrtobool_from_user.patch
 ffef99094b44893d07aedf3bbf12b03f2c26fb93be4eb179ade9552ae82be6680daca06b6fc0f95064ef08fd94ef4a0b192a94f5065314a4608de8b8c413d86e  02-fix-wifi-firmware-path.patch
+75545ccd0082a119b9ad95fcef3523c939a5c946f8f3a5c3dde15cee1502f6c1011050a0ad5359426f018bb7ceea1c97a28c7665941bc89f365c8d11065ce0f6  linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
 "

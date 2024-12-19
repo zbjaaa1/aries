@@ -1,0 +1,60 @@
+# Reference: <https://postmarketos.org/devicepkg>
+# Maintainer: Newbyte <newbyte@postmarketos.org>
+# Co-Maintainer: Ferass El Hafidi <funderscore@postmarketos.org>
+pkgname=device-librecomputer-cottonwood
+pkgdesc="Libre Computer Cottonwood"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	postmarketos-base
+	soc-amlogic-s905
+"
+makedepends="devicepkg-dev"
+source="
+	deviceinfo
+	modules-initfs
+"
+subpackages="
+	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-kernel-alta:kernel_alta
+	$pkgname-kernel-solitude:kernel_solitude
+"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+kernel_alta() {
+	pkgdesc="Kernel for Libre Computer AML-A311D-CC"
+	depends="linux-postmarketos-amlogic"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+kernel_solitude() {
+	pkgdesc="Kernel for Libre Computer AML-S905D3-CC"
+	depends="linux-postmarketos-amlogic"
+	provides="device-librecomputer-solitude>=$pkgver-r$pkgrel"
+	provider_priority=100
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+nonfree_firmware() {
+	pkgdesc="vdec firmware"
+	depends="linux-firmware-meson"
+	provides="device-librecomputer-solitude-nonfree-firmware>=$pkgver-r$pkgrel"
+	provider_priority=100
+	mkdir "$subpkgdir"
+}
+
+sha512sums="
+0bab2d0b469de7cca656aefcbd1023ca456ec8a8285370625c50af37af95fa53fc3b565c6ccd75639e5503d87b60d360a69d89d8a01f3c0f6b5bc3cabb9a12d9  deviceinfo
+52948c2884a6f6384e12b7a598f70878526d0d3293c214425170145231144ec7de805c038641741a4a5d75b50e554f6a3fa3769784a674217ed032f9b6a233c8  modules-initfs
+"

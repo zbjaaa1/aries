@@ -1,9 +1,9 @@
 # Forked from Alpine to rebuild with systemd support
 
-pkgname=polkit
-pkgver=999124
-_pkgver=124
-pkgrel=2
+pkgname=polkit-pmos
+_pkgname=polkit
+pkgver=124
+pkgrel=0
 pkgdesc="Application development toolkit for controlling system-wide privileges"
 url="https://www.freedesktop.org/wiki/Software/polkit/"
 arch="all"
@@ -31,22 +31,16 @@ subpackages="
 	$pkgname-lang
 	$pkgname-systemd
 	"
-source="https://gitlab.freedesktop.org/polkit/polkit/-/archive/$_pkgver/polkit-$_pkgver.tar.bz2
+source="https://gitlab.freedesktop.org/polkit/polkit/-/archive/$pkgver/polkit-$pkgver.tar.bz2
 	alpine-polkit.pam
 	"
-builddir="$srcdir/polkit-$_pkgver"
+builddir="$srcdir/polkit-$pkgver"
 # Not running 'systemctl preset' on polkit
 # Reasoning from fedora:
 #  # The implied (systemctl preset) will fail and complain, but the macro hides
 #  # and ignores the fact.  This is in fact what we want, polkit.service does not
 #  # have an [Install] section and it is always started on demand.
 # https://src.fedoraproject.org/rpms/polkit/blob/rawhide/f/polkit.spec
-
-# secfixes:
-#   0.120-r2:
-#     - CVE-2021-4034
-#   0.119-r0:
-#     - CVE-2021-3560
 
 build() {
 	msg 'Building with systemd'
@@ -72,7 +66,15 @@ check() {
 
 package() {
 	depends="$pkgname-libs=$pkgver-r$pkgrel"
-	provides="$pkgname-elogind=$pkgver-r$pkgrel"
+	provides="
+		polkit-elogind=$pkgver
+		polkit-common=$pkgver
+		polkit=$pkgver
+		"
+	provider_priority=9999
+	# replaces for rename from systemd/polkit
+	replaces="polkit"
+	replaces_priority=9999
 
 	DESTDIR="$pkgdir" meson install --no-rebuild -C systemd
 
@@ -89,17 +91,59 @@ package() {
 }
 
 libs() {
-	provides="polkit-elogind-libs polkit-noelogind-libs"
+	provides="
+		polkit-elogind-libs=$pkgver
+		polkit-noelogind-libs=$pkgver
+		polkit-libs=$pkgver
+		"
 	provider_priority=9999
+	depends=""
+	# replaces for rename from systemd/polkit
+	replaces="polkit-libs"
+	replaces_priority=9999
 
 	default_libs
 }
 
 dev() {
-	provides="polkit-elogind-dev polkit-noelogind-dev"
+	provides="
+		polkit-elogind-dev=$pkgver
+		polkit-noelogind-dev=$pkgver
+		polkit-dev=$pkgver
+		"
 	provider_priority=9999
 
 	default_dev
+
+	# XXX: We have to disable tracedeps to avoid abuild adding both
+	# polkit-libs and polkit-elogind-libs to depends - they are autodetected
+	# via symlinks in /usr/lib.
+	options="!tracedeps"
+	# XXX: Since we disabled tracedeps, all depends and provides must be
+	# specified. This sucks, but I don't know of a better solution (@jirutka).
+	depends="$depends_dev
+		$pkgname-libs=$pkgver-r$pkgrel
+		dbus-glib-dev
+		pc:gio-2.0>=2.18
+		pc:glib-2.0>=2.18
+		pkgconfig
+		"
+	provides="$provides
+		pc:polkit-agent-1=$pkgver
+		pc:polkit-gobject-1=$pkgver
+		"
+}
+
+doc() {
+	provides="polkit-doc=$pkgver"
+
+	default_doc
+}
+
+lang() {
+	provides="polkit-lang=$pkgver"
+
+	default_lang
 }
 
 sha512sums="

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=futuresql
-pkgver=9999_git20240603
+pkgver=9999_git20241216
 pkgrel=0
-_commit="e054cfa60c1ad0672600b7d5f160b61c479db579"
+_commit="5d3053bf36873f9f93a7567aec428ff4f6756869"
 pkgdesc="Non-blocking Qt database framework"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -23,7 +23,7 @@ makedepends="
 	"
 subpackages="$pkgname-dev"
 _repo_url="https://invent.kde.org/libraries/futuresql.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/futuresql-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/futuresql-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/futuresql-$_commit"
@@ -46,5 +46,5 @@ package() {
 }
 
 sha512sums="
-1fa2419c8a4188b24475f8307874cf7b671b8d84890b01bd043472dd8c9da23d6f51f24bf0263ebf483cec321852a853b2899e92ed7e65bf696b4f7888f4e7d5  futuresql-e054cfa60c1ad0672600b7d5f160b61c479db579.tar.xz
+92a10510d1c7966883521bdb8ed019cae26461ec6c91436a426f60b1b96addb4862a7ae1547cdc94bd594f4dc5e79cf5d02c0d56f3df2328452ca42d3f7a7fd6  futuresql-5d3053bf36873f9f93a7567aec428ff4f6756869.tar.xz
 "

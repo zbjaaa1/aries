@@ -1,13 +1,11 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kmail-account-wizard
-pkgver=9999_git20241206
+pkgver=9999_git20241221
 pkgrel=0
-_commit="ecb60fc8ada6cce68feceba1ba93d660739a2ac2"
-# armhf blocked by extra-cmake-modules
+_commit="58d566b28236445b393212e17d3f4bd80dbc9179"
+# armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> kmailtransport
 arch="all !armhf !ppc64le !s390x !riscv64"
 url="https://kontact.kde.org/"
@@ -31,7 +29,6 @@ makedepends="
 	knewstuff-dev
 	knotifications-dev
 	knotifyconfig-dev
-
 	kservice-dev
 	ktexteditor-dev
 	kwallet-dev
@@ -39,18 +36,20 @@ makedepends="
 	libkleo-dev
 	pimcommon-dev
 	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	samurai
 	shared-mime-info
 	"
 _repo_url="https://invent.kde.org/pim/kmail-account-wizard.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/kmail-account-wizard-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kmail-account-wizard-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
 builddir="$srcdir/kmail-account-wizard-$_commit"
 
 build() {
-	cmake -B build -DBUILD_WITH_QT6=ON -G Ninja \
+	cmake -B build -G Ninja \
 		-DCMAKE_BUILD_TYPE=RelWithDebInfo \
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib
@@ -58,7 +57,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -66,5 +65,5 @@ package() {
 }
 
 sha512sums="
-49a11665632015b0ba1b1c24c64b26d642585f050a496268ba64ab1fc3f4c264c65a3c883efa3af75d3ba423fcdd96f99c99a631717c3195f32721fec4d7913b  kmail-account-wizard-ecb60fc8ada6cce68feceba1ba93d660739a2ac2.tar.xz
+37c061b5a454c3d0d7e784f4ccd10359ad46ccd6034fae53d51101daebf0d7fbbb13fb4f9287d0d1547189ea93f76dc6480599005f174c318438c5ebc6bdb660  kmail-account-wizard-58d566b28236445b393212e17d3f4bd80dbc9179.tar.xz
 "

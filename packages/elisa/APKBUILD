@@ -1,13 +1,11 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=elisa
-pkgver=9999_git20241205
+pkgver=9999_git20241221
 pkgrel=0
-_commit="513687099496a7e537ba9e625fdcb4357bad6adb"
-# armhf blocked by extra-cmake-modules
+_commit="6cd6e03367c619010d01b652693d1343ea1038ee"
+# armhf blocked by qt6-qtdeclarative
 # s390x blocked by vlc
 arch="all !armhf !s390x"
 url="https://kde.org/applications/multimedia/org.kde.elisa"
@@ -39,6 +37,7 @@ makedepends="
 	qqc2-desktop-style-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtmultimedia-dev
 	qt6-qtsvg-dev
 	samurai
@@ -49,7 +48,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/multimedia/elisa.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/elisa-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/elisa-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -75,5 +74,5 @@ package() {
 }
 
 sha512sums="
-98bf3edee691fa5185625cd6e994dc142d370f4132a90e6e367b78d18b8158ac1e8a8791c751a0d988306995dafb3cc83ebae988d3051ae4a7b838f8781fc996  elisa-513687099496a7e537ba9e625fdcb4357bad6adb.tar.xz
+22b4cc05380878ec62eb224b8954d967cb5792c27b9ddfb6b285fb04f6ddd1668e18059400785d676a0c93c5a101b006adf3e5615598a8cb8f3828dc262e7ff6  elisa-6cd6e03367c619010d01b652693d1343ea1038ee.tar.xz
 "

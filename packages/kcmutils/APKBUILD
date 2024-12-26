@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kcmutils
-pkgver=9999_git20241206
+pkgver=9999_git20241221
 pkgrel=0
-_commit="f01d758dfa8355286f12d839d21b9640b7886e33"
+_commit="f1a525655aad210fc9eb3774f929cf75afb36669"
 pkgdesc="Utilities for interacting with KCModules"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://community.kde.org/Frameworks"
 license="LGPL-2.1-only AND LGPL-2.1-or-later"
@@ -25,12 +23,13 @@ depends_dev="
 makedepends="$depends_dev
 	doxygen
 	extra-cmake-modules
+	qt6-qtdeclarative-private-dev
 	qt6-qttools-dev
 	samurai
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kcmutils.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/kcmutils-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kcmutils-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -54,5 +53,5 @@ package() {
 }
 
 sha512sums="
-9955d5c9eaf16e6e2b6fb07a08ef31b1328669a56064ad840d67cd7715a637747b41db0753fa98ac896356b7a640a5dabf22411ce90d09f56995cfb04535f29d  kcmutils-f01d758dfa8355286f12d839d21b9640b7886e33.tar.xz
+533a17662cba302274a6934523b403d84e841fcf40e321f6e67e845f190ed42cee679164f281426c128815d76c493157474e38e7ed9fe80cad052f0e39f55a51  kcmutils-f1a525655aad210fc9eb3774f929cf75afb36669.tar.xz
 "

@@ -1,15 +1,13 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=francis
-pkgver=9999_git20241207
+pkgver=9999_git20241221
 pkgrel=0
-_commit="37147e4b9ea6b96e2697f6ef6264ee52309a7de0"
+_commit="c005b513714ce575b228d0f2879def6fafc7ad52"
 pkgdesc="Track your time"
 url="https://invent.kde.org/utilities/francis"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 license="GPL-3.0-or-later AND LGPL-2.0-or-later and BSD-2-Clause AND BSD-3-Clause"
 makedepends="
@@ -23,13 +21,14 @@ makedepends="
 	knotifications-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtsvg-dev
 	samurai
 	"
 checkdepends="xvfb-run"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/utilities/francis.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/francis-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/francis-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/francis-$_commit"
@@ -43,7 +42,7 @@ build() {
 }
 
 check() {
-	xvfb-run ctest --test-dir build --output-on-failure
+	xvfb-run ctest --test-dir build
 }
 
 package() {
@@ -51,5 +50,5 @@ package() {
 }
 
 sha512sums="
-0e72f27211245fed8575491fd9a3ff172354dbf0a9572e6a792b5b9724e7971af6e1dd16a202d569fddae0730ec9519594d38e7fd8006122f3318507f6359382  francis-37147e4b9ea6b96e2697f6ef6264ee52309a7de0.tar.xz
+75882ae17b5c24bd0a9e871c66acc0673b12a86c9ea8f4949da49c03a1edb66cc5193d2180e21d798fdbfd9f0358401c9c01c4f7cc15cd88253e743fe9a8c76f  francis-c005b513714ce575b228d0f2879def6fafc7ad52.tar.xz
 "

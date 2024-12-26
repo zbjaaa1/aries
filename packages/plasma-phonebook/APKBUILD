@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-mobile
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-phonebook
-pkgver=9999_git20241202
+pkgver=9999_git20241217
 pkgrel=0
-_commit="0c0327e410afc0a42808fdbbf45cc9703f6a53d4"
+_commit="730d148f31135bae100a9edc2863400e391dfdcb"
 pkgdesc="Contacts application which allows adding, modifying and removing contacts"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://invent.kde.org/plasma-mobile/plasma-phonebook"
 license="LicenseRef-KDE-Accepted-GPL"
@@ -27,11 +25,12 @@ makedepends="
 	kpeoplevcard-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtsvg-dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/plasma-mobile/plasma-phonebook.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/plasma-phonebook-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/plasma-phonebook-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -46,7 +45,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -54,5 +53,5 @@ package() {
 }
 
 sha512sums="
-b8f8aae8f92a1e483b6d1ec0d411e4d854fd59effcaf92c698ee94621c1ca75850424a94a2d9992f56ff69815c1a03a5f42eee214ca9dfb44e5760657cbc2c6a  plasma-phonebook-0c0327e410afc0a42808fdbbf45cc9703f6a53d4.tar.xz
+135088494a2f05e7f891c4e30b5c78386fdb8ef58e8fcda2bc2f1ebb4928a7a30b5afd14bba0e2d706328d94d5422fec1a323e457c4e1ffe6fa141c394f5baa8  plasma-phonebook-730d148f31135bae100a9edc2863400e391dfdcb.tar.xz
 "

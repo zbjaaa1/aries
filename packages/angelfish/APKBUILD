@@ -1,16 +1,13 @@
-# Contributor: Jonah Brüchert <jbb@kaidan.im>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=angelfish
-pkgver=9999_git20241203
+pkgver=9999_git20241221
 pkgrel=0
-_commit="2106ffad2f081093063d9ff6ebdaa627ea9d79ca"
+_commit="6cfe96b053f29e5b93d4a2fe574cc175378a12d7"
 pkgdesc="Small Webbrowser for Plasma Mobile"
-# armhf blocked by extra-cmake-modules
-# ppc64le and s390x blocked by qt6-qtwebengine
-# riscv64 disabled due to missing rust in recursive dependency
+# armhf blocked by qt6-qtdeclarative
+# ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
 arch="all !ppc64le !s390x !armhf !riscv64"
 url="https://phabricator.kde.org/source/plasma-angelfish/"
 license="GPL-3.0-or-later"
@@ -34,12 +31,15 @@ makedepends="
 	libplasma
 	purpose-dev
 	qqc2-desktop-style-dev
+	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtwebengine-dev
 	samurai
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/network/angelfish.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/angelfish-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/angelfish-$_commit.tar.xz"
 options="net" # net required to download Rust dependencies
 
 provides="plasma-angelfish=$pkgver-r$pkgrel" # Backwards compatibility
@@ -58,7 +58,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure -j1
+	ctest --test-dir build -j1
 }
 
 package() {
@@ -66,5 +66,5 @@ package() {
 }
 
 sha512sums="
-35d9b23338b5305e60aea97bb3275224a220a3f187101440e519ea016a7930c4c2d1153bd09a121a774f6f0e1433d37925826fd010eb2028f9b568bd1a8d464d  angelfish-2106ffad2f081093063d9ff6ebdaa627ea9d79ca.tar.xz
+22d9d769b374ac4cee5e4fa196e6176146da5a974e06667ecd9a4a933a6c14ee8b5a82882b588f7fbf9d7a11f8c4d43c5d1d7795587468e745c2dfe560b29aab  angelfish-6cfe96b053f29e5b93d4a2fe574cc175378a12d7.tar.xz
 "

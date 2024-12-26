@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-mobile
-pkgver=9999_git20241205
+pkgver=9999_git20241222
 pkgrel=0
-_commit="cdff9358356b4712fe78f05680023adfd2618d3f"
+_commit="67ce71fcc0e9b3aad237cf2d01d9deaf1a2aacbc"
 pkgdesc="Modules providing phone functionality for Plasma"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://www.plasma-mobile.org/"
 license="GPL-2.0-or-later AND LGPL-2.1-or-later"
@@ -60,6 +58,7 @@ makedepends="
 	plasma-workspace-dev
 	qcoro-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	samurai
 	solid-dev
 	telepathy-qt-dev
@@ -75,7 +74,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-mobile.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/plasma-mobile-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/plasma-mobile-$_commit.tar.xz
 	99-flashlight.rules
 	"
 options="!check" # No tests
@@ -102,6 +101,6 @@ package() {
 }
 
 sha512sums="
-fa3750f4f7c8d3276eb4234dbebeee45e954199589728489907fe55cce55b902ccb3fd55c5b4aca3cddd864cc36b4cccace4c40542f6f094e3d5458bb87c0c0e  plasma-mobile-cdff9358356b4712fe78f05680023adfd2618d3f.tar.xz
+84890dd8d515c3984c2a9390bdcd651eab5488dc7a368e5090077853f6ec7de7ee673d036f1d53f3e3cb10d5405a735aa7d623e399db70b608751e78459883c2  plasma-mobile-67ce71fcc0e9b3aad237cf2d01d9deaf1a2aacbc.tar.xz
 4badc25cbb7dc84d6af54cff5f3c09dcc37da86b7e930bdcab6d75f8dd90ef0dd9c8a3837ab696b1f4de9cad82d5e64ddd44904640a92e910a8f45524542be95  99-flashlight.rules
 "

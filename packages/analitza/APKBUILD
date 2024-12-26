@@ -1,13 +1,11 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=analitza
-pkgver=9999_git20241202
+pkgver=9999_git20241221
 pkgrel=0
-_commit="5b06142d456b3081ea1ed9adc80f063ec7dc3bb1"
-# armhf blocked by extra-cmake-modules
+_commit="60b5b7f761358202331bb3016b22630dc4988aed"
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://edu.kde.org/"
 pkgdesc="A library to add mathematical features to your program"
@@ -22,11 +20,12 @@ depends_dev="
 	"
 makedepends="$depends_dev
 	extra-cmake-modules
+	qt6-qtdeclarative-private-dev
 	samurai
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/education/analitza.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/analitza-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/analitza-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -41,7 +40,7 @@ build() {
 }
 
 check() {
-	xvfb-run ctest --test-dir build --output-on-failure
+	xvfb-run ctest --test-dir build
 }
 
 package() {
@@ -49,5 +48,5 @@ package() {
 }
 
 sha512sums="
-26d05e34a895425b0a2ff3e92a19d30685de6ef684eae87290e3f1fbcb7c52c7e40529f24dc3eafcfa03a6780c19d469138c283483a82d090648628a928779ae  analitza-5b06142d456b3081ea1ed9adc80f063ec7dc3bb1.tar.xz
+f344437c872e7e469349d206f2e58c791b80636f6d0500defb2bd917b223c79b75e723c4b69a2df3be09b0a4fa4f1f2ec72cd0b0861374e740f6fd9e848095fa  analitza-60b5b7f761358202331bb3016b22630dc4988aed.tar.xz
 "

@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: Bart Ribbers <bribbers@disroot.org>
-
 # group=3rdparty
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=libquotient
-pkgver=9999_git20241204
+pkgver=9999_git20241220
 pkgrel=0
-_commit="4c97d1db6cb4b98ac34522fddb2630bcdb56587c"
+_commit="757f3ce5ebe4055dbd60bfbf673a005f77e444de"
 pkgdesc="Qt library for cross-platform clients for Matrix"
 url="https://github.com/quotient-im/libQuotient"
-arch="all !armhf" # blocked by qt5-qtmultimedia
+arch="all"
 license="LGPL-2.1-or-later"
 depends_dev="
 	olm-dev
@@ -17,11 +15,12 @@ depends_dev="
 	"
 makedepends="$depends_dev
 	cmake
+	qt6-qtbase-private-dev
 	samurai
 	"
 subpackages="$pkgname-dev"
 _repo_url="https://github.com/quotient-im/libquotient.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/libquotient-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/libquotient-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/libquotient-$_commit"
@@ -39,7 +38,7 @@ build() {
 
 check() {
 	# testolmaccount requires a running Matrix homeserver
-	ctest --test-dir build --output-on-failure -E "testolmaccount"
+	ctest --test-dir build -E "testolmaccount"
 }
 
 package() {
@@ -49,5 +48,5 @@ package() {
 }
 
 sha512sums="
-7c812ddbe5e534d1f6f2bff4a4bf789e47f7b71e36baedd97cd893ae840459fcd4739626c0c81a6410440d4db51f4e87b2f050659d9c5c1fd854e6ddfe59e3b8  libquotient-4c97d1db6cb4b98ac34522fddb2630bcdb56587c.tar.xz
+4ca23ff115f526b42e687605cbf07a59553fef7180fe1a625c9342f9fea5d3714868063fccffe759139cfeb060037baa40d3c15113327f157af0e1c8a5a5696f  libquotient-757f3ce5ebe4055dbd60bfbf673a005f77e444de.tar.xz
 "

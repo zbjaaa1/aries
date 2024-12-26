@@ -1,12 +1,10 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-welcome
-pkgver=9999_git20241202
+pkgver=9999_git20241220
 pkgrel=0
-_commit="0eaa7da79dd03b09167fe97662337b6a05051a61"
+_commit="da08924f1e5ea758e3609d98ffd8668901c7356c"
 pkgdesc="A friendly onboarding wizard for Plasma"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> kaccounts-integration
@@ -34,6 +32,7 @@ makedepends="
 	libplasma-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtsvg-dev
 	samurai
 	"
@@ -43,7 +42,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-welcome.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/plasma-welcome-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/plasma-welcome-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -58,7 +57,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -66,5 +65,5 @@ package() {
 }
 
 sha512sums="
-a8b7d0303f7a496c2b159e0e363458d9b287876b6a172c4c3b4e54a1663bf9e98d0125f4e7fd45e376f544784955cedccff86c33e2aad6e041e8de06ca14051f  plasma-welcome-0eaa7da79dd03b09167fe97662337b6a05051a61.tar.xz
+4ce782052771bda8274f31c4afa8bac95ef9b17e516dff6e03f6e32415fe56aefa0c7c78253a9fc0c8bdc7b17ea0a4d8d59bbc17604820709feb07a04f25a8ef  plasma-welcome-da08924f1e5ea758e3609d98ffd8668901c7356c.tar.xz
 "

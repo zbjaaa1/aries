@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kidentitymanagement
-pkgver=9999_git20241206
+pkgver=9999_git20241221
 pkgrel=0
-_commit="c219f1cbe28e604e0f027f1bd68d49dd71848b09"
+_commit="d1d46ae0fec8f921c45678024d3d41f9dfb95f2d"
 pkgdesc="KDE PIM libraries"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kontact.kde.org"
 license="LGPL-2.0-or-later"
@@ -23,15 +21,17 @@ depends_dev="
 	ktextwidgets-dev
 	kxmlgui-dev
 	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
 	"
 makedepends="$depends_dev
 	extra-cmake-modules
 	kirigami-addons-dev
+	qt6-qtdeclarative-private-dev
 	samurai
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/kidentitymanagement.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/kidentitymanagement-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kidentitymanagement-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -57,5 +57,5 @@ package() {
 }
 
 sha512sums="
-52fc606db4d4776ccb563fc094df26f415b6a3117301baeb1b7fdd178fd4176fb0ad2ffd633fd8e60562e3a0cd515829ee27f66d0618d5ce0a72b9cbd59ca7b1  kidentitymanagement-c219f1cbe28e604e0f027f1bd68d49dd71848b09.tar.xz
+7261d6d21e259f87504f23f0a3bb7d25a528962bcb032ee01c81afa8f13a89853ee0f9f13c3f26f995eda202a9c1858498f00aec20119e810e10a150e5cd622a  kidentitymanagement-d1d46ae0fec8f921c45678024d3d41f9dfb95f2d.tar.xz
 "

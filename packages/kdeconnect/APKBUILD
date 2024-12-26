@@ -1,15 +1,13 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kdeconnect
-pkgver=9999_git20241207
+pkgver=9999_git20241223
 pkgrel=0
-_commit="6129134d04aa0333b3c2fcb7c337bc9e5b8b0c4c"
+_commit="afbe18199287f4f0026641fa3dad77ed43293d7d"
 pkgdesc="Adds communication between KDE and your smartphone"
 url="https://community.kde.org/KDEConnect"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 license="GPL-2.0-only OR GPL-3.0-only"
 depends="
@@ -39,6 +37,8 @@ makedepends="
 	qca-qt6-dev
 	qqc2-desktop-style-dev
 	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtconnectivity-dev
 	qt6-qtmultimedia-dev
 	samurai
@@ -46,7 +46,7 @@ makedepends="
 checkdepends="xvfb-run"
 subpackages="$pkgname-doc $pkgname-lang $pkgname-nftables::noarch $pkgname-zsh-completion"
 _repo_url="https://invent.kde.org/network/kdeconnect-kde.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/kdeconnect-kde-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kdeconnect-kde-$_commit.tar.xz
 	60_kdeconnect.nft
 	"
 builddir="$srcdir/$pkgname-kde-$pkgver"
@@ -84,6 +84,6 @@ nftables() {
 }
 
 sha512sums="
-5d6b028849ecf1a40e427ae356434d6aea1b3fb4fe568be8c78d62fdc0353315ab9dfeab321b804685ea87b7e467e9b2f457bcede5cfc41999677cc73effb62a  kdeconnect-kde-6129134d04aa0333b3c2fcb7c337bc9e5b8b0c4c.tar.xz
+d467ba8d897ac45c920ba0647e6f5d4a2aa6a61c6a91830f57c4c0da570f42b1b26611f7ab97ded5ee09e73207a4960baa94d5b477c4ed0f9d866f7f8715303b  kdeconnect-kde-afbe18199287f4f0026641fa3dad77ed43293d7d.tar.xz
 0ccc2cb0ffd3892698b45bcf723cfdd23ad98f0e2b0436cd0a91d9ed13c6992853e2c4092ee8a0edc6216f1f262151e99e344b8f16c52237e9ff8de62fd37cae  60_kdeconnect.nft
 "

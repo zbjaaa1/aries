@@ -1,13 +1,12 @@
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=ktrip
-pkgver=9999_git20241203
+pkgver=9999_git20241221
 pkgrel=0
-_commit="85aa3a58aeb50c16792130d7c375e5753a849702"
+_commit="a98c739cb1a051cd515c8312080827e577c91026"
 pkgdesc="A public transport assistant"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://invent.kde.org/utilities/ktrip"
 license="GPL-2.0-only OR GPL-3.0-only"
@@ -28,10 +27,11 @@ makedepends="
 	qqc2-desktop-style-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/ktrip.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/ktrip-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/ktrip-$_commit.tar.xz"
 options="!check" # No tests
 
 options="!check"
@@ -55,5 +55,5 @@ package() {
 }
 
 sha512sums="
-bc1644b8dba40309c713687eb77d60c87c6e56adcbea74e3b30b2558b8882e5373577a65063b50724bf03306f3299cbf69e3118a8bcca8c3b4816466babf13c1  ktrip-85aa3a58aeb50c16792130d7c375e5753a849702.tar.xz
+28a7f05787cd424abcc1aeb3e15ad079f987e9d96a34bb6c8cb3b786ae7ff57db0b40426880c2574a3f493071c69c2617dd3f27a678a1dd66c3fab646bd35674  ktrip-a98c739cb1a051cd515c8312080827e577c91026.tar.xz
 "

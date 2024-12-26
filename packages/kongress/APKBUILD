@@ -1,14 +1,12 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kongress
-pkgver=9999_git20241207
+pkgver=9999_git20241223
 pkgrel=0
-_commit="0160a0e85d49b369f3e8161c5de86e8c083203ea"
+_commit="bdc1686ba6877e915fb6f5f5fef4491f75ce7ede"
 pkgdesc="Companion application for conferences"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://invent.kde.org/utilities/kongress"
 license="GPL-3.0-or-later AND LGPL-3.0-or-later AND BSD-2-Clause AND CC-BY-SA-4.0 AND CC0-1.0"
@@ -27,12 +25,13 @@ makedepends="
 	kservice-dev
 	qt6-qtbase-dev
 	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qtsvg-dev
 	qt6-qttools-dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/kongress.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/kongress-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kongress-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -51,5 +50,5 @@ package() {
 }
 
 sha512sums="
-2806383fc7a6d06004d9e9e711894ad7fa9cbf7e34d1621987a666a6694bbbdc92cb0a52a04b78cfa85df972ec01cf26b5cb7a2b599adce2b4c7e5cabfd36f20  kongress-0160a0e85d49b369f3e8161c5de86e8c083203ea.tar.xz
+704e1fb098ae9f76427fcc2e15c984252354c911a8657f6736fbe282c3cb9982714e831ca848d71baf84fbe547c9ba93c3e361eedf1161979ebb8258fa0b5873  kongress-bdc1686ba6877e915fb6f5f5fef4491f75ce7ede.tar.xz
 "

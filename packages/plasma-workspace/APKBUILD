@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-workspace
-pkgver=9999_git20241207
+pkgver=9999_git20241223
 pkgrel=0
-_commit="4d71f3bc60fcabf343e7448bc220e14a933d3946"
+_commit="543577ecaaeaf85e14c4b714a875c4f6858ded82"
 pkgdesc="KDE Plasma Workspace"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -93,6 +93,7 @@ makedepends="$depends_dev
 	kded
 	kdoctools-dev
 	libxtst-dev
+	qt6-qtdeclarative-private-dev
 	qt6-qttools-dev
 	samurai
 	xdotool
@@ -112,7 +113,7 @@ subpackages="
 	$pkgname-zsh-completion
 	"
 _repo_url="https://invent.kde.org/plasma/plasma-workspace.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/plasma-workspace-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/plasma-workspace-$_commit.tar.xz"
 
 replaces="plasma5support"
 
@@ -173,5 +174,5 @@ package() {
 }
 
 sha512sums="
-ee396f85e88fe6a5be0daf7daa174ef093d04ade13a69ce174e9191f3203eeacef37a5bf4cb9ae70848c72711bb3a79802754945c848f6a3068ed085ce24d71e  plasma-workspace-4d71f3bc60fcabf343e7448bc220e14a933d3946.tar.xz
+44d1506a69ee04503851a5fe63c40635783e87ceb8af27936f9c626c79d4e034e7b67f1aa39d825196cf8b35dae080e78b3d192eca779ea0edc167654f130791  plasma-workspace-543577ecaaeaf85e14c4b714a875c4f6858ded82.tar.xz
 "

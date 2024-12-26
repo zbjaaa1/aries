@@ -1,21 +1,19 @@
-# Contributor: Bart Ribbers <bribbers@disroot.org>
-# Maintainer: team/kde <bribbers@disroot.org>
-
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
+maintainer="team/kde <bribbers@disroot.org>"
 pkgname=krdc
-pkgver=9999_git20241207
+pkgver=9999_git20241221
 pkgrel=0
-_commit="adda3a1d19599eb91859c3daa01d7fd414b7557a"
-# armhf blocked by extra-cmake-modules
+_commit="fc96a2beb0f8cfa6b0d0864db4c2de4864ad246f"
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/applications/internet/krdc/"
 pkgdesc="Remote Desktop Client"
 license="GPL-2.0-or-later AND GFDL-1.2-only"
-depends="freerdp"
+depends="freerdp2"
 makedepends="
 	extra-cmake-modules
-	freerdp-dev
+	freerdp2-dev
 	kbookmarks-dev
 	kcmutils-dev
 	kcompletion-dev
@@ -34,10 +32,11 @@ makedepends="
 	kxmlgui-dev
 	libssh-dev
 	libvncserver-dev
+	qt6-qtbase-dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/network/krdc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-07/krdc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/krdc-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -52,7 +51,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -60,5 +59,5 @@ package() {
 }
 
 sha512sums="
-8a7bb496e240e23038dead92ad1bbb5c736042931cb786dd26f9b2c05db438147e7efb40e4e584fa03dea02ff5c65d6526fd6fb942dd3739bd22a0a5f6ad0365  krdc-adda3a1d19599eb91859c3daa01d7fd414b7557a.tar.xz
+3f8de4add8c073341344d5cb686d1bb49a1646b0bb6fe328353bec4e47f668e88f756c031734f12279a525abc9f40138fc85fc32d1f21c82958b671406f6f10f  krdc-fc96a2beb0f8cfa6b0d0864db4c2de4864ad246f.tar.xz
 "

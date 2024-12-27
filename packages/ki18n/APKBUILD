@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=ki18n
-pkgver=9999_git20241218
+pkgver=9999_git20241225
 pkgrel=0
-_commit="b7455ecb4cd38ce6ca05907de6a28bdf0909e7b0"
+_commit="37737d975d9b2a76fd750037d26a47acbed5125c"
 pkgdesc="Advanced internationalization framework"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -24,7 +24,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/ki18n.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/ki18n-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-27/ki18n-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-1e1abd6112cb5a815a6794354df1623f2108478728ba27a49e7da607783932a98ce465512e336228773c0a0d7c38d72c01d56fb8a1602be9a88fb4cb5b847faf  ki18n-b7455ecb4cd38ce6ca05907de6a28bdf0909e7b0.tar.xz
+01ac7b7690ef62024cb399d6fcaa9641a14a4652b2289cbe6854f17cf5e87cd6ee69d8b9a45cd6027b34da48c7616711dcfae4236744c3300fc4c82721afa17e  ki18n-37737d975d9b2a76fd750037d26a47acbed5125c.tar.xz
 "

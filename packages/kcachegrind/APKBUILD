@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kcachegrind
-pkgver=9999_git20241221
+pkgver=9999_git20241225
 pkgrel=0
-_commit="1f64abc474e246be97c81e6e559cb5245f7efddd"
+_commit="89b2fb066168ba5c1cc34221687d4c62ea96b188"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/development/org.kde.kcachegrind"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/sdk/kcachegrind.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/kcachegrind-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-27/kcachegrind-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -52,5 +52,5 @@ package() {
 }
 
 sha512sums="
-aefc41f58346d7ebe8f9eed2308d296b820b04ef2eb7655d0fc3fcb8581651fa814e144e32b7b202f52587c7d6530da36f696c5cae58c2043caf11144dcdf4b8  kcachegrind-1f64abc474e246be97c81e6e559cb5245f7efddd.tar.xz
+f28b00040e5aed1bafee574ec3e57801dc6fd9012b258acfebb7c66926f0599a2010c934a9271941e8ac5bbd12f55e14cb9f8614636b6be672821d292117b647  kcachegrind-89b2fb066168ba5c1cc34221687d4c62ea96b188.tar.xz
 "

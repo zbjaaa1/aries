@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=syntax-highlighting
-pkgver=9999_git20241221
+pkgver=9999_git20241225
 pkgrel=0
-_commit="d93ab31c1bccac7d3362ba53c0ce2ab4bd86525b"
+_commit="231518312be49c4481bc0b440c7a860e6e4d280d"
 pkgdesc="Syntax highlighting engine for structured text and code"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -24,7 +24,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/syntax-highlighting.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-23/syntax-highlighting-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-27/syntax-highlighting-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-4f70e982be4f83e442d5e0de3956240db153826ae950f205c8037163850e0690591286c5e38495b45a6af90a88a6da40728567a6eec2b83928f39f8c779dcae6  syntax-highlighting-d93ab31c1bccac7d3362ba53c0ce2ab4bd86525b.tar.xz
+569a4e03e042d300a495b0fd7601908df5968c32022768caffb64cbb8388862c99d55fe113ceb95b30e55d23af955923441953cbe5f08f0ccf792b99f844a390  syntax-highlighting-231518312be49c4481bc0b440c7a860e6e4d280d.tar.xz
 "

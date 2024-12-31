@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=krdc
-pkgver=9999_git20241225
+pkgver=9999_git20241230
 pkgrel=0
-_commit="6e232b4c400391a7c0bb1456a98f97976aa38d93"
+_commit="db21a40bceb1b662b6fca90bd25130296eb9d1be"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/applications/internet/krdc/"
@@ -36,7 +36,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/network/krdc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-28/krdc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-30/krdc-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-449b2cbdc72bcdae65546643a8abfe6df44acad08db313ee06f3776f4feca5b0e062b5a94d361b5e9f9738314dad20828a057053c2e61de2bb99da25024aa6dd  krdc-6e232b4c400391a7c0bb1456a98f97976aa38d93.tar.xz
+c71d5f4ed4960cafa4ecc4424c6acfe38303452b2d09a716f050e6283e5cac40276e3daf0fb1c8972c106f2b974700af2f953a94b1694b3bec19b38ec297266e  krdc-db21a40bceb1b662b6fca90bd25130296eb9d1be.tar.xz
 "

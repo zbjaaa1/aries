@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kalzium
-pkgver=9999_git20241222
+pkgver=9999_git20241229
 pkgrel=0
-_commit="65e5e37691186d1f60e7b607505676efd4d93c37"
+_commit="9f13eaa20181724c1c5d3883549f477b347a4352"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://edu.kde.org/kalzium/"
@@ -32,7 +32,7 @@ makedepends="
 	solid-dev
 	"
 _repo_url="https://invent.kde.org/education/kalzium.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-28/kalzium-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-30/kalzium-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang $pkgname-dev"
 options="!check" # No tests
 
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-0b8df9e90ebdc249c417a5d07b0f63fb0a9200725a1c6411cf0ba5d916627be865d74ed16b756fb5ee2df3c348278bc81f4b1efd451cb11a2164330dedc68283  kalzium-65e5e37691186d1f60e7b607505676efd4d93c37.tar.xz
+a904a0d0fae5aee2a60c94b825da7ea68081e13eaaf68d592bafd95b9dda5af85f1ee1c3ee2a809ce7efc5cd9f1c238d346a55283aa46ac6c5139cbe4c54a712  kalzium-9f13eaa20181724c1c5d3883549f477b347a4352.tar.xz
 "

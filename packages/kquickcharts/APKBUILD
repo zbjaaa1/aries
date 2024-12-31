@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kquickcharts
-pkgver=9999_git20241206
+pkgver=9999_git20241229
 pkgrel=0
-_commit="55b3e4574fd6bcaa48d75dfc4deb96752e926c57"
+_commit="122a0885401480421accf3764a827d2c56e4cbd6"
 pkgdesc="A QtQuick plugin providing high-performance charts"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -21,7 +21,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kquickcharts.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-28/kquickcharts-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-30/kquickcharts-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 
 options="!check"
@@ -54,5 +54,5 @@ dev() {
 }
 
 sha512sums="
-46431d9d05a5ae79a745fac25b4609f5b5b9801a1e323e5f6ee16d432683793fc0a5d5c014d9993575315aea839572347fd10d2c4503d3139056fb88c2a13531  kquickcharts-55b3e4574fd6bcaa48d75dfc4deb96752e926c57.tar.xz
+ebd8ccd9c582af26c2d0a1735c919ce9d13e7f6fd6eb80750dd3a5d0c3c8c266c5a7f8becf5d4364e87c2160f4cdd4b20bee7f5b23cc0561f99f6e45904a35f7  kquickcharts-122a0885401480421accf3764a827d2c56e4cbd6.tar.xz
 "

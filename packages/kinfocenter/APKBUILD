@@ -6,7 +6,7 @@
 pkgname=kinfocenter
 pkgver=9999_git20241230
 pkgrel=0
-_commit="6194c4df7eb89937e3238d0a0e709a6070756a37"
+_commit="7ec64d231b29fb7a00ceba961b04715a7a772e16"
 pkgdesc="A utility that provides information about a computer system"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -45,7 +45,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/kinfocenter.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-30/kinfocenter-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-31/kinfocenter-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -68,5 +68,5 @@ package() {
 }
 
 sha512sums="
-77f1902242274640a36f1d2f243b7daaf6c65565425b207913be27d66cccebae8ec6be3049bbb8887e42aa262636ae3a2e646eb1091a9eec7ec9faf3b24e41cf  kinfocenter-6194c4df7eb89937e3238d0a0e709a6070756a37.tar.xz
+b8a0f649633f9c611f19118aa09b95a1ec5f04917e5e303691d72d2058f607a4bca5c3cce3b0bad71b5e35433451edd7d66db43e4621fd4cb1e37e4505741764  kinfocenter-7ec64d231b29fb7a00ceba961b04715a7a772e16.tar.xz
 "

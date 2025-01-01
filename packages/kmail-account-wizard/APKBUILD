@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kmail-account-wizard
-pkgver=9999_git20241225
+pkgver=9999_git20241231
 pkgrel=0
-_commit="59c0047c0ed316efa7959c2db1710e8778dd3d10"
+_commit="8d190fc4deec2fcead73254b6ccf734654a510f3"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> kmailtransport
 arch="all !armhf !ppc64le !s390x !riscv64"
@@ -42,7 +42,7 @@ makedepends="
 	shared-mime-info
 	"
 _repo_url="https://invent.kde.org/pim/kmail-account-wizard.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-30/kmail-account-wizard-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-31/kmail-account-wizard-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -65,5 +65,5 @@ package() {
 }
 
 sha512sums="
-7754668794f5745dd1ef8f089b3261a907542308d1728fee526034b119e766796168e7c5a03a032e837650a7b4a7fc1f50671a4b8b4c7a13b850fc073e421b09  kmail-account-wizard-59c0047c0ed316efa7959c2db1710e8778dd3d10.tar.xz
+f941ed0bdb2f2a918865328cec8ea58d9aba88cdeaf6cddb6fa54601d3815a0fe0bd5882150dd91a3c95ef5b52a6d21dbecee972671fedc8fb977dedba18eb17  kmail-account-wizard-8d190fc4deec2fcead73254b6ccf734654a510f3.tar.xz
 "

@@ -3,12 +3,12 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=alligator
-pkgver=9999_git20241019
+pkgver=9999_git20241231
 pkgrel=0
-_commit="a81343c203b60a79ca680a264ae62d2fee2d9d74"
+_commit="60eeabd14c65138b902481624c285abba1534536"
 pkgdesc="A convergent RSS/Atom feed reader"
 url="https://invent.kde.org/plasma-mobile/alligator/"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 license="GPL-2.0-only OR GPL-3.0-only"
 depends="
@@ -22,13 +22,17 @@ makedepends="
 	kconfig-dev
 	kcoreaddons-dev
 	ki18n-dev
+	kirigami-dev
 	kirigami-addons-dev
 	qt6-qtbase-dev
+	qt6-qtdeclarative-dev
+	qt6-qtdeclarative-private-dev
 	samurai
 	syndication-dev
 	"
+subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/network/alligator.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-10-21/alligator-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-01/alligator-$_commit.tar.xz"
 options="!check" # No tests
 
 options="!check"
@@ -47,5 +51,5 @@ package() {
 }
 
 sha512sums="
-5c1d8f5c8e519218906c1b8ba0a8b05f648eac5de97337bd4fd4a67f67803b88b72fd36b02c16a269d1fdb8c3a0832b68cdaeb8e66e5f115cc99cb1897690172  alligator-a81343c203b60a79ca680a264ae62d2fee2d9d74.tar.xz
+ce3c69e8db488cf46a02db0a16ad5b8f46ec23625433c280f4f028b3f4e3798e4d99b2ba47f0ae02545b8e6300d4c7203f7f97d8fa656ed64cd60d0eb1d25e4a  alligator-60eeabd14c65138b902481624c285abba1534536.tar.xz
 "

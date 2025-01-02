@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kongress
-pkgver=9999_git20241230
+pkgver=9999_git20250101
 pkgrel=0
-_commit="90b015b7645d4d8815ace62546a2a00f4d02a2af"
+_commit="64a1af65b644521d61da3630df2d39bff1892331"
 pkgdesc="Companion application for conferences"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/kongress.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2024-12-31/kongress-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-02/kongress-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-3fb0b2afc155c8fc8f7dd473d55caba24fdc9a733944feb635255778956dbfac4233da76e6238d69c9cf3c564421f43cba47702d4e48ce1b6930d29256abb678  kongress-90b015b7645d4d8815ace62546a2a00f4d02a2af.tar.xz
+6f06477b4d0f821f4ecca4dbdf610c1022e1c23db9bc898457bfb8651997593d14127b5626956dba7ed8a7e77e8cab31e7800c9d4041b2505f619b49ceb653f4  kongress-64a1af65b644521d61da3630df2d39bff1892331.tar.xz
 "

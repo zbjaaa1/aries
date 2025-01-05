@@ -12,7 +12,6 @@ depends="
 	linux-samsung-goyawifi
 	mkbootimg
 	postmarketos-base
-	!networkmanager_dhclient
 	!$pkgname-networkmanager-dhcpcd
 "
 makedepends="devicepkg-dev"
@@ -63,7 +62,7 @@ nonfree_firmware() {
 	mkdir "$subpkgdir"
 }
 
-networkmanager_dhclient() {
+networkmanager_dhcpcd() {
 	install_if="$pkgname networkmanager"
 	pkgdesc="Install and use dhcpcd for networkmanager to get IP throught DHCP"
 	depends="dhclient"

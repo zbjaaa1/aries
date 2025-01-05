@@ -28,7 +28,7 @@ source="
 "
 subpackages="
 	$pkgname-nonfree-firmware:nonfree_firmware
-	$pkgname-networkmanager-dhcpcd:networkmanager_dhcpcd
+	$pkgname-networkmanager-dhcp-client:networkmanager_dhcp_client
 	$pkgname-fix-lightdm:fix_lightdm
 "
 
@@ -61,11 +61,11 @@ nonfree_firmware() {
 	mkdir "$subpkgdir"
 }
 
-networkmanager_dhcpcd() {
-	install_if="$pkgname networkmanager"
-	pkgdesc="Install and use dhcpcd for networkmanager to get IP throught DHCP"
+networkmanager_dhcp_client() {
+	install_if="$pkgname=$pkgver-r$pkgrel networkmanager"
+	pkgdesc="Install and use an external DHCP client for networkmanager (currently dhcpcd)"
 	depends="dhcpcd"
-	provides="$pkgname-networkmanager-dhclient=1-r0"
+	provides="device-samsung-goyawifi-networkmanager-dhclient"
 
 	# Use dhcpcd for networkmanager as internal client would not work on goyawifi
 	install -D -m644 "$srcdir"/dhcp-client.conf \

@@ -65,7 +65,7 @@ nonfree_firmware() {
 networkmanager_dhcpcd() {
 	install_if="$pkgname networkmanager"
 	pkgdesc="Install and use dhcpcd for networkmanager to get IP throught DHCP"
-	depends="dhclient"
+	depends="dhcpcd"
 
 	# Use dhcpcd for networkmanager as internal client would not work on goyawifi
 	install -D -m644 "$srcdir"/dhcp-client.conf \

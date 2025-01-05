@@ -3,7 +3,7 @@
 
 pkgname=grub-efi-x86
 pkgver=2.12
-pkgrel=6
+pkgrel=7
 
 _arch="x86"
 _mirror="http://dl-4.alpinelinux.org/alpine/"
@@ -12,15 +12,15 @@ pkgdesc="GRUB $_arch EFI files for every architecture"
 url="https://www.gnu.org/software/grub/"
 license="GPL-3.0-or-later"
 arch="x86_64"
-source="grub-efi-$pkgver-r$pkgrel-$_arch-edge.apk::$_mirror/edge/main/$_arch/grub-efi-$pkgver-r$pkgrel.apk"
+source="grub-efi-$pkgver-r$pkgrel-$_arch-v3.21.apk::$_mirror/v3.21/main/$_arch/grub-efi-$pkgver-r$pkgrel.apk"
 
 package() {
 	mkdir -p "$pkgdir"
 	cd "$pkgdir"
-	tar -xf "$srcdir/grub-efi-$pkgver-r$pkgrel-$_arch-edge.apk"
+	tar -xf "$srcdir/grub-efi-$pkgver-r$pkgrel-$_arch-v3.21.apk"
 	rm .PKGINFO .SIGN.*
 }
 
 sha512sums="
-bad54187b4fbb9f78f2d619ff9a652a4927c557070c2c39334fd9900ae5aeb956144055602ca56295d7966c2d10090ef142a073dd67eb14f7b41ba0d54c78d4d  grub-efi-2.12-r6-x86-edge.apk
+6116bd4c9e049df2e630d5708d3f6cc84c538540626785f0cc1029cf62fc3ac9648ad379ca377e5de3eae9237f4e22047425ebacd4aaf3dcbe8a7038ee8e452f  grub-efi-2.12-r7-x86-v3.21.apk
 "

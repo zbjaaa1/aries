@@ -12,7 +12,6 @@ depends="
 	linux-samsung-goyawifi
 	mkbootimg
 	postmarketos-base
-	!$pkgname-networkmanager-dhclient
 "
 makedepends="devicepkg-dev"
 source="
@@ -66,6 +65,7 @@ networkmanager_dhcpcd() {
 	install_if="$pkgname networkmanager"
 	pkgdesc="Install and use dhcpcd for networkmanager to get IP throught DHCP"
 	depends="dhcpcd"
+	provides="$pkgname-networkmanager-dhclient"
 
 	# Use dhcpcd for networkmanager as internal client would not work on goyawifi
 	install -D -m644 "$srcdir"/dhcp-client.conf \

@@ -65,7 +65,7 @@ networkmanager_dhcp_client() {
 	install_if="$pkgname=$pkgver-r$pkgrel networkmanager"
 	pkgdesc="Install and use an external DHCP client for networkmanager (currently dhcpcd)"
 	depends="dhcpcd"
-	provides="device-samsung-goyawifi-networkmanager-dhclient"
+	provides="device-samsung-goyawifi-networkmanager-dhclient=1-r0"
 
 	# Use dhcpcd for networkmanager as internal client would not work on goyawifi
 	install -D -m644 "$srcdir"/dhcp-client.conf \

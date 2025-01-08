@@ -1,0 +1,118 @@
+Module                  Size  Used by
+md4                    12288  0
+bnep                   32768  2
+edac_mce_amd           28672  0
+edac_core              73728  0
+intel_rapl_msr         16384  0
+intel_rapl_common      40960  1 intel_rapl_msr
+snd_soc_acp5x_mach     24576  5
+snd_acp5x_pcm_dma      12288  1
+snd_acp5x_i2s          12288  2
+snd_sof_amd_vangogh    12288  0
+kvm_amd               208896  0
+snd_sof_pci            20480  1 snd_sof_amd_vangogh
+btusb                  69632  0
+snd_sof_amd_acp        53248  1 snd_sof_amd_vangogh
+btrtl                  24576  1 btusb
+vfat                   20480  1
+fat                    94208  1 vfat
+btintel                61440  1 btusb
+snd_sof_xtensa_dsp     16384  1 snd_sof_amd_acp
+wdat_wdt               16384  0
+btbcm                  20480  1 btusb
+sp5100_tco             16384  0
+kvm                  1179648  1 kvm_amd
+snd_sof               241664  2 snd_sof_amd_acp,snd_sof_pci
+watchdog               36864  2 sp5100_tco,wdat_wdt
+pcspkr                 12288  0
+snd_hda_codec_hdmi     94208  1
+i2c_piix4              24576  0
+snd_sof_utils          16384  1 snd_sof
+bluetooth             950272  28 btrtl,btintel,btbcm,bnep,btusb
+i2c_smbus              16384  1 i2c_piix4
+snd_pci_acp5x          16384  0
+snd_acp_config         20480  2 snd_pci_acp5x,snd_sof_amd_vangogh
+snd_usb_audio         434176  2
+snd_soc_acpi           16384  2 snd_sof_amd_acp,snd_acp_config
+snd_hda_intel          49152  1
+rtw88_8822ce           12288  0
+snd_usbmidi_lib        45056  1 snd_usb_audio
+snd_intel_dspcfg       16384  1 snd_hda_intel
+r8152                 151552  0
+snd_rawmidi            45056  1 snd_usbmidi_lib
+snd_soc_cs35l41_spi    12288  2
+rtw88_8822c           487424  1 rtw88_8822ce
+snd_hda_codec         155648  2 snd_hda_codec_hdmi,snd_hda_intel
+snd_soc_cs35l41        53248  1 snd_soc_cs35l41_spi
+mii                    12288  1 r8152
+snd_seq_device         12288  1 snd_rawmidi
+mc                     65536  1 snd_usb_audio
+snd_soc_nau8821        57344  2 snd_soc_acp5x_mach
+rtw88_pci              32768  1 rtw88_8822ce
+snd_hwdep              12288  2 snd_usb_audio,snd_hda_codec
+snd_soc_wm_adsp        45056  1 snd_soc_cs35l41
+cdc_acm                45056  0
+rtw88_core            278528  2 rtw88_pci,rtw88_8822c
+snd_hda_core          114688  3 snd_hda_codec_hdmi,snd_hda_intel,snd_hda_codec
+snd_soc_core          360448  7 snd_acp5x_i2s,snd_soc_nau8821,snd_soc_wm_adsp,snd_sof,snd_acp5x_pcm_dma,snd_soc_cs35l41,snd_soc_acp5x_mach
+tpm_crb                20480  0
+snd_compress           28672  2 snd_soc_wm_adsp,snd_soc_core
+regmap_spi             12288  1 snd_soc_cs35l41_spi
+tpm_tis                12288  0
+snd_pcm_dmaengine      12288  1 snd_soc_core
+cs_dsp                 65536  1 snd_soc_wm_adsp
+tpm_tis_core           32768  1 tpm_tis
+snd_soc_cs35l41_lib    36864  2 snd_soc_cs35l41_spi,snd_soc_cs35l41
+ac97_bus               12288  1 snd_soc_core
+snd_pcm               163840  15 snd_sof_amd_acp,snd_soc_nau8821,snd_hda_codec_hdmi,snd_hda_intel,snd_usb_audio,snd_hda_codec,snd_sof,snd_acp5x_pcm_dma,snd_compress,snd_soc_core,snd_sof_utils,snd_hda_core,snd_soc_cs35l41,snd_soc_acp5x_mach,snd_pcm_dmaengine
+tpm                   106496  3 tpm_tis,tpm_crb,tpm_tis_core
+opt3001                16384  0
+ltrf216a               12288  0
+libaescfb              12288  1 tpm
+industrialio          102400  2 ltrf216a,opt3001
+8250_dw                24576  0
+snd_timer              45056  1 snd_pcm
+input_leds             12288  0
+snd                   114688  30 snd_seq_device,snd_hda_codec_hdmi,snd_hwdep,snd_hda_intel,snd_usb_audio,snd_usbmidi_lib,snd_hda_codec,snd_sof,snd_timer,snd_compress,snd_soc_core,snd_pcm,snd_rawmidi,snd_soc_acp5x_mach
+uio_pdrv_genirq        16384  0
+soundcore              12288  1 snd
+uio                    28672  1 uio_pdrv_genirq
+joydev                 24576  0
+serio_raw              16384  0
+fuse                  192512  3
+ext4                 1007616  1
+mbcache                12288  1 ext4
+jbd2                  167936  1 ext4
+dm_crypt               61440  1
+dm_mod                167936  3 dm_crypt
+dax                    45056  1 dm_mod
+libcomposite           86016  0
+udc_core               77824  1 libcomposite
+hid_steam              32768  0
+usbhid                 69632  0
+amdgpu              13324288  34
+amdxcp                 12288  1 amdgpu
+sdhci_pci              98304  0
+drm_ttm_helper         12288  2 amdgpu
+cqhci                  32768  1 sdhci_pci
+ttm                    86016  2 amdgpu,drm_ttm_helper
+sdhci                  73728  1 sdhci_pci
+drm_exec               12288  1 amdgpu
+gpu_sched              57344  1 amdgpu
+drm_suballoc_helper    12288  1 amdgpu
+xhci_pci               20480  0
+mmc_core              221184  3 sdhci,cqhci,sdhci_pci
+nvme                   57344  2
+drm_buddy              16384  1 amdgpu
+hid_multitouch         32768  0
+steamdeck_hwmon        12288  0
+extcon_steamdeck       16384  0
+leds_steamdeck         12288  0
+drm_display_helper    184320  1 amdgpu
+xhci_pci_renesas       16384  1 xhci_pci
+led_class              20480  3 sdhci,input_leds,leds_steamdeck
+nvme_core             172032  3 nvme
+steamdeck              12288  0
+video                  73728  1 amdgpu
+i2c_hid_acpi           12288  0
+i2c_hid                36864  1 i2c_hid_acpi

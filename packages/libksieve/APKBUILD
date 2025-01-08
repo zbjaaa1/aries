@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=libksieve
-pkgver=9999_git20241231
+pkgver=9999_git20250102
 pkgrel=0
-_commit="702fbe57bab5ad75d37f9d38a62fff8d4ca181b8"
+_commit="12c363c288d3145944bd67000723d4dbd974d3ee"
 pkgdesc="KDE PIM library for managing sieves"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
@@ -40,7 +40,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/libksieve.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-02/libksieve-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/libksieve-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -65,5 +65,5 @@ package() {
 }
 
 sha512sums="
-4bf1bb9e28631c6ce9a9e3237d9ba8125f3e2392916d7aa7d3e25554729f76636bfbfcd245ebb6fc0b3853f228ab94f8dd523aec86c07dd83f5c43e74d5598f3  libksieve-702fbe57bab5ad75d37f9d38a62fff8d4ca181b8.tar.xz
+176cf5f7737bd3ee727be56340fec8a00bf32a1329167324a915e6be15baa5ea1db1f309b01a5e3e3694c6f59fd2435fd2a6908007ad3bed28ddcae68b15c60f  libksieve-12c363c288d3145944bd67000723d4dbd974d3ee.tar.xz
 "

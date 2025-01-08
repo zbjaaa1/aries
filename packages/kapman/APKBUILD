@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kapman
-pkgver=9999_git20241225
+pkgver=9999_git20250102
 pkgrel=0
-_commit="cadaf8c258b3b7c5427ec836fafca7b9b9621757"
+_commit="44a038a282e7fdff61aa29a9e3d3884f7c10a154"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/games/org.kde.kapman"
@@ -29,7 +29,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/games/kapman.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-02/kapman-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/kapman-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -53,5 +53,5 @@ package() {
 }
 
 sha512sums="
-690e4ae6c40a0715a5a17985192ee3387484e48f541fc5d258f65eee7cd1fe1dc2804433417da1d19d7501bf9b297312d77a799af703d13ff6cf7c4f77521a21  kapman-cadaf8c258b3b7c5427ec836fafca7b9b9621757.tar.xz
+d6f0284fc678ae1fb1b7478f578d45a17d8daf10077cdfab281afa40584e0b66ae986a641b6fc7b7b4c29e89b2b958dfb51ee87ffdb6bf1ab92001a6dc93ea43  kapman-44a038a282e7fdff61aa29a9e3d3884f7c10a154.tar.xz
 "

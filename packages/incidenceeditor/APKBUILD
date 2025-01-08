@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=incidenceeditor
-pkgver=9999_git20241231
+pkgver=9999_git20250102
 pkgrel=0
-_commit="5df86db2efe9b2e79bb31457948c9940b3a57095"
+_commit="218385d97c74445ac6bbec127d36fadbf77936b2"
 pkgdesc="KDE PIM incidence editor"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> akonadi
@@ -37,7 +37,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/incidenceeditor.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-02/incidenceeditor-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/incidenceeditor-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -63,5 +63,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-98a0fc680eda14678818650fe65470a84fa9dafe4215a70eec74dc73985b39fa1604253d51ab8d213701927fc81c27fd718c93f41eb99898626f8b45468f95c6  incidenceeditor-5df86db2efe9b2e79bb31457948c9940b3a57095.tar.xz
+655ca31c293e6331bd21c3f79f3d201b1be5c03038a7962232e1f14afc1e1713a94798116df54dc28cf751158f6a15e5463cc98b959097ea05c0c8975daa98cd  incidenceeditor-218385d97c74445ac6bbec127d36fadbf77936b2.tar.xz
 "

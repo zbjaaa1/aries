@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=ktexteditor
-pkgver=9999_git20250102
+pkgver=99999_git20250113
 pkgrel=0
-_commit="d070d3a048460efb835b64571b0ffe8083a91370"
+_commit="4c678eeebcfa1e4944c5d9b39d7f48859a5552e9"
 pkgdesc="Advanced embeddable text editor"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -33,7 +33,7 @@ makedepends="$depends_dev
 checkdepends="xvfb-run"
 options="!check" # fail on builders
 _repo_url="https://invent.kde.org/frameworks/ktexteditor.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/ktexteditor-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/ktexteditor-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 replaces="ktexteditor5"
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-9d51b27e83e39a40968af7d7b2424032170f3b28a1228dcbffa9d1b83c7854b81975f4f021cd81fc781057a71a1d0aede7ff343770f1cd9040b43793c54d9522  ktexteditor-d070d3a048460efb835b64571b0ffe8083a91370.tar.xz
+ac9409e07167fa2621f80f3fafa92e7325b1591c12083d60c5baa5ded20989a3633cdee0f1234dd5eaf166e23ee3e87aa50c1e7201d935c71a5e1bfc2bb7533d  ktexteditor-4c678eeebcfa1e4944c5d9b39d7f48859a5552e9.tar.xz
 "

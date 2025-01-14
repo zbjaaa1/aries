@@ -2,11 +2,11 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-workspace
-pkgver=9999_git20250102
+pkgver=99999_git20250113
 pkgrel=0
-_commit="5369684c418ed6f566977b0592352e0b35264061"
+_commit="5463e672abb2201a47b33f2b2d90d91449b85f0d"
 pkgdesc="KDE Plasma Workspace"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/plasma-desktop/"
 license="(GPL-2.0-only OR GPL-3.0-only) AND LGPL-2.1-or-later AND GPL-2.0-or-later AND MIT AND LGPL-2.1-only AND LGPL-2.0-or-later AND (LGPL-2.1-only OR LGPL-3.0-only) AND LGPL-2.0-only"
@@ -96,6 +96,7 @@ makedepends="$depends_dev
 	qt6-qtdeclarative-private-dev
 	qt6-qttools-dev
 	samurai
+	systemd-dev
 	xdotool
 	"
 checkdepends="xvfb-run"
@@ -113,7 +114,7 @@ subpackages="
 	$pkgname-zsh-completion
 	"
 _repo_url="https://invent.kde.org/plasma/plasma-workspace.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/plasma-workspace-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/plasma-workspace-$_commit.tar.xz"
 
 replaces="plasma5support"
 
@@ -160,13 +161,6 @@ check() {
 package() {
 	DESTDIR="$pkgdir" cmake --install build
 
-	# We don't ship systemd
-	rm -r "$pkgdir"/usr/lib/systemd
-
-	if [ -d "$pkgdir"/home ]; then
-		rm -r "${pkgdir:?}"/home
-	fi
-
 	# Remove X11 support
 	rm \
 		"$pkgdir"/usr/bin/startplasma-x11 \
@@ -174,5 +168,5 @@ package() {
 }
 
 sha512sums="
-5c2f7af2d34e5f63e432ff829f1e73cd51d3b78dc83d24c203c42263121ccc6ac29482caa1aa6f98e912dad6d14ab18081eaf846cbd688c2a755ee36a88bd787  plasma-workspace-5369684c418ed6f566977b0592352e0b35264061.tar.xz
+ec2b7975a345a238402e94d49bce42a1b1d38ac62c128a671488a191a4847fda18c82c8a1287733eb190727cfa83fad5c58592af14d46c9a25a58cc8410ea4ad  plasma-workspace-5463e672abb2201a47b33f2b2d90d91449b85f0d.tar.xz
 "

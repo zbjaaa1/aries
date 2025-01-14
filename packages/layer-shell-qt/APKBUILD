@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=layer-shell-qt
-pkgver=9999_git20241218
+pkgver=99999_git20250109
 pkgrel=0
-_commit="edb8f67b1b16178dabac43cb74cade39fe384629"
+_commit="ac333b19c73a3ca760114410095fd9643efb07ef"
 pkgdesc="Qt component to allow applications to make use of the Wayland wl-layer-shell protocol"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -27,7 +27,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/layer-shell-qt.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/layer-shell-qt-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/layer-shell-qt-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 
 options="!check"
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-9f1f84fa488649ab09fe99f59c30c840404082f8344f67a84568c0342559ef7e8d4b4e68ae6c0084dad36186ebdaf95e2c43d8fd75ec575d5ea969e549ad1e06  layer-shell-qt-edb8f67b1b16178dabac43cb74cade39fe384629.tar.xz
+9265148cc947d0abc2c88e93fea8ef5971b7ead7a65ece2d8f5d8740ed8a3f46eb5ca5590cdf61353fc36649f64f2a3637418009d320fc5ef28dda25af358d41  layer-shell-qt-ac333b19c73a3ca760114410095fd9643efb07ef.tar.xz
 "

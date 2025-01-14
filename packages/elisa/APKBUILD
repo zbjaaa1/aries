@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=elisa
-pkgver=9999_git20250102
+pkgver=99999_git20250113
 pkgrel=0
-_commit="b957aa3ed0099eebcaa51cecd741067096dfd70a"
+_commit="ac828b8496b44da31f8c440f6a056d0073d26efc"
 # armhf blocked by qt6-qtdeclarative
 # s390x blocked by vlc
 arch="all !armhf !s390x"
@@ -48,7 +48,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/multimedia/elisa.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/elisa-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/elisa-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -74,5 +74,5 @@ package() {
 }
 
 sha512sums="
-79cd35c37ee2b70253c88fec5f98475d95c7d7280c863b994cd5401862e935b343b760e9d3bebcbc6294651ca7de925b8ab569d856561fb88363abc34c32c924  elisa-b957aa3ed0099eebcaa51cecd741067096dfd70a.tar.xz
+8bb61b2e30a0543c8e75c699d10447d54a67fc5ac35c4d7b77c9808b144230e286208a4fd1deeac0f9b280323ee70d23b6458c0f09f8fb8dd1631283781ca42b  elisa-ac828b8496b44da31f8c440f6a056d0073d26efc.tar.xz
 "

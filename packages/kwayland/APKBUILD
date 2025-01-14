@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=kwayland
-pkgver=9999_git20241219
+pkgver=99999_git20250109
 pkgrel=0
-_commit="1ced4e33a3d0308eb4d773fd8d11250541ad622b"
+_commit="b956759d36897f11b296b0118f1783110463f103"
 pkgdesc="Qt-style Client and Server library wrapper for the Wayland libraries"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://www.kde.org"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/plasma/kwayland.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-03/kwayland-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/kwayland-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-dbg"
 options="!check" # Fails due to requiring running Wayland compositor
 
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-35dc017d06e78907a66201d5d1ac2a744d58cf366e146648a640edbf3a981d7b2c92dc9ac41ea6371086629d1109d8635ac974aae5c874fbbf26f5d811daa665  kwayland-1ced4e33a3d0308eb4d773fd8d11250541ad622b.tar.xz
+8a355ab4bd4d37e296ba11b405271369270381f5c6a603b8328a8b95b0699735529b71dc750754b7649bd206c52bbba77ec180ff10be194ee228ba4606542de2  kwayland-b956759d36897f11b296b0118f1783110463f103.tar.xz
 "

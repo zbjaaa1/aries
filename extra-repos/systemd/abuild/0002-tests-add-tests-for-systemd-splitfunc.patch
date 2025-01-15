@@ -1,0 +1,254 @@
+From 4aecd931f4b911211194c3018d029330d6aed38e Mon Sep 17 00:00:00 2001
+From: Clayton Craft <clayton@craftyguy.net>
+Date: Tue, 21 Jan 2025 11:50:06 -0800
+Subject: [PATCH 2/4] tests: add tests for systemd splitfunc
+
+---
+ tests/abuild_systemdsplit_test                | 110 ++++++++++++++++++
+ .../systemd_existing_install_scripts/APKBUILD |  32 +++++
+ ...sting-install-scripts-systemd.post-install |   1 +
+ ...isting-install-scripts-systemd.pre-install |   1 +
+ .../systemd_no_install_scripts/APKBUILD       |  27 +++++
+ tests/testrepo/systemd_pkg/APKBUILD           |  24 ++++
+ 6 files changed, 195 insertions(+)
+ create mode 100755 tests/abuild_systemdsplit_test
+ create mode 100644 tests/testrepo/systemd_existing_install_scripts/APKBUILD
+ create mode 100644 tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.post-install
+ create mode 100644 tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.pre-install
+ create mode 100644 tests/testrepo/systemd_no_install_scripts/APKBUILD
+ create mode 100644 tests/testrepo/systemd_pkg/APKBUILD
+
+diff --git a/tests/abuild_systemdsplit_test b/tests/abuild_systemdsplit_test
+new file mode 100755
+index 0000000..2a9f1cb
+--- /dev/null
++++ b/tests/abuild_systemdsplit_test
+@@ -0,0 +1,110 @@
++#!/usr/bin/env atf-sh
++
++. $(atf_get_srcdir)/test_env.sh
++init_tests \
++	abuild_systemdsplit_pkg \
++	abuild_systemdsplit_no_install_scripts \
++	abuild_systemdsplit_existing_install_scripts
++
++testrepo=$(atf_get_srcdir)/testrepo
++
++export ABUILD_SHAREDIR=$(atf_get_srcdir)/..
++export ABUILD_CONF=/dev/null
++export ABUILD_APK_INDEX_OPTS="--allow-untrusted"
++export REPODEST="$PWD"/packages
++
++init_keys() {
++	cp -ra "$(atf_get_srcdir)"/testdata/.abuild "$PWD"
++}
++
++abuild_systemdsplit_pkg_body() {
++	init_keys
++	cp -ra "$testrepo" .
++	cd testrepo/systemd_pkg
++
++	atf_check -s exit:0 -o ignore \
++		-e not-match:"WARNING" \
++		-e not-match:"fatal" \
++		-e match:"Running split function systemd" \
++		abuild
++
++	arch=$(abuild -A)
++	tar -zxf "$REPODEST"/testrepo/$arch/sd-pkg-systemd-1.0-r0.apk
++
++	if [ ! -f usr/lib/systemd/system/foo.service ]; then
++		atf_fail "usr/lib/systemd/system/*.service should exist"
++	fi
++}
++
++abuild_systemdsplit_no_install_scripts_body() {
++	init_keys
++	cp -ra "$testrepo" .
++	cd testrepo/systemd_no_install_scripts
++
++	atf_check -s exit:0 -o ignore \
++		-e not-match:"WARNING" \
++		-e not-match:"fatal" \
++		-e match:"Adding .post-install" \
++		-e match:"Adding .pre-deinstall" \
++		abuild
++
++	arch=$(abuild -A)
++	tar -zxf "$REPODEST"/testrepo/$arch/sd-no-install-scripts-systemd-1.0-r0.apk
++
++	# post-install
++	if [ ! -f .post-install ]; then
++		atf_fail ".post-install script should exist"
++	fi
++	if ! grep -Eq "systemd_service_post_install system.*foo.service" .post-install; then
++		atf_fail ".post-install script missing preset logic"
++	fi
++
++	# pre-deinstall
++	if [ ! -f .pre-deinstall ]; then
++		atf_fail ".pre-deinstall script should exist"
++	fi
++	if ! grep -Eq "systemd_service_pre_deinstall system.*foo.service" .pre-deinstall; then
++		atf_fail ".pre-deinstall script missing preset logic"
++	fi
++}
++
++abuild_systemdsplit_existing_install_scripts_body() {
++	init_keys
++	cp -ra "$testrepo" .
++	cd testrepo/systemd_existing_install_scripts
++
++	atf_check -s exit:0 -o ignore \
++		-e not-match:"WARNING" \
++		-e not-match:"fatal" \
++		-e match:"Adding .pre-install" \
++		-e match:"Adding .post-install" \
++		-e match:"Adding .pre-deinstall" \
++		abuild
++
++	arch=$(abuild -A)
++	tar -zxf "$REPODEST"/testrepo/$arch/sd-existing-install-scripts-systemd-1.0-r0.apk
++
++	# post-install
++	if [ ! -f .post-install ]; then
++		atf_fail ".post-install script should exist"
++	fi
++	if ! grep -Eq "systemd_service_post_install system.*foo.service" .post-install; then
++		atf_fail ".post-install script missing preset logic"
++	fi
++	if ! grep -Eq "# DO NOT OVERWRITE" .post-install; then
++		atf_fail ".post-install was overwritten by the preset logic"
++	fi
++
++	# pre-deinstall
++	if [ ! -f .pre-deinstall ]; then
++		atf_fail ".pre-deinstall script should exist"
++	fi
++	if ! grep -Eq "systemd_service_pre_deinstall system.*foo.service" .pre-deinstall; then
++		atf_fail ".pre-deinstall script missing preset logic"
++	fi
++
++	# pre-install
++	if ! grep -Eq "# THIS SHOULD EXIST" .pre-install; then
++		atf_fail ".pre-install script was overwritten"
++	fi
++}
+diff --git a/tests/testrepo/systemd_existing_install_scripts/APKBUILD b/tests/testrepo/systemd_existing_install_scripts/APKBUILD
+new file mode 100644
+index 0000000..0f15530
+--- /dev/null
++++ b/tests/testrepo/systemd_existing_install_scripts/APKBUILD
+@@ -0,0 +1,32 @@
++# Maintainer: postmarketOS <team@postmarketos.org>
++pkgname="sd-existing-install-scripts"
++pkgver="1.0"
++pkgrel=0
++pkgdesc="Dummy test package w/ systemd ([Install] section in service and custom install script)"
++url="https://gitlab.alpinelinux.org/alpine/aports"
++arch="noarch"
++license="MIT"
++subpackages="$pkgname-systemd"
++source=""
++builddir="$srcdir/pkg1-1.0"
++options="!check"
++
++prepare() {
++	mkdir -p "$builddir"
++}
++
++package() {
++	mkdir -p "$pkgdir/usr/lib/systemd/system"
++	cat <<-EOF > "$pkgdir/usr/lib/systemd/system/foo.service"		
++		[Service]
++		ExecStart=/usr/bin/foo
++
++		[Install]
++		Wanted-by=default.target
++	EOF
++}
++
++systemd() {
++	default_systemd
++	install="$install $subpkgname.pre-install"
++}
+diff --git a/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.post-install b/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.post-install
+new file mode 100644
+index 0000000..2931eeb
+--- /dev/null
++++ b/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.post-install
+@@ -0,0 +1 @@
++# DO NOT OVERWRITE
+diff --git a/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.pre-install b/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.pre-install
+new file mode 100644
+index 0000000..9e66ed7
+--- /dev/null
++++ b/tests/testrepo/systemd_existing_install_scripts/sd-existing-install-scripts-systemd.pre-install
+@@ -0,0 +1 @@
++# THIS SHOULD EXIST
+diff --git a/tests/testrepo/systemd_no_install_scripts/APKBUILD b/tests/testrepo/systemd_no_install_scripts/APKBUILD
+new file mode 100644
+index 0000000..6af4652
+--- /dev/null
++++ b/tests/testrepo/systemd_no_install_scripts/APKBUILD
+@@ -0,0 +1,27 @@
++# Maintainer: postmarketOS <team@postmarketos.org>
++pkgname="sd-no-install-scripts"
++pkgver="1.0"
++pkgrel=0
++pkgdesc="Dummy test package w/ systemd support ([Install] section in service)"
++url="https://gitlab.alpinelinux.org/alpine/aports"
++arch="noarch"
++license="MIT"
++subpackages="$pkgname-systemd"
++source=""
++builddir="$srcdir/pkg1-1.0"
++options="!check"
++
++prepare() {
++	mkdir -p "$builddir"
++}
++
++package() {
++	mkdir -p "$pkgdir/usr/lib/systemd/system"
++	cat <<-EOF > "$pkgdir/usr/lib/systemd/system/foo.service"		
++		[Service]
++		ExecStart=/usr/bin/foo
++
++		[Install]
++		Wanted-by=default.target
++	EOF
++}
+diff --git a/tests/testrepo/systemd_pkg/APKBUILD b/tests/testrepo/systemd_pkg/APKBUILD
+new file mode 100644
+index 0000000..a5446a9
+--- /dev/null
++++ b/tests/testrepo/systemd_pkg/APKBUILD
+@@ -0,0 +1,24 @@
++# Maintainer: postmarketOS <team@postmarketos.org>
++pkgname="sd-pkg"
++pkgver="1.0"
++pkgrel=0
++pkgdesc="Dummy test package w/ systemd (no [Install] section in service)"
++url="https://gitlab.alpinelinux.org/alpine/aports"
++arch="noarch"
++license="MIT"
++subpackages="$pkgname-systemd"
++source=""
++builddir="$srcdir/pkg1-1.0"
++options="!check"
++
++prepare() {
++	mkdir -p "$builddir"
++}
++
++package() {
++	mkdir -p "$pkgdir/usr/lib/systemd/system"
++	cat <<-EOF > "$pkgdir/usr/lib/systemd/system/foo.service"		
++		[Service]
++		ExecStart=/usr/bin/foo
++	EOF
++}
+-- 
+2.48.1
+

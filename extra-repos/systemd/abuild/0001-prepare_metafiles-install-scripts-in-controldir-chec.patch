@@ -1,0 +1,72 @@
+From df135fd1a709ea27cb36d60f7d992e10170ed838 Mon Sep 17 00:00:00 2001
+From: Clayton Craft <clayton@craftyguy.net>
+Date: Fri, 17 Jan 2025 08:43:57 -0800
+Subject: [PATCH 1/4] prepare_metafiles: install scripts in controldir checking
+ deps
+
+A future patch will make it possible that some scripts are generated
+when they are "installed" to the controldir, and in this case they will
+not exist yet when script dependencies are checked and added to the
+package. By "installing" the scripts sooner, the dependencies for these
+generated scripts can be accounted for.
+---
+ abuild.in | 29 +++++++++++++++--------------
+ 1 file changed, 15 insertions(+), 14 deletions(-)
+
+diff --git a/abuild.in b/abuild.in
+index b834e73..83439c5 100644
+--- a/abuild.in
++++ b/abuild.in
+@@ -1118,6 +1118,20 @@ prepare_metafiles() {
+ 	mkdir -p "$controldir"
+ 	local builddate="$SOURCE_DATE_EPOCH"
+ 
++	local metafiles=".PKGINFO"
++	for i in $install $triggers; do
++		local f=${i%=*}
++		local n=${f%.*}
++		if [ "$n" != "$name" ]; then
++			continue
++		fi
++		script=${f#$name}
++		msg "Adding $script"
++		cp "$startdir/$f" "$controldir/$script" || return 1
++		chmod +x "$controldir/$script"
++		metafiles="$metafiles $script"
++	done
++
+ 	# Fix package size on several filesystems
+ 	case "$(stat -f -c "%T" .)" in
+ 	btrfs|ecryptfs|zfs)
+@@ -1176,7 +1190,7 @@ prepare_metafiles() {
+ 		for i in $install $triggers; do
+ 			local s=${i%=*}
+ 			[ "$name" != "${s%.*}" ] && continue
+-			if head -n 1 "$startdir/$s" | grep -E '^#!\s*/bin/sh' >/dev/null ; then
++			if head -n 1 "$controldir/$s" | grep -E '^#!\s*/bin/sh' >/dev/null ; then
+ 				msg "Script found. /bin/sh added as a dependency for $pkg"
+ 				deps="$deps /bin/sh"
+ 				break
+@@ -1227,19 +1241,6 @@ prepare_metafiles() {
+ 		echo "install_if = $(echo $install_if)" >> "$pkginfo"
+ 	fi
+ 
+-	local metafiles=".PKGINFO"
+-	for i in $install $triggers; do
+-		local f=${i%=*}
+-		local n=${f%.*}
+-		if [ "$n" != "$name" ]; then
+-			continue
+-		fi
+-		script=${f#$name}
+-		msg "Adding $script"
+-		cp "$startdir/$f" "$controldir/$script" || return 1
+-		chmod +x "$controldir/$script"
+-		metafiles="$metafiles $script"
+-	done
+ 	printf %s "$metafiles" | tr ' ' '\0' > "$controldir"/.metafiles
+ }
+ 
+-- 
+2.48.1
+

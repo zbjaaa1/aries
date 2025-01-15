@@ -5,113 +5,141 @@
 pkgname=systemd
 pkgver=256.5
 _pkgver="musl-v${pkgver//_/-}"
-pkgrel=6
+pkgrel=7
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
 license="MIT AND GPL-2.0-only AND LGPL-2.1-or-later"
 options="pmb:strict !check" # few tests fail, need to debug. We use alpine dbus for building, systemd-dbus for runtime
+install="$pkgname.pre-install"
 
 makedepends="
-	acl-dev
-	audit-dev
 	bash
-	bash-completion
-	clang
-	cmake
+	bash-completion-dev
 	coreutils
-	cryptsetup-dev
-	elfutils
-	glib-dev
+	gettext-dev
 	gperf
-	kmod-dev
-	libapparmor-dev
-	libbpf-dev
-	libbz2
 	libcap-dev
-	libfido2-dev
-	libgcc
-	libgcrypt-dev
-	libintl
-	libiptcdata-dev
-	libmicrohttpd-dev
-	libpwquality
-	libqrencode-dev
-	libseccomp-dev
-	libselinux-dev
-	libxkbcommon-dev
-	linux-pam-dev
-	llvm15
-	lz4-dev
 	meson
 	musl-dev
-	pcre2-dev
-	perl
 	pkgconf
 	py3-jinja2
-	py3-lxml
-	python3-dev
 	rsync
-	tpm2-tss-mu
 	tzdata
 	util-linux-dev
-	xz-dev
-	zstd-dev
 	"
 
-# We add these as explicit dependencies to ensure we get the systemd variants
-# and not the Alpine ones.
+_args=""
+# moving all the dependencies there breaks pmboostrap repo_missing dependency parsing.
+# nice (unintended) benefit: bpo no longer breaks
 if [ -z "$BOOTSTRAP" ] || [ "$BOOTSTRAP" -gt 2 ]; then
+	# journald-remote has to be before journald
+	subpackages="$subpackages
+		$pkgname-x11
+		$pkgname-doc
+		$pkgname-lang
+
+		$pkgname-journald-remote
+		$pkgname-journald-upload
+
+		$pkgname-journald
+		$pkgname-journald-systemd
+		$pkgname-journald-zsh-completion:journald_zcomp:noarch
+		$pkgname-journald-bash-completion:journald_bcomp:noarch
+
+		$pkgname-udevd
+		$pkgname-udevd-zsh-completion:udevd_zcomp:noarch
+		$pkgname-udevd-bash-completion:udevd_bcomp:noarch
+
+		$pkgname-logind
+		$pkgname-logind-systemd
+		$pkgname-logind-zsh-completion:logind_zcomp:noarch
+		$pkgname-logind-bash-completion:logind_bcomp:noarch
+
+		$pkgname-timesyncd
+		$pkgname-timesyncd-systemd
+		$pkgname-timesyncd-zsh-completion:timesyncd_zcomp:noarch
+		$pkgname-timesyncd-bash-completion:timesyncd_bcomp:noarch
+
+		$pkgname-networkd
+		$pkgname-networkd-systemd
+		$pkgname-networkd-zsh-completion:networkd_zcomp:noarch
+		$pkgname-networkd-bash-completion:networkd_bcomp:noarch
+
+		$pkgname-resolved
+		$pkgname-resolved-systemd
+		$pkgname-resolved-zsh-completion:resolved_zcomp:noarch
+		$pkgname-resolved-bash-completion:resolved_bcomp:noarch
+
+	"
 	makedepends="$makedepends
 		dbus-dev
+		linux-pam-dev
 		polkit-dev
+
+		acl-dev
+		audit-dev
+		bzip2-dev
+		cryptsetup-dev
+		curl-dev
+		elfutils-dev
+		glib-dev
+		gnutls-dev
+		kmod-dev
+		libapparmor-dev
+		libbpf-dev
+		libgcrypt-dev
+		libgcrypt-dev
+		libgpg-error-dev
+		libiptcdata-dev
+		libmicrohttpd-dev
+		libpwquality-dev
+		libqrencode-dev
+		libseccomp-dev
+		libselinux-dev
+		libxkbcommon-dev
+		lz4-dev
+		openssl-dev
+		pcre2-dev
+		tpm2-tss-mu
+		xz-dev
+		zlib-dev
+		zstd-dev
+	"
+	# make sure to copy a new entry here to BOOTSTRAP <= 2
+	_args="$_args
+		-Dman=enabled
+		-Dpam=enabled
+		-Dpolkit=enabled
+
+		-Dcryptolib=gcrypt
+		-Ddefault-network=true
+		-Ddns-over-tls=gnutls
+		-Defi=true
+		-Delfutils=enabled
+		-Dgcrypt=true
+		-Dlibfido2=disabled
 	"
 else
-	makedepends="$makedepends
-		linux-pam-dev>1.0
-		dbus-dev<999
-		polkit-dev<999
+	# we're bootstrapping here from alpine dependencies
+	# :'<,'>s/true/false/
+	# :'<,'>s/enabled/disabled/
+	_args="$_args
+		-Ddbus=disabled
+		-Dpam=disabled
+		-Dpolkit=disabled
+
+		-Dman=disabled
+		-Dtranslations=false
 	"
 fi
 
-# provides=openrc and openrc-settingsd to prevent those packages
-# getting pulled in, as there are some conflicts (dbus)
-provides="busctl eudev openrc-settingsd=$pkgver-r$pkgrel"
-provider_priority=100
-
-install="$pkgname.pre-install"
-subpackages="
-	$pkgname-lang
+subpackages="$subpackages
 	$pkgname-dbg
 	$pkgname-dev
-	$pkgname-doc
-	$pkgname-x11
-
-	$pkgname-udevd
-	$pkgname-udevd-zsh-completion:udevd_zcomp:noarch
-	$pkgname-udevd-bash-completion:udevd_bcomp:noarch
-
-	$pkgname-timesyncd
-	$pkgname-timesyncd-zsh-completion:timesyncd_zcomp:noarch
-	$pkgname-timesyncd-bash-completion:timesyncd_bcomp:noarch
-
-	$pkgname-networkd
-	$pkgname-networkd-zsh-completion:networkd_zcomp:noarch
-	$pkgname-networkd-bash-completion:networkd_bcomp:noarch
-
-	$pkgname-resolved
-	$pkgname-resolved-zsh-completion:resolved_zcomp:noarch
-	$pkgname-resolved-bash-completion:resolved_bcomp:noarch
-
-	$pkgname-logind
-	$pkgname-logind-zsh-completion:logind_zcomp:noarch
-	$pkgname-logind-bash-completion:logind_bcomp:noarch
-
-	$pkgname-journald
-	$pkgname-journald-zsh-completion:journald_zcomp:noarch
-	$pkgname-journald-bash-completion:journald_bcomp:noarch
 
 	$pkgname-libs
+	$pkgname-libs-private:libs_private
 
 	$pkgname-bash-completion
 	$pkgname-zsh-completion
@@ -120,10 +148,11 @@ subpackages="
 source="
 	https://gitlab.com/postmarketOS/systemd/-/archive/$_pkgver/systemd-$_pkgver.tar.gz
 	4.patch
+	0001-curl-util-use-curl_getdate-instead-of-implementing-h.patch
 	systemd-apk-macros.sh
-	wired.network
 	"
 builddir="$srcdir/systemd-$_pkgver"
+provider_priority=100
 
 export CFLAGS="$CFLAGS -D__UAPI_DEF_ETHHDR=0" # see src/basic/linux/if_ether.h
 
@@ -148,35 +177,49 @@ _default_zshcomp() {
 	amove "$_zshcomp/$1"
 }
 
+_default_systemd() {
+	_parent_name="${subpkgname%-systemd}"
+	depends="systemd=$pkgver-r$pkgrel $_parent_name=$pkgver-r$pkgrel"
+	pkgdesc="$_parent_name (systemd files)"
+	install_if="systemd $_parent_name=$pkgver-r$pkgrel"
+	install="$subpkgname.post-install $subpkgname.pre-deinstall"
+}
+
 build() {
+	_args="${_args//$'\n'}"
+	_args="${_args//$'\t'/ }"
+
 	abuild-meson \
 		-Dmode=release \
 		-Dsplit-bin=true \
 		-Dsplit-usr=true \
 		\
-		-Dkmod-path=/bin/kmod \
-		-Dsulogin-path=/sbin/sulogin \
-		\
 		-Ddebug-shell=/bin/ash \
-		-Dpolkit=enabled \
-		-Dpam=enabled \
-		-Dpamlibdir=/usr/lib/security \
+		-Dkmod-path=/bin/kmod \
+		-Dntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 4.pool.ntp.org" \
 		-Dpamconfdir=/etc/pam.d \
+		-Dpamlibdir=/usr/lib/security \
+		-Dsulogin-path=/sbin/sulogin \
+		-Dsupport-url="https://gitlab.postmarketos.org/groups/postmarketOS/-/issues" \
+		-Dfirst-boot-full-preset=true \
 		\
 		-Dbootloader=disabled \
 		-Dutmp=false \
-		-Dldconfig=false \
-		-Duserdb=false \
+		-Dgshadow=false \
 		-Dhomed=disabled \
+		-Didn=false \
+		-Dkernel-install=false \
+		-Dldconfig=false \
 		-Dnss-myhostname=false \
 		-Dnss-mymachines=disabled \
 		-Dnss-resolve=disabled \
 		-Dnss-systemd=false \
-		-Dsysext=true \
-		-Dsysusers=true \
+		-Drpmmacrosdir="no" \
 		-Dselinux=disabled \
+		-Dsysvinit-path="" \
+		-Dukify=disabled \
+		-Duserdb=false \
 		\
-		-Dman=enabled\
 		-Dhtml=disabled \
 		\
 		-Dsystem-alloc-uid-min=101 \
@@ -187,17 +230,14 @@ build() {
 		-Dnobody-user=nobody \
 		-Dnobody-group=nobody \
 		\
+		-Dcreate-log-dirs=true \
 		-Ddefault-kill-user-processes=true \
-		-Dgshadow=false \
 		-Ddefault-locale=en_US.UTF-8 \
+		-Dfexecve=true \
 		\
 		-Ddefault-dns-over-tls=yes \
-		-Ddns-over-tls=openssl \
 		-Ddns-servers="9.9.9.10#dns10.quad9.net 149.112.112.10#dns10.quad9.net 2620:fe::10#dns10.quad9.net 2620:fe::fe:10#dns10.quad9.net" \
-		-Dntp-servers="0.pool.ntp.org 1.pool.ntp.org 2.pool.ntp.org 4.pool.ntp.org" \
-		\
-		-Didn=false \
-		-Dsysvinit-path="" \
+		$_args \
 		build .
 	meson compile ${JOBS:+-j ${JOBS}} -C build
 }
@@ -209,11 +249,15 @@ check() {
 package() {
 	# FIXME: For some reason .note.dlopen isn't placed in the binary. Investigate!
 	# https://github.com/systemd/systemd/blob/main/docs/ELF_DLOPEN_METADATA.md
-	depends="
-		$pkgname-journald=$pkgver-r$pkgrel
-		$pkgname-udevd=$pkgver-r$pkgrel
-		!openrc
-		"
+	provides="busctl openrc-settingsd=$pkgver-r$pkgrel"
+	depends="!openrc $pkgname-libs-private=$pkgver-r$pkgrel"
+	if [ -z "$BOOTSTRAP" ] || [ "$BOOTSTRAP" -gt 2 ]; then
+		depends="$depends
+			$pkgname-journald
+			$pkgname-logind
+			$pkgname-udevd
+			"
+	fi
 
 	DESTDIR="$pkgdir" meson install --no-rebuild -C build
 
@@ -223,31 +267,46 @@ package() {
 
 	install -Dm755 "$srcdir"/systemd-apk-macros.sh -t \
 		"$pkgdir"/usr/lib/systemd
+
+	# as long as we don't use factory reset, delete related files
+	rm -R "$pkgdir"/usr/share/factory
 }
 
+libs_private() {
+	depends=""
+	amove usr/lib/systemd/libsystemd-*.so
+}
+
+# udev is too tightly integrated into systemd services
 udevd() {
 	pkgdesc="systemd udev"
-	# is a dependency of systemd
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
 
 	# NOTE: should only be udev, but packages hardcode eudev
 	provides="eudev udev eudev-libs"
 	provider_priority=100
 
-	amove usr/bin/udevadm
 	amove etc/udev
+	amove usr/lib/udev
+
+	amove usr/bin/udevadm
+	amove usr/lib/systemd/system/systemd-udev*
+	amove usr/lib/systemd/systemd-udevd
+
 	amove usr/lib/libudev*
+
 	amove usr/lib/systemd/system/initrd-udevadm-cleanup-db.service
 	amove usr/lib/systemd/system/sockets.target.wants/systemd-udev*
 	amove usr/lib/systemd/system/sysinit.target.wants/systemd-udev*
-	amove usr/lib/systemd/system/systemd-udev*
-	amove usr/lib/systemd/systemd-udevd
-	amove usr/lib/udev
+
+	amove usr/lib/systemd/systemd-network-generator
+	amove usr/lib/systemd/system/systemd-network-generator.service
 
 	mkdir -p "$subpkgdir"/sbin "$subpkgdir"/bin
 
 	# Install a symlink to /usr/bin to be compatible with eudev
 	ln -sf /usr/lib/systemd/systemd-udevd "$subpkgdir"/usr/bin/udevd
-	# Install split-user symlinks
+	# Install split-usr symlinks
 	ln -sf /usr/lib/systemd/systemd-udevd "$subpkgdir"/sbin/udevd
 	ln -sf /usr/lib/systemd/systemd-udevd "$subpkgdir"/bin/udevadm
 	ln -sf /usr/lib/systemd/systemd-udevd "$subpkgdir"/sbin/udevadm
@@ -263,17 +322,23 @@ udevd_zcomp() {
 
 timesyncd() {
 	pkgdesc="systemd Time Synchronization"
-	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
 
 	amove etc/systemd/timesyncd.conf
-	amove usr/bin/timedatectl
 	amove usr/lib/systemd/ntp-units.d/80-systemd-timesync.list
+
+	amove usr/bin/timedatectl
 	amove usr/lib/systemd/systemd-timesyncd
-	amove usr/lib/systemd/system/systemd-timesyncd.service
+
 	amove usr/share/dbus-1/system-services/org.freedesktop.timesync1.service
 	amove usr/share/dbus-1/system.d/org.freedesktop.timesync1.conf
+
 	amove usr/share/polkit-1/actions/org.freedesktop.timesync1.policy
+}
+
+timesyncd_systemd() {
+	_default_systemd
+	amove usr/lib/systemd/system/systemd-timesyncd.service
 }
 
 timesyncd_bcomp() {
@@ -286,29 +351,34 @@ timesyncd_zcomp() {
 
 networkd() {
 	pkgdesc="systemd Network Configuration"
-	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
+
+	amove etc/systemd/networkd.conf
+	amove etc/systemd/network
+	amove usr/lib/systemd/network
 
 	amove usr/bin/networkctl
-	amove etc/systemd/network
-	amove etc/systemd/networkd.conf
-	amove usr/share/polkit-1/rules.d/systemd-networkd.rules
-	amove usr/lib/systemd/systemd-network-generator
 	amove usr/lib/systemd/systemd-networkd
 	amove usr/lib/systemd/systemd-networkd-wait-online
-	amove usr/lib/systemd/network
-	amove usr/lib/systemd/system/systemd-networkd.service
-	amove usr/lib/systemd/system/systemd-networkd.socket
-	amove usr/lib/systemd/system/systemd-networkd-wait-online.service
+
+	amove usr/lib/tmpfiles.d/systemd-network.conf
+
 	amove usr/share/dbus-1/interfaces/org.freedesktop.network1.DHCPServer.xml
 	amove usr/share/dbus-1/interfaces/org.freedesktop.network1.Link.xml
 	amove usr/share/dbus-1/interfaces/org.freedesktop.network1.Manager.xml
 	amove usr/share/dbus-1/interfaces/org.freedesktop.network1.Network.xml
 	amove usr/share/dbus-1/system-services/org.freedesktop.network1.service
 	amove usr/share/dbus-1/system.d/org.freedesktop.network1.conf
-	amove usr/share/polkit-1/actions/org.freedesktop.network1.policy
 
-	install -D -m0644 "$srcdir/wired.network" "$subpkgdir/usr/lib/systemd/network/80-wired.network"
+	amove usr/share/polkit-1/rules.d/systemd-networkd.rules
+	amove usr/share/polkit-1/actions/org.freedesktop.network1.policy
+}
+
+networkd_systemd() {
+	_default_systemd
+	amove usr/lib/systemd/system/systemd-networkd.service
+	amove usr/lib/systemd/system/systemd-networkd.socket
+	amove usr/lib/systemd/system/systemd-networkd-*.service
 }
 
 networkd_bcomp() {
@@ -321,22 +391,32 @@ networkd_zcomp() {
 
 resolved() {
 	pkgdesc="systemd Network Name Resolution"
-	depends="$pkgname=$pkgver-r$pkgrel"
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
 	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
 
 	amove etc/systemd/resolved.conf
-	amove usr/sbin/resolvconf
-	amove usr/lib/systemd/system/systemd-resolved.service
-	amove usr/lib/systemd/systemd-resolved
+
 	amove usr/bin/resolvectl
 	amove usr/bin/systemd-resolve
+	amove usr/lib/systemd/systemd-resolved
+	amove usr/sbin/resolvconf
+
+	amove usr/lib/systemd/resolv.conf
+
 	amove usr/lib/tmpfiles.d/systemd-resolve.conf
+
 	amove usr/share/dbus-1/interfaces/org.freedesktop.resolve1*
 	amove usr/share/dbus-1/system-services/org.freedesktop.resolve1.service
 	amove usr/share/dbus-1/system.d/org.freedesktop.resolve1.conf
+
 	amove usr/share/polkit-1/actions/org.freedesktop.resolve1.policy
+}
+
+resolved_systemd() {
+	_default_systemd
+	amove usr/lib/systemd/system/systemd-resolved.service
 }
 
 resolved_bcomp() {
@@ -351,18 +431,18 @@ resolved_zcomp() {
 logind() {
 	pkgdesc="systemd User Login Management"
 	depends="
-		$pkgname=$pkgver-r$pkgrel
-		dbus
+		$pkgname-libs-private=$pkgver-r$pkgrel
+		dbus>9990
 		shadow
 	"
 
 	provides="elogind"
 	provider_priority=100
 
-	amove usr/bin/loginctl
 	amove etc/systemd/logind.conf
+
+	amove usr/bin/loginctl
 	amove usr/lib/systemd/systemd-logind
-	amove usr/lib/systemd/system/systemd-logind.service
 
 	amove usr/lib/systemd/system/dbus-org.freedesktop.login1.service
 	amove usr/share/dbus-1/interfaces/org.freedesktop.login1.*.xml
@@ -370,6 +450,11 @@ logind() {
 	amove usr/share/dbus-1/system.d/org.freedesktop.login1.conf
 
 	amove usr/share/polkit-1/actions/org.freedesktop.login1.policy
+}
+
+logind_systemd() {
+	_default_systemd
+	amove usr/lib/systemd/system/systemd-logind.service
 }
 
 logind_bcomp() {
@@ -380,18 +465,47 @@ logind_zcomp() {
 	_default_zshcomp _loginctl
 }
 
+journald_remote() {
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
+
+	amove etc/systemd/journal-remote.conf
+
+	amove usr/lib/systemd/systemd-journal-gatewayd
+	amove usr/lib/systemd/systemd-journal-remote
+
+	amove usr/share/systemd/gatewayd
+
+	amove var/log/journal/remote
+}
+
+journald_upload() {
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
+
+	amove etc/systemd/journal-upload.conf
+
+	amove usr/lib/systemd/systemd-journal-upload
+}
+
 journald() {
 	pkgdesc="systemd Journal"
-	# is a dependency of systemd
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
+
+	amove etc/systemd/journald.conf
 
 	amove usr/bin/journalctl
-	amove etc/systemd/journal-remote.conf
-	amove etc/systemd/journald.conf
+	amove usr/lib/systemd/systemd-journald
+	amove usr/lib/systemd/system/sysinit.target.wants/systemd-journal*.service
+
+	amove usr/lib/tmpfiles.d/journal-nocow.conf
+	amove usr/lib/sysusers.d/systemd-journal.conf
+
+	amove var/log/journal
+}
+
+journald_systemd() {
+	_default_systemd
 	amove usr/lib/systemd/system/sockets.target.wants/systemd-journal*
 	amove usr/lib/systemd/system/systemd-journal*
-	amove usr/lib/systemd/systemd-journal*
-	amove usr/lib/tmpfiles.d/journal-nocow.conf
-	amove var/log/journal
 }
 
 journald_bcomp() {
@@ -404,6 +518,7 @@ journald_zcomp() {
 
 x11() {
 	pkgdesc="systemd x11"
+	depends="$pkgname-libs-private=$pkgver-r$pkgrel"
 	install_if="$pkgname=$pkgver-r$pkgrel xorg-server-common"
 
 	amove usr/lib/tmpfiles.d/x11.conf
@@ -420,6 +535,6 @@ dev() {
 sha512sums="
 5d1f4625b75b6637afa71519bc7048fe899b4f5785ce26316524ac78941e43cf6ba83391dae68497cfa4f8aaa35d953ec0c04ee581307ffc7007cf4b9d9c4454  systemd-musl-v256.5.tar.gz
 e8ced12eb67a261a5c2788487053451c352e0b2ebe3d72aaf84a3011dc92981affe4f036f693260fc8ee4a49f02de4522fd022e5783dba939023f13891ab228e  4.patch
+a0b7d3f4c0614cc97d6ee2ea2c81fb3368506131f91550c6df3792c47e66ba894de397a0d586540205311f0654ed2b98085a5601c0748f8cfca599b908c8f5df  0001-curl-util-use-curl_getdate-instead-of-implementing-h.patch
 2f9ec875de67fc4bb401bebea88653cd34c22787a26a8122233fbb761bfbf190be72cfa0c26a433c30d703ee1e10489787d75492f0e1a76cbd5f6601e7e23d49  systemd-apk-macros.sh
-81c897fed8a3fbfb67ec591b2398a5d65e4af1b3ef379376c157c98d71f085b707f8ebc896d5571a94f99f8fc84fd6b43e3b879ca9b0d57fc6c4596034c7a777  wired.network
 "

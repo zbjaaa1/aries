@@ -26,8 +26,8 @@ def test_aports_kernel():
         if aport_name == "linux-pam":
             continue  # This package isn't a linux kernel!
 
-        if "pmb:cross-native" not in apkbuild["options"]:
-            raise RuntimeError(f"{aport_name}: \"pmb:cross-native\" missing in"
+        if "pmb:cross-kernel" not in apkbuild["options"]:
+            raise RuntimeError(f"{aport_name}: \"pmb:cross-kernel\" missing in"
                                " options= line")
 
         # cross-compilers should not be in makedepends

@@ -10,7 +10,7 @@ _carch="arm64"
 _flavor="asus-x00td"
 url="https://kernel.org"
 license="GPL-2.0-only"
-options="!strip !check !tracedeps pmb:cross-native"
+options="!strip !check !tracedeps pmb:cross-kernel"
 makedepends="bash bc bison devicepkg-dev flex openssl-dev perl gcc6"
 # Compiler: GCC 6 (My phone refuses to boot kernel compiled with gcc and goes straight to fastboot mode)
 if [ "${CC:0:5}" != "gcc6-" ]; then

@@ -1,0 +1,29 @@
+# Maintainer: Caleb Connolly <caleb@postmarketos.org>
+# Co-Maintainer: Clayton Craft <clayton@craftyguy.net>
+pkgname=postmarketos-network-gadget
+pkgver=1
+pkgrel=0
+pkgdesc="Script to set up usb network gadget from rootfs"
+url="https://postmarketos.org"
+options="!check pmb:cross-native"  # no tests
+depends="postmarketos-initramfs	"
+source="
+	start_network_gadget.sh
+	network-gadget.service
+	"
+subpackages="$pkgname-systemd"
+arch="noarch"
+license="GPL-2.0-or-later"
+
+package() {
+	install -Dm755 "$srcdir/start_network_gadget.sh" \
+		"$pkgdir/usr/libexec/start_network_gadget"
+
+	install -Dm644 "$srcdir/network-gadget.service" \
+		"$pkgdir/usr/lib/systemd/system/network-gadget.service"
+}
+
+sha512sums="
+b7f6f7ea9fae8ca3ec0c7ea7aab04fafa6aaaaac1e97361a867e80b9e3f57d5127fa284816aa8e5d4e4f455c36a97bc89a347e7cb4723e0aa7233ea80fd1ad7f  start_network_gadget.sh
+abd61b7027cf48fefe8a503fb978de007064d29d5e3b5eb569ef7db23ed881b75793456b7f65eb9a4ef9ed6a1585085e3c333fee43787dc6cb64c997e379c8f1  network-gadget.service
+"

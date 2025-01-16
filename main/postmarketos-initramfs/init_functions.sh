@@ -8,7 +8,7 @@ PMOS_BOOT="${PMOS_BOOT:-}"
 PMOS_ROOT="${PMOS_ROOT:-}"
 SUBPARTITION_DEV="${SUBPARTITION_DEV:-}"
 
-CONFIGFS="/config/usb_gadget"
+CONFIGFS="/sys/kernel/config/usb_gadget"
 CONFIGFS_ACM_FUNCTION="acm.usb0"
 CONFIGFS_MASS_STORAGE_FUNCTION="mass_storage.0"
 HOST_IP="${unudhcpd_host_ip:-172.16.42.1}"
@@ -69,8 +69,9 @@ mount_proc_sys_dev() {
 	mount -t devtmpfs -o mode=0755,nosuid dev /dev || echo "Couldn't mount /dev"
 	mount -t tmpfs -o nosuid,nodev,mode=0755 run /run || echo "Couldn't mount /run"
 
-	mkdir /config
-	mount -t configfs -o nodev,noexec,nosuid configfs /config
+	mkdir -p /sys/kernel/config
+	mount -t configfs -o nodev,noexec,nosuid configfs /sys/kernel/config
+	ln -sf sys/kernel/config /config
 
 	# /dev/pts (needed for telnet)
 	mkdir -p /dev/pts

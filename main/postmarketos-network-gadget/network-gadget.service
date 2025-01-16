@@ -1,0 +1,13 @@
+[Unit]
+Description=Start USB network gadget
+Wants=modprobe@libcomposite.service
+Requires=usb-gadget.target
+After=usb-gadget.target
+
+[Service]
+RemainAfterExit=yes
+ExecStart=/usr/libexec/start_network_gadget
+
+[Install]
+WantedBy=multi-user.target
+Also=modprobe@libcomposite.service

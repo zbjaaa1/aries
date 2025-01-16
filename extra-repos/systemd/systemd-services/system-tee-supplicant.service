@@ -1,0 +1,11 @@
+[Unit]
+Description=OpenSSH Daemon
+
+[Service]
+ExecStartPre=-ln -s /usr/lib/optee_armtz /lib/optee_armtz
+ExecStart=/usr/sbin/tee-supplicant
+KillMode=process
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

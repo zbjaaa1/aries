@@ -6,7 +6,7 @@
 # How to add a new service file (5 steps):
 pkgname=systemd-services
 # 1. bump pkgver
-pkgver=43
+pkgver=44
 pkgrel=0
 pkgdesc="Systemd service files"
 url="https://postmarketos.org"
@@ -46,6 +46,7 @@ subpackages="
 	modemmanager-systemd:_service
 	nftables-systemd:_service
 	openssh-server-pam-systemd:_service
+	optee-client-systemd:_service
 	pd-mapper-systemd:_service
 	phosh-systemd:_service
 	plasma-mobile-systemd:_service
@@ -127,6 +128,7 @@ _mmsd_tng_sources="user/mmsd-tng.service"
 _modemmanager_sources="system/ModemManager.service"
 _nftables_sources="system/nftables.service"
 _openssh_server_pam_sources="system/sshd.service system/sshdgenkeys.service"
+_optee_client_sources="system/tee-supplicant.service"
 _pd_mapper_sources="system/pd-mapper.service"
 _phosh_sources="system/phosh.service"
 _plasma_mobile_sources="system/plasma-mobile.service"
@@ -196,6 +198,7 @@ source="$(flatpath \
 	$_modemmanager_sources \
 	$_nftables_sources \
 	$_openssh_server_pam_sources \
+	$_optee_client_sources \
 	$_pd_mapper_sources \
 	$_phosh_sources \
 	$_plasma_mobile_sources \
@@ -240,6 +243,7 @@ _mmsd_tng_user_presets="mmsd-tng.service"
 _modemmanager_system_presets="ModemManager.service"
 _nftables_system_presets="nftables.service"
 _openssh_server_pam_system_presets="sshd.service"
+_optee_client_system_presets="tee-supplicant.service"
 _pd_mapper_system_presets="pd-mapper.service"
 _phosh_system_presets="phosh.service"
 _plasma_mobile_system_presets="plasma-mobile.service"
@@ -353,6 +357,7 @@ f6fb4c890cbf72e344ca7a22e7f033fb4c32ce9f5edc27c03ccc5c21424d6a0ef871d79e8a89a502
 12bb9aa2a2ab8d4b21c72a785b41057eb16a27eca5718cd03a987a50b77d669fe90abafae48c68b41616f31b1953853b3b4a74db4bc3cdeccacc00df113de204  system-nftables.service
 fa445c4a53214524baed4e9c52a5463592a074f88a5a286eacb60d0907c0545f725afde23abd68cf611067add80c2ccb289a381fc5ff6a5f654ea49c81f02fe8  system-sshd.service
 c0badea3905c1d53d213fbfe11d25b556a2e484fe77eb50e9f4d42e25b67b56a0804e7d8e1b7731cd280cbb3525b4c60311817609381e2308d9f2dfb7c0d7072  system-sshdgenkeys.service
+15a4bfb6f461747b9cb56f5c2188b24741e9c2c7fc0782492b95cb66cebd3fd12266e692e1d30a7eb0f7618bbb340d9ed8b4cb0d812893a59788657d19fe3c13  system-tee-supplicant.service
 0bed9a8a719661609ad84d1c6fcdf2fe9213e741682b7ddebad82d9744f137c593788ed522868f10b95b599d81743d07ec3212630a7e99d333261dfa1bf1cc11  system-pd-mapper.service
 0025c83b3007d1bcf6de70fd6400f3c845aff575987c87f2228e7ccedc8cf69703cd04abf8b51805f31722bb4b8eea9b4fd9afdfe7fdfe1d4c6c4664273de77c  system-phosh.service
 e12d8e98e28a795f879aebcceb32a991ee4abcb3bc5ec458aa5378bb52ff86cf39be04bc4a196925f532d623304b3005f561fa5e55d1c87944d718058ec4c0e6  system-plasma-mobile.service

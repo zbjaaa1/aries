@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=analitza
-pkgver=99999_git20250112
+pkgver=99999_git20250115
 pkgrel=0
-_commit="d5c68cd5d16aa6d1db2288e13401146f05aa5cd2"
+_commit="707c68858c41769d009ff4ba6d96760addf9c79d"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://edu.kde.org/"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/education/analitza.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-13/analitza-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-15/analitza-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-7dcf919ff68612e75cf4bfbd8123d07bddb1109adb0e0f87451c4bb237497972ee3a909fa1614ce7ec2fe4171c6d80e585c117cac3cce194efe5c0e6ba33588d  analitza-d5c68cd5d16aa6d1db2288e13401146f05aa5cd2.tar.xz
+69758b03c35a7c3c4f903c0b410bf18b47269f26a9adf2f2777bc2731ed44ec952decb02c05ef8fa64a311820f1365b22c1250280f50bb6b89b31fa392884232  analitza-707c68858c41769d009ff4ba6d96760addf9c79d.tar.xz
 "

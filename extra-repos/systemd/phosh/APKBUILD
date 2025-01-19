@@ -1,0 +1,137 @@
+# Contributor: Bart Ribbers <bribbers@disroot.org>
+# Contributor: Danct12 <danct12@disroot.org>
+# Contributor: Newbyte <newbyte@disroot.org>
+# Contributor: Rasmus Thomsen <oss@cogitri.dev>
+# Maintainer: team/phosh <newbyte@postmarketos.org>
+pkgname=phosh
+pkgver=0.44.0
+pkgrel=1
+pkgdesc="Wayland shell for GNOME on mobile devices"
+# armhf: blocked by gnome-shell-schemas
+arch="all !armhf"
+url="https://gitlab.gnome.org/World/Phosh/phosh"
+license="GPL-3.0-only"
+triggers="$pkgname.trigger=/usr/lib/phosh/plugins/prefs"
+depends="
+	adwaita-icon-theme
+	bash
+	dbus-x11
+	dbus:org.freedesktop.Secrets
+	desktop-file-utils
+	font-adobe-source-code-pro
+	font-cantarell
+	gnome-control-center
+	gnome-session
+	gnome-settings-daemon
+	gnome-shell-schemas
+	gsettings-desktop-schemas
+	phoc
+	phosh-keyboard
+	xwayland
+	"
+makedepends="
+	callaudiod-dev
+	elogind-dev
+	evince-dev
+	evolution-data-server-dev
+	feedbackd-dev
+	gcr-dev
+	gettext-dev
+	glib-dev
+	gmobile-dev
+	gnome-bluetooth-dev
+	gnome-desktop-dev
+	gtk+3.0-dev
+	libadwaita-dev
+	libgudev-dev
+	libhandy1-dev
+	libsecret-dev
+	linux-pam-dev
+	meson
+	modemmanager-dev
+	networkmanager-dev
+	polkit-elogind-dev
+	pulseaudio-dev
+	py3-docutils
+	upower-dev
+	wayland-dev
+	wayland-protocols
+	"
+checkdepends="xvfb-run"
+# the ordering here is important - libphosh split functions need to run first to move the libphosh-0
+# headers/pkgconfig/lib into the libphosh packages, before the top level -dev package gobbles
+# up the rest.
+subpackages="
+	libphosh:libs
+	libphosh-dev:libphosh_dev
+	$pkgname-dbg
+	$pkgname-dev
+	$pkgname-doc
+	$pkgname-lang
+	$pkgname-portalsconf
+	$pkgname-systemd:_systemd_user
+	"
+source="https://sources.phosh.mobi/releases/phosh/phosh-${pkgver/_/.}.tar.xz
+	phosh.desktop
+	"
+builddir="$srcdir/$pkgname-${pkgver/_/.}"
+
+prepare() {
+	default_prepare
+	sed -i 's/\.rc/_rc/' meson.build
+}
+
+build() {
+	# phoc tests need a running Wayland compositor
+	abuild-meson \
+		-Db_lto=true \
+		-Dphoc_tests=disabled \
+		-Dman=true \
+		-Dbindings-lib=true \
+		. output
+	meson compile -C output
+}
+
+check() {
+	xvfb-run -a meson test --no-rebuild --print-errorlogs -C output
+}
+
+package() {
+	DESTDIR="$pkgdir/" meson install --no-rebuild --skip-subprojects -C output
+
+	install -D -m644 "$srcdir"/phosh.desktop \
+		"$pkgdir"/usr/share/wayland-sessions/phosh.desktop
+
+	# https://gitlab.alpinelinux.org/alpine/aports/-/merge_requests/64741#note_402279
+	rm -r "$pkgdir"/usr/lib/systemd/system
+}
+
+portalsconf() {
+	install_if="$pkgname=$pkgver-r$pkgrel xdg-desktop-portal>=1.17.1"
+	amove usr/share/xdg-desktop-portal/phosh-portals.conf
+}
+
+libphosh_dev() {
+	local _soname="libphosh-${pkgver%.*}"
+	amove usr/include/$_soname
+	amove usr/lib/$_soname.so
+	amove usr/lib/pkgconfig/$_soname.pc
+}
+
+# This is a temporary workaround til abuild supports _systemd and is depended
+# upon downstream in phosh-systemd.
+# Phosh gains more and more gnome-session integration, this is heavily systemd
+# dependend when gnome-session is built with systemd support.
+# Vendoring these files manually in pmOS is quite britle, we would otherwise
+# have to fork phosh or make a lot of version pinning.
+# TODO: when we drop this subpackage, add a {provides,replaces}="$pkgname-systemd-user" to systemd()
+_systemd_user() {
+	pkgdesc="User units for phosh"
+
+	amove usr/lib/systemd/user
+}
+
+sha512sums="
+8dde81b55d00725e8bd1fc86a8167c46ead0dc53e69b57b2c3965fe7185cbfaf8a232ca922e2459e0d9421fd1dac6153b4c0b057dd980789c60fe86a6651e405  phosh-0.44.0.tar.xz
+8ca4893a751311de326e198314669f5a276092ade99c6353c4c9ce070713fb1a5b1615e7fecb93b428dc79fd4001a9af43d24eafaf2545d7db464963fda25330  phosh.desktop
+"

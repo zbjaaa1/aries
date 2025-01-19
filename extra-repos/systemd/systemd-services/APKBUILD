@@ -6,7 +6,7 @@
 # How to add a new service file (5 steps):
 pkgname=systemd-services
 # 1. bump pkgver
-pkgver=36
+pkgver=37
 pkgrel=0
 pkgdesc="Systemd service files"
 url="https://postmarketos.org"
@@ -251,6 +251,8 @@ _wireplumber_user_presets="wireplumber.service"
 _wpa_supplicant_system_presets="wpa_supplicant.service"
 _xdg_desktop_portal_user_presets="xdg-desktop-portal-rewrite-launchers.service"
 
+_dependencies_phosh="phosh-systemd-user"
+
 _service() {
 	local name=$(echo ${subpkgname%%-systemd})
 	local n=$(echo ${subpkgname%-systemd} | sed s/-/_/g)
@@ -274,6 +276,14 @@ _service() {
 		fi
 		install -Dm$mode "$srcdir/$(flatpath "$f")" "$prefix/$f"
 	done
+
+	depends="$(eval "echo \$_dependencies_${n}")"
+	if ! depends_has systemd; then
+		depends="$depends systemd"
+	fi
+	if ! depends_has "$name"; then
+		depends="$depends $name"
+	fi
 
 	for t in user system; do
 		local presets

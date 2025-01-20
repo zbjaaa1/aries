@@ -2,9 +2,9 @@
 # group=kde-other
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kquickimageeditor
-pkgver=99999_git20241202
+pkgver=99999_git20250116
 pkgrel=0
-_commit="be9b7fb050009c53b10987370d67a386007c3cb6"
+_commit="97aaacfd259f95b60b3897143e1939f5631ad1bc"
 pkgdesc="Simple image editor for QtQuick applications"
 url="https://invent.kde.org/libraries/kquickimageeditor"
 # armhf blocked by qt6-qtdeclarative
@@ -20,7 +20,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/kquickimageeditor.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-15/kquickimageeditor-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-17/kquickimageeditor-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 options="!check" # No tests
 
@@ -39,5 +39,5 @@ package() {
 }
 
 sha512sums="
-675bfd2d4905c0b0f2e43500d4f018d981d9218d6dada9a5b74d07121451236581ce1bc537eb71d181ddab215d2b3325a0060256607f6d6176916b1e57aaa1f6  kquickimageeditor-be9b7fb050009c53b10987370d67a386007c3cb6.tar.xz
+ed209ee725fec03fa59e05fa2f8f61a27851f0b303ff535ed09096259a2034067cf84a9d0923852b6d4028ccf1ca352b098ab05e74999f07c45970805bf4d80c  kquickimageeditor-97aaacfd259f95b60b3897143e1939f5631ad1bc.tar.xz
 "

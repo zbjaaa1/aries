@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kalgebra
-pkgver=99999_git20250115
+pkgver=99999_git20250116
 pkgrel=0
-_commit="3df3e2a08f815fb51d0f9ec7bb3b6efa5c94a4b7"
+_commit="c6d262ad306c1836a3d3f4d03d753aaed6ad0354"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://edu.kde.org/kalgebra/"
@@ -30,7 +30,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/education/kalgebra.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-15/kalgebra-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-17/kalgebra-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -54,5 +54,5 @@ package() {
 }
 
 sha512sums="
-fd386e21de60614b4653bcfb70ce0af74f9d853266436e6d5f2b93d67a59b7d60292b0ca38492c3ec9ab98404b1e92c6ba4717c2d4095addd2bb09196a1a93b1  kalgebra-3df3e2a08f815fb51d0f9ec7bb3b6efa5c94a4b7.tar.xz
+7eb9037bd8170f1f3996d52bb54591548df5e1fe0fb42390cf6aff62ec419366112937e71201d594b99d42db010ede199480b6fffaaed1c9af3fa9e81d7dc9ef  kalgebra-c6d262ad306c1836a3d3f4d03d753aaed6ad0354.tar.xz
 "

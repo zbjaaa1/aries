@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kidentitymanagement
-pkgver=99999_git20250112
+pkgver=99999_git20250123
 pkgrel=0
-_commit="8ab296f0bf13601e882df072c718dcea415d4cf0"
+_commit="776414d3d62097f7f126bf5a39ae4bcd96b73543"
 pkgdesc="KDE PIM libraries"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/kidentitymanagement.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-21/kidentitymanagement-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-23/kidentitymanagement-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -57,5 +57,5 @@ package() {
 }
 
 sha512sums="
-db2ef5ce1dfbadbf36755d54bd001587326f23b30f27008afaac5b41b809f27399c62d08b0893fab1f305a580ceed1ef3b7f55b92cf0ea379341851fe2010fd1  kidentitymanagement-8ab296f0bf13601e882df072c718dcea415d4cf0.tar.xz
+d443d10cb0ac983ffa1ef3b67b4ab3d3fc889349604e1115900b1f70f840d06330dda828d31102fccbe78056199d9c03815caf8dedce5e503d8ea145aed1f234  kidentitymanagement-776414d3d62097f7f126bf5a39ae4bcd96b73543.tar.xz
 "

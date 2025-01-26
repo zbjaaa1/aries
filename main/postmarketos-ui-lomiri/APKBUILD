@@ -1,7 +1,7 @@
 # Maintainer: Luca Weiss <luca@lucaweiss.eu>
 pkgname=postmarketos-ui-lomiri
 pkgver=1
-pkgrel=0
+pkgrel=1
 pkgdesc="(Wayland) The convergent desktop environment (Experimental)"
 url="https://lomiri.com/"
 arch="noarch !armhf !riscv64"
@@ -17,6 +17,7 @@ depends="
 	networkmanager
 	pipewire
 	polkit
+	postmarketos-artwork-icons
 	postmarketos-base-ui
 	postmarketos-base-ui-networkmanager
 	postmarketos-base-ui-qt-tweaks
@@ -25,7 +26,6 @@ depends="
 	postmarketos-base-ui-wifi
 	repowerd
 	sensorfw
-	superd
 	tinydm
 	wireplumber
 	xwayland
@@ -88,18 +88,18 @@ package() {
 
 	# Replace the launcher logo
 	mkdir -p "$pkgdir"/usr/share/lomiri/Launcher/graphics/
-	# TODO: Replace with logo_monochrome.svg from postmarketos-artwork
-	install -Dm644 "$srcdir"/logo.svg \
-		"$pkgdir"/usr/share/lomiri/Launcher/graphics/
+	ln -s /usr/share/pixmaps/postmarketos-logo-monochrome.svg \
+		"$pkgdir"/usr/share/lomiri/Launcher/graphics/logo.svg
 }
 
 openrc() {
 	install_if="$pkgname openrc"
 	install="$subpkgname.post-install $subpkgname.post-upgrade"
 	depends="
-		postmarketos-base-ui-bluez-openrc
 		polkit-elogind
+		postmarketos-base-ui-bluez-openrc
 		postmarketos-base-ui-elogind
+		superd
 	"
 
 	# superd is only needed on OpenRC

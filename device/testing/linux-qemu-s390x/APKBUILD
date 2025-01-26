@@ -1,0 +1,69 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/s390/configs/(CHANGEME!)
+
+pkgname=linux-qemu-s390x
+pkgver=6.13.0
+_kernver=${pkgver%.*}
+pkgrel=0
+pkgdesc="QEMU s390x kernel"
+arch="s390x"
+_carch="s390"
+_flavor="qemu-s390x"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+"
+
+# Source
+source="https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz
+	pmos.config"
+builddir="$srcdir"/linux-$_kernver
+_outdir="out"
+
+prepare() {
+	default_prepare
+	cp "$srcdir/pmos.config" "$builddir"/arch/"$_carch"/configs/
+
+	# Generate .config
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-pmos" \
+		defconfig pmos.config
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+!	install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
+!			"$pkgdir/boot/linux.efi"
+
+	make modules_install dtbs_install \
+		ARCH="$_carch" \
+		INSTALL_PATH="$pkgdir"/boot/ \
+		INSTALL_MOD_PATH="$pkgdir" \
+		INSTALL_MOD_STRIP=1 \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+
+	rm -f "$pkgdir"/lib/modules/*/build "$pkgdir"/lib/modules/*/source
+
+	install -D "$builddir"/include/config/kernel.release \
+		"$pkgdir"/usr/share/kernel/linux-"$_kernver"/kernel.release
+}
+
+sha512sums="
+1137e6440132b0958f89165440e99208f82b204e7245ae69dc9c808df97d13ce8f58136db92407e0e93394fa7f6283ec7a34597c6e92a5b6d9025e0960357957  linux-6.13.tar.xz
+2fdd6b4d4c49ed35458bb616221e39cfcaef8753c1f1b06b8e4d33d6a078a1178d8ab5cfb1801f893fb56b99663bd385e30c8b0bc66cb5bbbf0d1c105bc30d39  pmos.config
+"

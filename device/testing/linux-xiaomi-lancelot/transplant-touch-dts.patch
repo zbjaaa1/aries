@@ -1,39 +1,90 @@
 diff --git a/arch/arm64/boot/dts/mediatek/mt6768.dts b/arch/arm64/boot/dts/mediatek/mt6768.dts
-index 394b0cf69b43..792c16959c8a 100644
+index 394b0cf69b43..aeb025f0b47e 100644
 --- a/arch/arm64/boot/dts/mediatek/mt6768.dts
 +++ b/arch/arm64/boot/dts/mediatek/mt6768.dts
-@@ -3548,7 +3548,34 @@ defined(CONFIG_MTK_CAM_SECURITY_SUPPORT)
+@@ -3548,6 +3548,31 @@ defined(CONFIG_MTK_CAM_SECURITY_SUPPORT)
  
- 	touch {
+ 	touch: touch {
  		compatible = "mediatek,touch";
-+		tpd-resolution = <0x438 0x870>;
-+		use-tpd-button = <0x0>;
-+		tpd-key-num = <0x3>;
-+		tpd-key-local = <0x8b 0xac 0x9e 0x0>;
-+		tpd-key-dim-local = <0x5a 0x373 0x64 0x28 0xe6 0x373 0x64 0x28 0x172 0x373 0x64 0x28 0x0 0x0 0x0 0x0>;
-+
-+		tpd-max-touch-num = <0xa>;
-+		tpd-filter-enable = <0x0>;
-+		tpd-filter-pixel-density = <0xa8>;
-+		tpd-filter-custom-prameters = <0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0>;
-+		tpd-filter-custom-speed = <0x0 0x0 0x0>;
-+		pinctrl-names = "default", "state_eint_as_int",
-+                        "state_eint_output0", "state_eint_output1",
-+                        "state_rst_output0", "state_rst_output1";
-+		pinctrl-0 = <0xf1>;
-+		pinctrl-1 = <0xf2>;
-+		pinctrl-2 = <0xf3>;
-+		pinctrl-3 = <0xf4>;
-+		pinctrl-4 = <0xf5>;
-+		pinctrl-5 = <0xf6>;
-+		status = "okay";
-+
-+		interrupts = <0x1 0x2 0x1 0x0>;
-+		interrupt-parent = <0x1e>;
-+		vtouch-supply = <0x98>;
-+		phandle = <0xdd>;
++ 		tpd-resolution = <0x438 0x870>;
++ 		use-tpd-button = <0x0>;
++ 		tpd-key-num = <0x3>;
++ 		tpd-key-local = <0x8b 0xac 0x9e 0x0>;
++ 		tpd-key-dim-local = <0x5a 0x373 0x64 0x28 0xe6 0x373 0x64 0x28 0x172 0x373 0x64 0x28 0x0 0x0 0x0 0x0>;
++ 
++ 		tpd-max-touch-num = <0xa>;
++ 		tpd-filter-enable = <0x0>;
++ 		tpd-filter-pixel-density = <0xa8>;
++ 		tpd-filter-custom-prameters = <0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0 0x0>;
++ 		tpd-filter-custom-speed = <0x0 0x0 0x0>;
++ 		pinctrl-names = "default", "state_eint_as_int",
++                         "state_eint_output0", "state_eint_output1",
++                         "state_rst_output0", "state_rst_output1";
++                pinctrl-0 = <&ctp_pins_default>;
++                pinctrl-1 = <&ctp_pins_eint_as_int>;
++                pinctrl-2 = <&ctp_pins_eint_output0>;
++                pinctrl-3 = <&ctp_pins_eint_output1>;
++                pinctrl-4 = <&ctp_pins_rst_output0>;
++                pinctrl-5 = <&ctp_pins_rst_output1>;
++ 		status = "okay";
++ 
++ 		interrupts = <0x1 0x2 0x1 0x0>;
++ 		interrupt-parent = <0x1e>;
++ 		vtouch-supply = <0x98>;
  	};
-+
  	xiaomi_touch{
  		compatible = "xiaomi-touch";
- 		status = "ok";
+@@ -3815,6 +3840,53 @@ defined(CONFIG_MTK_CAM_SECURITY_SUPPORT)
+ 			output-low;
+ 		};
+ 	};
++
++
++        ctp_pins_default: eint0default {
++        };
++
++        ctp_ts_pins_default: eint1default {
++        };
++
++        ctp_pins_eint_as_int: eint@0 {
++        	pins_cmd_dat {
++        		pinmux = <PINMUX_GPIO1__FUNC_GPIO1>;
++        		slew-rate = <0>;
++        		bias-disable;
++        	};
++        };
++
++        ctp_pins_eint_output0: eintoutput0 {
++        	pins_cmd_dat {
++        		pinmux = <PINMUX_GPIO1__FUNC_GPIO1>;
++        		slew-rate = <1>;
++        		output-low;
++        	};
++        };
++
++        ctp_pins_eint_output1: eintoutput1 {
++        	pins_cmd_dat {
++        		pinmux = <PINMUX_GPIO1__FUNC_GPIO1>;
++        		slew-rate = <1>;
++        		output-high;
++                };
++        };
++
++        ctp_pins_rst_output0: rstoutput0 {
++        	pins_cmd_dat {
++                        pinmux = <PINMUX_GPIO92__FUNC_GPIO92>;
++                        slew-rate = <1>;
++                        output-low;
++                };
++        };
++
++        ctp_pins_rst_output1: rstoutput1 {
++        	pins_cmd_dat {
++                        pinmux = <PINMUX_GPIO92__FUNC_GPIO92>;
++                        slew-rate = <1>;
++                        output-high;
++        	};
++        };
+ };
+ 
+ /* move shiva tp dts config to here to avoid boot up error */

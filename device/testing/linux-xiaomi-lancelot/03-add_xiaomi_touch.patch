@@ -1,0 +1,32 @@
+From 04944e924d26be3d7f95ee3cceb374983093e451 Mon Sep 17 00:00:00 2001
+From: Alexander Winkowski <dereference23@outlook.com>
+Date: Sat, 28 Oct 2023 12:58:28 +0000
+Subject: [PATCH] input: touchscreen: xiaomi_touch: Fix -Wstrict-prototypes
+
+Change-Id: I0095087fd790a3bdc8f56a622c511a8e168a9dfd
+Signed-off-by: Alexander Winkowski <dereference23@outlook.com>
+
+Source: https://github.com/LineageOS/android_kernel_xiaomi_sm6150/commit/04944e924d26be3d7f95ee3cceb374983093e451
+---
+ drivers/input/touchscreen/xiaomi/xiaomi_touch.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/input/touchscreen/xiaomi/xiaomi_touch.c b/drivers/input/touchscreen/xiaomi/xiaomi_touch.c
+index 069085d5ed19..76218483c351 100755
+--- a/drivers/input/touchscreen/xiaomi/xiaomi_touch.c
++++ b/drivers/input/touchscreen/xiaomi/xiaomi_touch.c
+@@ -148,12 +148,12 @@ struct xiaomi_touch *xiaomi_touch_dev_get(int minor)
+ 		return NULL;
+ }
+ 
+-struct class *get_xiaomi_touch_class()
++struct class *get_xiaomi_touch_class(void)
+ {
+ 	return xiaomi_touch_dev.class;
+ }
+ 
+-struct device *get_xiaomi_touch_dev()
++struct device *get_xiaomi_touch_dev(void)
+ {
+ 	return xiaomi_touch_dev.dev;
+ }

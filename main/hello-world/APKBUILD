@@ -10,6 +10,12 @@ source="main.c Makefile"
 
 build() {
 	cd "$srcdir"
+
+	msg "Building with ccache='$USE_CCACHE', CC='$CC'"
+	msg "which gcc? $(which gcc)"
+	msg "env: ";
+	env
+
 	make
 }
 

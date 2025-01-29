@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kded
-pkgver=99999_git20250119
+pkgver=99999_git20250125
 pkgrel=0
-_commit="2d642a7ddcb50ed389cd264c88c68f75e418971c"
+_commit="d9f12ee72dc8b6f07fbd321637dd65ae693bcf05"
 pkgdesc="Extensible deamon for providing system level services"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kded.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-24/kded-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-28/kded-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-99a75c3c9261d1c6dff60d7fdc4adde2672b4d69b9c3f30368ef1c186612bad2622d51ee93b1807f9b7e5e6e78432f7c9d97c234d1c9e2717460686466ee30fa  kded-2d642a7ddcb50ed389cd264c88c68f75e418971c.tar.xz
+402deb1e931e4e8fd1b04ef73e695bdc210813caf858216428f4f40d06a6e7216918cae483c78e0cb9ed3231c16130f3e482df36e169f74e2315690dcd71c6c6  kded-d9f12ee72dc8b6f07fbd321637dd65ae693bcf05.tar.xz
 "

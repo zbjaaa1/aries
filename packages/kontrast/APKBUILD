@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kontrast
-pkgver=99999_git20250112
+pkgver=99999_git20250125
 pkgrel=0
-_commit="e3a39ca1fa1b8c5fc7ea75d57524b24471204f0c"
+_commit="cdc10e89a4ed824e29ec9f0fffa91bed189f1059"
 pkgdesc="Tool to check contrast for colors that allows verifying that your colors are correctly accessible"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/accessibility/kontrast.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-24/kontrast-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-28/kontrast-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -47,5 +47,5 @@ package() {
 }
 
 sha512sums="
-c63876724095320ab6456a97fc630b45b514be81914f73d78e2edca6893793457c5108770f3d7974b73999d69b5bd478615996422798e8d49bab991f8f164188  kontrast-e3a39ca1fa1b8c5fc7ea75d57524b24471204f0c.tar.xz
+185d1fda7e8ef14918b8fdb32ff98c9a47bb655135b9b063996068026d38c43d79cd202e9c52cf7b8ae4ac20ad61e135a5df35b87c74a5b56ac4faca6f14447a  kontrast-cdc10e89a4ed824e29ec9f0fffa91bed189f1059.tar.xz
 "

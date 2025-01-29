@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=krunner
-pkgver=99999_git20250119
+pkgver=99999_git20250125
 pkgrel=0
-_commit="cb6e6f414c261fa025956d7134710addaadebabe"
+_commit="c0eeb6a6c68f89f43ee7c461c6c676915c0533d2"
 pkgdesc="Framework for providing different actions given a string query"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -33,7 +33,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/frameworks/krunner.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-24/krunner-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-28/krunner-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -58,5 +58,5 @@ package() {
 }
 
 sha512sums="
-d2426571b79bc4bfb61868227c72c98628be49ba4e08c2cdfd3a921374ac7fd3654e74237fc30550313074321ef4ab11ed5b4fa5adfc5ff2b5567a959c42f9fa  krunner-cb6e6f414c261fa025956d7134710addaadebabe.tar.xz
+395d109bf09e54e08fe68c6bc05ba025c6e37d031dc7ee89fcd260aee09a45f13c4a709c1691c9a2f133f331f6107b33a27793339943698de2b1cb2db212f3dc  krunner-c0eeb6a6c68f89f43ee7c461c6c676915c0533d2.tar.xz
 "

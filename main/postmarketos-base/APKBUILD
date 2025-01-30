@@ -1,5 +1,5 @@
 pkgname=postmarketos-base
-pkgver=40
+pkgver=41
 pkgrel=1
 pkgdesc="Meta package for minimal postmarketOS base"
 url="https://postmarketos.org"
@@ -15,13 +15,8 @@ depends="
 	postmarketos-ramdisk
 	postmarketos-mvcfg
 	postmarketos-keys
-	sudo-virt
 	zram-init
 	"
-_pmb_recommends="
-	doas
-	doas-sudo-shim
-"
 install="$pkgname.post-install"
 triggers="$pkgname.trigger=/usr/share/deviceinfo"
 subpackages="
@@ -29,6 +24,10 @@ subpackages="
 	$pkgname-nftables
 	$pkgname-nftables-openrc:nftables_openrc
 	$pkgname-openrc
+	$pkgname-privilege-d:_privilege_doas
+	$pkgname-privilege-none:_privilege_none
+	$pkgname-privilege-run0:_privilege_run0
+	$pkgname-privilege-sudo:_privilege_sudo
 	"
 options="!check"
 
@@ -39,8 +38,6 @@ replaces="
 	alpine-baselayout-data
 	alpine-release
 	busybox-initscripts
-	sudo
-	sudo-ldap
 	"
 replaces_priority=100  # leave plenty for alpine
 
@@ -94,10 +91,12 @@ prepare() {
 }
 
 package() {
+	# Privilege escalation tools are provided by a subpackage in this
+	# APKBUILD and won't exist when this is evaluated at the top level.
+	# It's moved into this function to work around it.
+	depends="$depends $pkgname-privilege"
+
 	local i
-	for i in $_source440; do
-		install -Dm440 "$srcdir/$(flatpath "$i")" "$pkgdir/$i"
-	done
 	for i in $_source644; do
 		install -Dm644 "$srcdir/$(flatpath "$i")" "$pkgdir/$i"
 	done
@@ -157,6 +156,46 @@ openrc() {
 	amove etc/init.d/swapfile
 	amove etc/init.d/tmpfs
 	amove etc/udev/udev.conf
+}
+
+_privilege_doas() {
+	pkgdesc="Use doas as the privilege escalation tool."
+	depends="doas doas-sudo-shim"
+
+	# FIXME: Workaround pmbootstrap picking shortest and always choosing sudo
+	provides="$pkgname-privilege=$pkgver-r$pkgrel"
+	provides="$provides $pkgname-privilege-doas"
+
+	provider_priority=100
+
+	install -Dm440 "$srcdir/$(flatpath "etc/doas.d/10-postmarketos.conf")" "$subpkgdir/etc/doas.d/10-postmarketos.conf"
+}
+
+_privilege_none() {
+	pkgdesc="Do not install any privilege escalation tool."
+	provides="$pkgname-privilege=$pkgver-r$pkgrel"
+	provider_priority=10
+
+	mkdir "$subpkgdir"
+}
+
+_privilege_run0() {
+	pkgdesc="Use run0 as the privilege escalation tool."
+	depends="run0"
+	provides="$pkgname-privilege=$pkgver-r$pkgrel"
+	provider_priority=80
+
+	mkdir "$subpkgdir"
+}
+
+_privilege_sudo() {
+	pkgdesc="Use sudo as the privilege escalation tool."
+	depends="sudo"
+	replaces="sudo sudo-ldap"
+	provides="$pkgname-privilege=$pkgver-r$pkgrel"
+	provider_priority=90
+
+	install -Dm440 "$srcdir/$(flatpath "etc/sudoers")" "$subpkgdir/etc/sudoers"
 }
 
 sha512sums="

@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kglobalacceld
-pkgver=99999_git20250117
+pkgver=99999_git20250129
 pkgrel=0
-_commit="233e3b53588cec2f488e664652a02271f198d133"
+_commit="b8b38d514ff7078fbf1c309817a96709f9ea4a37"
 pkgdesc="Daemon providing Global Keyboard Shortcut (Accelerator) functionality"
 # armhf blocked by qt6-qtdeclarative -> kio
 arch="all !armhf"
@@ -32,7 +32,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/plasma/kglobalacceld.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-28/kglobalacceld-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-29/kglobalacceld-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 
 options="!check"
@@ -57,5 +57,5 @@ package() {
 	rm -r "$pkgdir"/usr/lib/systemd
 }
 sha512sums="
-66b893fc18e3b46d2192f971790040eec68684559a5531bd034544fff83a71ace3052f80c7a52e4a48d3d66522a122b901d4a2d2fecc1f338f0fd2ce062d94d9  kglobalacceld-233e3b53588cec2f488e664652a02271f198d133.tar.xz
+5105734e351a142db4a693caaabb2aa0ff95d01e6a40dcd7fd1ff892a36b9abe58a678cbbe3a1050ae6e35448160a7a6e25e62b08b9f1af759d4463e39f803a4  kglobalacceld-b8b38d514ff7078fbf1c309817a96709f9ea4a37.tar.xz
 "

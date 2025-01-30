@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kplotting
-pkgver=99999_git20250115
+pkgver=99999_git20250128
 pkgrel=0
-_commit="d5dc6667c86b659dc4327d477c1fd1b4a567e1fa"
+_commit="44d8df91bd29d360d5e2f498466fb59c6428ee04"
 pkgdesc="Lightweight plotting framework"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -20,7 +20,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kplotting.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-28/kplotting-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-29/kplotting-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -44,5 +44,5 @@ package() {
 }
 
 sha512sums="
-cec1570048cf2ee95d94a41277e3a008c1a363706b8309fd171ff9e5d9b26d9c0fff8b33e2a3f9f56a5de37901be92fb0f5f9d8a090050180ccdc906db811142  kplotting-d5dc6667c86b659dc4327d477c1fd1b4a567e1fa.tar.xz
+84f5a102f31a948b92e17df4d293001f212e2855c617776fa54ba9509261861653dec7ca5ae67d56ae1368ab96b937d924a9307938da1bbf514a631695f1e2f4  kplotting-44d8df91bd29d360d5e2f498466fb59c6428ee04.tar.xz
 "

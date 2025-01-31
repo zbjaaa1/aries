@@ -2,7 +2,7 @@
 # Maintainer: Ferass El Hafidi <funderscore@postmarketos.org>
 pkgname=device-amlogic-tvbox
 pkgdesc="Amlogic TV box"
-pkgver=4
+pkgver=5
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -24,7 +24,6 @@ subpackages="
 	$pkgname-kernel-p241:kernel_p241
 	$pkgname-kernel-videostrong-kii-pro:kernel_videostrong_kii_pro
 	$pkgname-kernel-xiaomi-aquaman:kernel_xiaomi_aquaman
-	$pkgname-kernel-xiaomi-once:kernel_xiaomi_once
 "
 
 build() {
@@ -70,13 +69,7 @@ kernel_xiaomi_aquaman() {
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
-kernel_xiaomi_once() {
-	pkgdesc="Kernel for Xiaomi Mi Box 3 (S905X)"
-	depends="linux-postmarketos-amlogic u-boot-amlogic-s905x-tv"
-	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
-}
-
 sha512sums="
-d26b86e5a956543b56bfffcd7b9a9847002aa2e4232d10ae43f3dfe20d6f33f5cbad42998b265c46cfe8c63ed5a35afe980a4a9b7021d02b710b72e66da331b5  deviceinfo
+b7a0155fbd598c9a4d4b1282eb03d8e32d279e3d1a8e9cf632e97b5693f2cdc46972027cefb49083df37332c29bd82b62e5a9b615dea431d6e67ff61e7b69200  deviceinfo
 52948c2884a6f6384e12b7a598f70878526d0d3293c214425170145231144ec7de805c038641741a4a5d75b50e554f6a3fa3769784a674217ed032f9b6a233c8  modules-initfs
 "

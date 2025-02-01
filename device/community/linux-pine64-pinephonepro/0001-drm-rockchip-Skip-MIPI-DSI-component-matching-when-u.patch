@@ -1,0 +1,119 @@
+From 5fbf4d14e9b63291b0db81469ab269a6b128a5e0 Mon Sep 17 00:00:00 2001
+From: Jan Jasper de Kroon <jajadekroon@gmail.com>
+Date: Sat, 1 Feb 2025 01:06:34 +0100
+Subject: [PATCH 1/1] drm/rockchip: Skip MIPI DSI component matching when used
+ by ISP
+
+On RK3399, a MIPI DSI controller can be used either for display or as
+a PHY for the ISP. When used as a PHY, the DSI controller should not
+be included in the DRM component matching process to prevent blocking
+DRM initialization when the ISP is not ready (e.g. when camera is
+disabled via killswitch).
+
+Use the existing usage_mode tracking to detect if a DSI controller is
+being used by the ISP and skip it from the DRM component match list
+in that case.
+
+This fixes display initialization during early boot (e.g. unl0kr) when
+the camera is disabled, without requiring the ISP driver to be included
+in initramfs.
+---
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.c   | 21 +++++++++++++++++++
+ .../gpu/drm/rockchip/dw-mipi-dsi-rockchip.h   |  8 +++++++
+ drivers/gpu/drm/rockchip/rockchip_drm_drv.c   | 19 +++++++++++++++++
+ 3 files changed, 48 insertions(+)
+ create mode 100644 drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.h
+
+diff --git a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+index ca775506ade4..2a572a890bb0 100644
+--- a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
++++ b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.c
+@@ -297,6 +297,27 @@ struct dw_mipi_dsi_rockchip {
+ 	bool dsi_bound;
+ };
+ 
++/*
++ * Check if the MIPI DSI controller is used by the ISP.
++ */
++bool dw_mipi_dsi_is_used_by_isp(struct device *dev)
++{
++	struct dw_mipi_dsi_rockchip *dsi = dev_get_drvdata(dev);
++
++	if (!dsi)
++		return false;
++
++	mutex_lock(&dsi->usage_mutex);
++	if (dsi->usage_mode == DW_DSI_USAGE_PHY) {
++		mutex_unlock(&dsi->usage_mutex);
++		return true;
++	}
++	mutex_unlock(&dsi->usage_mutex);
++
++	return false;
++}
++EXPORT_SYMBOL(dw_mipi_dsi_is_used_by_isp);
++
+ static struct dw_mipi_dsi_rockchip *to_dsi(struct drm_encoder *encoder)
+ {
+ 	struct rockchip_encoder *rkencoder = to_rockchip_encoder(encoder);
+diff --git a/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.h b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.h
+new file mode 100644
+index 000000000000..4f39b8bbc8f8
+--- /dev/null
++++ b/drivers/gpu/drm/rockchip/dw-mipi-dsi-rockchip.h
+@@ -0,0 +1,8 @@
++#ifndef _DW_MIPI_DSI_ROCKCHIP_H_
++#define _DW_MIPI_DSI_ROCKCHIP_H_
++
++#include <linux/device.h>
++
++bool dw_mipi_dsi_is_used_by_isp(struct device *dev);
++
++#endif /* _DW_MIPI_DSI_ROCKCHIP_H_ */
+diff --git a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+index 58e06a1ab565..3cd8de1f7ca0 100644
+--- a/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
++++ b/drivers/gpu/drm/rockchip/rockchip_drm_drv.c
+@@ -36,6 +36,7 @@
+ #include "rockchip_drm_drv.h"
+ #include "rockchip_drm_fb.h"
+ #include "rockchip_drm_gem.h"
++#include "dw-mipi-dsi-rockchip.h"
+ 
+ #define DRIVER_NAME	"rockchip"
+ #define DRIVER_DESC	"RockChip Soc DRM"
+@@ -368,6 +369,14 @@ static const char *const rockchip_drm_match_preferred[] = {
+ 	NULL,
+ };
+ 
++/*
++ * Check if the MIPI DSI controller is used by the ISP.
++ */
++static bool rockchip_drm_is_mipi_used_by_isp(struct device *dev)
++{
++    return dw_mipi_dsi_is_used_by_isp(dev);
++}
++
+ static struct component_match *rockchip_drm_match_add(struct device *dev)
+ {
+ 	struct component_match *match = NULL;
+@@ -402,6 +411,16 @@ static struct component_match *rockchip_drm_match_add(struct device *dev)
+ 			if (!d)
+ 				break;
+ 
++			/*
++			 * If the MIPI DSI controller is used by the ISP, skip it
++			 * in the DRM component match list to avoid blocking DRM
++			 * initialization.
++			 */
++			if (rockchip_drm_is_mipi_used_by_isp(d)) {
++				dev_info(d, "used by ISP, skipping from DRM\n");
++				continue;
++			}
++
+ 			device_link_add(dev, d, DL_FLAG_STATELESS);
+ 			component_match_add(dev, &match, component_compare_dev, d);
+ 		} while (true);
+-- 
+2.48.1
+

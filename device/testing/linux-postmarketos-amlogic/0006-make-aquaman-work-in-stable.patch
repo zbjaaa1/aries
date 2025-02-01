@@ -1,0 +1,25 @@
+From 6db683e1de07aee0f7c60fe017e4162ad20b6278 Mon Sep 17 00:00:00 2001
+From: Ferass El Hafidi <funderscore@postmarketos.org>
+Date: Sat, 1 Feb 2025 20:32:38 +0000
+Subject: [PATCH] WIP/DONOTMERGE: make it work on stable
+
+---
+ arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
+index c29cc01d8..1f5b8ea33 100644
+--- a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
+@@ -262,6 +262,8 @@ &pwm_ef {
+ 	status = "okay";
+ 	pinctrl-0 = <&pwm_e_pins>;
+ 	pinctrl-names = "default";
++	clocks = <&clkc CLKID_FCLK_DIV4>;
++	clock-names = "clkin0";
+ };
+ 
+ /* This is connected to the Bluetooth module: */
+-- 
+2.47.1
+

@@ -1,30 +1,38 @@
-From c8c28e9361af1a6fd7e354000d0c8c150e33673d Mon Sep 17 00:00:00 2001
+From 0f6503136d0e7a12732ffafde3f06fdb0c0919d5 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ferass=20El=C2=A0Hafidi?= <funderscore@postmarketos.org>
 Date: Thu, 30 Jan 2025 17:59:40 +0000
-Subject: [PATCH 1/2] dt-bindings: arm: amlogic: add Xiaomi Mi TV Stick
+Subject: [PATCH v2 1/2] dt-bindings: arm: amlogic: add S805Y and Mi TV Stick
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Add support for xiaomi-aquaman.
+Add support for the Amlogic S805Y SoC and the Xiaomi Mi TV Stick (aka.
+xiaomi-aquaman).  The S805Y is very similar to the S805X, with just a
+few minor differences.
 
 Signed-off-by: Ferass El Hafidi <funderscore@postmarketos.org>
 ---
- Documentation/devicetree/bindings/arm/amlogic.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/arm/amlogic.yaml | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
 diff --git a/Documentation/devicetree/bindings/arm/amlogic.yaml b/Documentation/devicetree/bindings/arm/amlogic.yaml
-index 0647851ae..0db7038b9 100644
+index 0647851ae..3403362e0 100644
 --- a/Documentation/devicetree/bindings/arm/amlogic.yaml
 +++ b/Documentation/devicetree/bindings/arm/amlogic.yaml
-@@ -70,6 +70,7 @@ properties:
-           - enum:
-               - amlogic,p241
-               - libretech,aml-s805x-ac
-+              - xiaomi,aquaman
+@@ -73,6 +73,13 @@ properties:
            - const: amlogic,s805x
            - const: amlogic,meson-gxl
  
++      - description: Boards with the Amlogic Meson GXL S805Y SoC
++        items:
++          - enum:
++              - xiaomi,aquaman
++          - const: amlogic,s805y
++          - const: amlogic,meson-gxl
++
+       - description: Boards with the Amlogic Meson GXL S905W SoC
+         items:
+           - enum:
 -- 
 2.47.1
 

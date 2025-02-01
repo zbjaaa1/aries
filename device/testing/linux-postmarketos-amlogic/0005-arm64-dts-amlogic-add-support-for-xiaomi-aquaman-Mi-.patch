@@ -1,13 +1,13 @@
-From 768d0074a5b17b9958519e2385330e3c483f9cab Mon Sep 17 00:00:00 2001
+From bc878e3beb9d294e46830248ae9ff27ad3eb0a96 Mon Sep 17 00:00:00 2001
 From: =?UTF-8?q?Ferass=20El=C2=A0Hafidi?= <funderscore@postmarketos.org>
 Date: Thu, 30 Jan 2025 18:02:46 +0000
-Subject: [PATCH 2/2] arm64: dts: amlogic: add support for xiaomi-aquaman/Mi TV
- Stick
+Subject: [PATCH v2 2/2] arm64: dts: amlogic: add support for xiaomi-aquaman/Mi
+ TV Stick
 MIME-Version: 1.0
 Content-Type: text/plain; charset=UTF-8
 Content-Transfer-Encoding: 8bit
 
-Xiaomi Mi TV Stick is a small Amlogic-based Android TV stick released in 
+Xiaomi Mi TV Stick is a small Amlogic-based Android TV stick released in
 2020.  It is known as `xiaomi-aquaman` internally.  Specifications:
  * Amlogic S805Y SoC
  * Android TV 9, upgradable to Android TV 10
@@ -15,14 +15,19 @@ Xiaomi Mi TV Stick is a small Amlogic-based Android TV stick released in
  * 1 GB of RAM
 
 The devicetree is based on p241's DT, with some changes to better match
-the Mi TV Stick.
+the Mi TV Stick:
+ * there is no Ethernet port, no IR, no CVBS connector on the stick
+ * a white LED is present
+ * adjust memory to have 1 GB of RAM available
 
 Signed-off-by: Ferass El Hafidi <funderscore@postmarketos.org>
 ---
  arch/arm64/boot/dts/amlogic/Makefile          |   1 +
- .../meson-gxl-s805y-xiaomi-aquaman.dts        | 311 ++++++++++++++++++
- 2 files changed, 312 insertions(+)
+ .../meson-gxl-s805y-xiaomi-aquaman.dts        | 288 ++++++++++++++++++
+ .../boot/dts/amlogic/meson-gxl-s805y.dtsi     |  10 +
+ 3 files changed, 299 insertions(+)
  create mode 100644 arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
+ create mode 100644 arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi
 
 diff --git a/arch/arm64/boot/dts/amlogic/Makefile b/arch/arm64/boot/dts/amlogic/Makefile
 index 2fbda8419..0921707f1 100644
@@ -38,10 +43,10 @@ index 2fbda8419..0921707f1 100644
  dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905d-p230.dtb
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
 new file mode 100644
-index 000000000..6b72f054a
+index 000000000..c29cc01d8
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
-@@ -0,0 +1,311 @@
+@@ -0,0 +1,288 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2025 Ferass El Hafidi <funderscore@postmarketos.org>
@@ -57,11 +62,11 @@ index 000000000..6b72f054a
 +#include <dt-bindings/leds/common.h>
 +#include <dt-bindings/sound/meson-aiu.h>
 +
-+#include "meson-gxl-s805x.dtsi"
++#include "meson-gxl-s805y.dtsi"
 +
 +/ {
-+	compatible = "xiaomi,aquaman", "amlogic,s805x", "amlogic,meson-gxl";
-+	model = "Xiaomi Mi TV Stick (S805Y)";
++	compatible = "xiaomi,aquaman", "amlogic,s805y", "amlogic,meson-gxl";
++	model = "Xiaomi Mi TV Stick (aquaman)";
 +
 +	aliases {
 +		serial0 = &uart_AO;
@@ -77,11 +82,6 @@ index 000000000..6b72f054a
 +
 +	chosen {
 +		stdout-path = "serial0:115200n8";
-+	};
-+
-+	cvbs-connector {
-+		/* No CVBS connector */
-+		status = "disabled";
 +	};
 +
 +	emmc_pwrseq: emmc-pwrseq {
@@ -107,7 +107,7 @@ index 000000000..6b72f054a
 +			color = <LED_COLOR_ID_WHITE>;
 +			function = LED_FUNCTION_POWER;
 +			gpios = <&gpio GPIODV_24 GPIO_ACTIVE_HIGH>;
-+			default-state = "heartbeat";
++			default-state = "on";
 +			panic-indicator;
 +		};
 +	};
@@ -152,7 +152,6 @@ index 000000000..6b72f054a
 +		regulator-max-microvolt = <5000000>;
 +	};
 +
-+
 +	emmc_pwrseq: emmc-pwrseq {
 +		compatible = "mmc-pwrseq-emmc";
 +		reset-gpios = <&gpio BOOT_9 GPIO_ACTIVE_LOW>;
@@ -174,7 +173,7 @@ index 000000000..6b72f054a
 +
 +	sound {
 +		compatible = "amlogic,gx-sound-card";
-+		model = "MI-AQUAMAN";
++		model = "XIAOMI-AQUAMAN";
 +		audio-aux-devs = <&au2>;
 +		audio-widgets = "Line", "Lineout";
 +		audio-routing = "AU2 INL", "ACODEC LOLN",
@@ -245,21 +244,6 @@ index 000000000..6b72f054a
 +	hdmi-phandle = <&hdmi_tx>;
 +};
 +
-+&ethmac {
-+	/* No Ethernet connector */
-+	status = "disabled";
-+};
-+
-+&internal_phy {
-+	pinctrl-0 = <&eth_link_led_pins>, <&eth_act_led_pins>;
-+	pinctrl-names = "default";
-+};
-+
-+&ir {
-+	/* No IR */
-+	status = "disabled";
-+};
-+
 +&hdmi_tx {
 +	status = "okay";
 +	pinctrl-0 = <&hdmi_hpd_pins>, <&hdmi_i2c_pins>;
@@ -327,8 +311,6 @@ index 000000000..6b72f054a
 +	status = "okay";
 +	pinctrl-0 = <&pwm_e_pins>;
 +	pinctrl-names = "default";
-+	clocks = <&clkc CLKID_FCLK_DIV4>;
-+	clock-names = "clkin0";
 +};
 +
 +/* This is connected to the Bluetooth module: */
@@ -347,11 +329,27 @@ index 000000000..6b72f054a
 +
 +&usb {
 +	status = "okay";
-+	dr_mode = "host";
++	dr_mode = "otg";
 +};
 +
 +&usb2_phy0 {
-+	phy-supply = <&vcc_5v>;
++	vbus-supply = <&vcc_5v>;
++};
+diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi
+new file mode 100644
+index 000000000..49b29b71f
+--- /dev/null
++++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi
+@@ -0,0 +1,10 @@
++// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
++/*
++ * Copyright (c) 2025 Ferass El Hafidi <funderscore@postmarketos.org>
++ */
++
++#include "meson-gxl-s805x.dtsi"
++
++/ {
++	compatible = "amlogic,s805y", "amlogic,meson-gxl";
 +};
 -- 
 2.47.1

@@ -1,6 +1,6 @@
 # Maintainer: Luca Weiss <luca@lucaweiss.eu>
 pkgname=postmarketos-ui-lomiri
-pkgver=1
+pkgver=2
 pkgrel=0
 pkgdesc="(Wayland) The convergent desktop environment (Experimental)"
 url="https://lomiri.com/"
@@ -21,12 +21,9 @@ depends="
 	postmarketos-base-ui-networkmanager
 	postmarketos-base-ui-qt-tweaks
 	postmarketos-base-ui-qt-wayland
-	postmarketos-base-ui-tinydm
 	postmarketos-base-ui-wifi
 	repowerd
 	sensorfw
-	superd
-	tinydm
 	wireplumber
 	xwayland
 "
@@ -75,12 +72,6 @@ options="!check"
 package() {
 	install -Dm644 "$srcdir"/000-gschema.override \
 		"$pkgdir"/usr/share/glib-2.0/schemas/000-postmarketos.gschema.override
-	install -Dm644 "$srcdir"/lomiri.desktop \
-		"$pkgdir"/usr/share/wayland-sessions/lomiri.desktop
-	install -Dm755 "$srcdir"/start_lomiri.sh \
-		"$pkgdir"/usr/bin/start_lomiri
-	install -Dm755 "$srcdir"/set-xdg-env.sh \
-		"$pkgdir"/etc/profile.d/set-xdg-env.sh
 
 	# Disable setup wizard
 	mkdir -p "$pkgdir"/etc/skel/.config/lomiri
@@ -97,10 +88,21 @@ openrc() {
 	install_if="$pkgname openrc"
 	install="$subpkgname.post-install $subpkgname.post-upgrade"
 	depends="
-		postmarketos-base-ui-bluez-openrc
 		polkit-elogind
+		postmarketos-base-ui-bluez-openrc
 		postmarketos-base-ui-elogind
+		postmarketos-base-ui-tinydm
+		superd
+		tinydm
 	"
+
+	# Scripts needed for launching under OpenRC
+	install -Dm644 "$srcdir"/lomiri.desktop \
+		"$pkgdir"/usr/share/wayland-sessions/lomiri.desktop
+	install -Dm755 "$srcdir"/start_lomiri.sh \
+		"$pkgdir"/usr/bin/start_lomiri
+	install -Dm755 "$srcdir"/set-xdg-env.sh \
+		"$pkgdir"/etc/profile.d/set-xdg-env.sh
 
 	# superd is only needed on OpenRC
 	mkdir -p "$subpkgdir"/etc/superd/services/

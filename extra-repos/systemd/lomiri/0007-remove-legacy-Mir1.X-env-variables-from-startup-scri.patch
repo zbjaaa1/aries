@@ -1,0 +1,38 @@
+From 63b67ecdc26dcfe2f4bde775115a56c0c825a5ef Mon Sep 17 00:00:00 2001
+From: Aster Boese <asterboese@mailbox.org>
+Date: Sat, 1 Feb 2025 21:39:00 -0500
+Subject: [PATCH] remove legacy Mir1.X env variables from startup script
+
+---
+ data/systemd-user/lomiri-systemd-wrapper.in | 9 ---------
+ 1 file changed, 9 deletions(-)
+
+diff --git a/data/systemd-user/lomiri-systemd-wrapper.in b/data/systemd-user/lomiri-systemd-wrapper.in
+index cd6a736a9..869b762f8 100755
+--- a/data/systemd-user/lomiri-systemd-wrapper.in
++++ b/data/systemd-user/lomiri-systemd-wrapper.in
+@@ -9,21 +9,12 @@
+ # must be fed by the raw input event stream from Unity8).
+ export QML_NO_TOUCH_COMPRESSION=1
+ 
+-# TODO: maybe allow this to be configurable somehow?
+-export MIR_SERVER_ENABLE_MIRCLIENT=1
+-export MIR_SERVER_PROMPT_FILE=1
+-
+ # Unlikely under systemd, but just in case.
+ if [ -z "$XDG_RUNTIME_DIR" ]; then
+     XDG_RUNTIME_DIR=/run/user/$(id -u)
+     export XDG_RUNTIME_DIR
+ fi
+ 
+-export MIR_SERVER_FILE="${XDG_RUNTIME_DIR}/mir_socket"
+-
+-rm -f "$MIR_SERVER_FILE"
+-rm -f "${MIR_SERVER_FILE}_trusted"
+-
+ # TODO: maybe handle some kind of collision?
+ export WAYLAND_DISPLAY=wayland-0
+ 
+-- 
+2.48.1
+

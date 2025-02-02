@@ -6,7 +6,7 @@
 # How to add a new service file (5 steps):
 pkgname=systemd-services
 # 1. bump pkgver
-pkgver=40
+pkgver=43
 pkgrel=0
 pkgdesc="Systemd service files"
 url="https://postmarketos.org"
@@ -33,12 +33,14 @@ subpackages="
 	gnome-terminal-systemd:_service
 	goimapnotify-systemd:_service
 	hexagonrpcd-systemd:_service
+	hfd-service-systemd:_service
 	iio-sensor-proxy-systemd:_service
 	iwd-systemd:_service
 	kactivitymanagerd-systemd:_service
 	kanshi-systemd:_service
 	kded-systemd:_service
 	kglobalacceld-systemd:_service
+	lomiri-systemd:_service
 	lxc-systemd:_service
 	mmsd-tng-systemd:_service
 	modemmanager-systemd:_service
@@ -51,6 +53,7 @@ subpackages="
 	q6voiced-systemd:_service
 	qbootctl-systemd:_service
 	qcom-diag-systemd:_service
+	repowerd-systemd:_service
 	rmtfs-systemd:_service
 	rtkit-systemd:_service
 	sensorfw-systemd:_service
@@ -112,12 +115,14 @@ _gnome_clocks_sources="user/gnome-clocks.service"
 _gnome_terminal_sources="user/gnome-terminal-server.service" # From https://gitlab.gnome.org/GNOME/gnome-terminal/-/blob/master/src/gnome-terminal-server.service.in
 _goimapnotify_sources="user/goimapnotify@.service" # From https://gitlab.com/shackra/goimapnotify/-/raw/master/goimapnotify@.service
 _hexagonrpcd_sources="system/hexagonrpcd-sdsp.service system/iio-sensor-proxy.d/hexagonrpcd.conf"
+_hfd_service_sources="system/hfd-service.service" # From https://gitlab.com/ubports/development/core/hfd-service/-/blob/main/init/hfd-service.service.in
 _iio_sensor_proxy_sources="system/iio-sensor-proxy.service"
 _iwd_sources="system/iwd.service" # From https://git.kernel.org/pub/scm/network/wireless/iwd.git/tree/src/iwd.service.in
 _kanshi_sources="user/kanshi.service" # created, no unit file upstream
 _kactivitymanagerd_sources="user/plasma-kactivitymanagerd.service"
 _kded_sources="user/kded.service" # From https://invent.kde.org/frameworks/kded/-/blob/master/src/plasma-kded6.service.in
 _kglobalacceld_sources="user/plasma-kglobalaccel.service"
+_lomiri_sources="user/lomiri.service user/lomiri-indicators.target"
 _lxc_sources="system/lxc@.service"
 _mmsd_tng_sources="user/mmsd-tng.service"
 _modemmanager_sources="system/ModemManager.service"
@@ -130,6 +135,7 @@ _powerdevil_sources="user/plasma-powerdevil.service" # From https://invent.kde.o
 _q6voiced_sources="system/q6voiced.service"
 _qbootctl_sources="system/qbootctl.service"
 _qcom_diag_sources="system/diag-router.service"
+_repowerd_sources="system/repowerd.service"
 _rmtfs_sources="system/rmtfs.service"
 _rtkit_sources="system/rtkit-daemon.service"
 _sensorfw_sources="system/sensorfwd.service"
@@ -179,12 +185,14 @@ source="$(flatpath \
 	$_gnome_terminal_sources \
 	$_goimapnotify_sources \
 	$_hexagonrpcd_sources \
+	$_hfd_service_sources \
 	$_iio_sensor_proxy_sources \
 	$_iwd_sources \
 	$_kactivitymanagerd_sources \
 	$_kanshi_sources \
 	$_kded_sources \
 	$_kglobalacceld_sources \
+	$_lomiri_sources \
 	$_lxc_sources \
 	$_mmsd_tng_sources \
 	$_modemmanager_sources \
@@ -197,6 +205,7 @@ source="$(flatpath \
 	$_q6voiced_sources \
 	$_qbootctl_sources \
 	$_qcom_diag_sources \
+	$_repowerd_sources \
 	$_rmtfs_sources \
 	$_rtkit_sources \
 	$_sensorfw_sources \
@@ -228,8 +237,10 @@ _fnott_user_presets="fnott.service"
 _geoclue_system_presets="geoclue.service"
 _gnome_clocks_user_presets="gnome-clocks.service"
 _hexagonrpcd_system_presets="hexagonrpcd-sdsp.service"
+_hfd_service_system_presets="hfd-service.service"
 _iwd_system_presets="iwd.service"
 _kanshi_user_presets="kanshi.service"
+_lomiri_user_presets="lomiri.service"
 _mmsd_tng_user_presets="mmsd-tng.service"
 _modemmanager_system_presets="ModemManager.service"
 _nftables_system_presets="nftables.service"
@@ -240,6 +251,7 @@ _plasma_mobile_system_presets="plasma-mobile.service"
 _q6voiced_system_presets="q6voiced.service"
 _qbootctl_system_presets="qbootctl.service"
 _qcom_diag_system_presets="diag-router.service"
+_repowerd_system_presets="repowerd.service"
 _rmtfs_system_presets="rmtfs.service"
 _rtkit_system_presets="rtkit-daemon.service"
 _sensorfw_system_presets="sensorfwd.service"
@@ -331,12 +343,15 @@ ccf803ac6a764570a98845f0b0ddcde0529943472ce4cc3dc904501883a51fda482d7aef3b84fac8
 e0c5baf8030bae74c1ddb0f6f9bc4fdf2a1febaa344de1957d9a69a01eb7e1dc143b9d324ef15214289934b3a7fd4725df26b032f9225102d9cf5633145320bc  user-goimapnotify@.service
 b009a1494f84705dcbea664823e24fb18f326ca84017d9c470ef55c0225d519993aacacf76b24c895ee926dbc2b3269ebc6b2a353cda5ad1b732af5624941a6a  system-hexagonrpcd-sdsp.service
 af0e416f78ab317fe09813de58b446e5178457992ea4a2da2eb128811045201087d847e1b7ac0447a59c20129a736135e5d76b113262aa1f76b994e77b9c6b42  system-iio-sensor-proxy.d-hexagonrpcd.conf
+954e573e3c39b9343cf2a5283d8e8662791186d57fc6bd8a72e90f7fe88b5c33878bd2e74dc9e21364f142c8db74a0c123e4ac23b440b8f0639eaa30e72c535d  system-hfd-service.service
 d12ebe6e7db2a8e34baab640dd4e2ea9cd01bc19054adf32d55528a6b27f71c2006ac2d65a58c98e21ed598e9cc66bfe79e197d20ed9d13f866a5a6cd3e247d5  system-iio-sensor-proxy.service
 df3388cb7b9d035e54b34d8f8a6594be89c3015f979fe3bdc199fb7db1ab0bef821d6b306eecdf978eb227454d5e50aab29ac02d9722b1b075ec0ce4705e3518  system-iwd.service
 9cf877929b16f3437e65d1a0a2049799cc97cc84a7caab6a581e90139495b4febb5fb4c59ee463110866a0b60c9462d6d0fdb331d92d29b30ce6aeada365ac48  user-plasma-kactivitymanagerd.service
 fa41668288d53f8ce42a7524f10b1e03812fb11ed71bcb484dc22d0d374b453837317eb599cf61b66163a905949024509e73d5190012b664b301d48af7002a01  user-kanshi.service
 b0ecd5d413a2010d3f36285c2d35523119c29007e1e4162e51dfc746cc105f990a82a2a2d6037a8b906628c0a4f606729290525c7a53dbcfbc8147244fa403a7  user-kded.service
 acf21c4391ca62775491ba4d3b7c460b4163ef07abb195e152c98299a2d12779f3eb95f8cad0aeb3239f2d0fa8222a2483000c45aa6a47e05269876147d89839  user-plasma-kglobalaccel.service
+8fbf4a09c4065688b3b781aafe27c5a107f52725002b72d91f213fe5203fea63fb12f2f66e373961a524615eaf4b6d0d50f1e7e0cd9697dbaa9e8020c212fbd2  user-lomiri.service
+bb3449cc1ba56bb6c05607c8d4c95e5cf7d2ebd03eaee33b00d74449bd010623dc64a7a58d32811e79172b2f70c25d2d1d989ea4e6c8dda42bdb1fc90c64798e  user-lomiri-indicators.target
 f6fb4c890cbf72e344ca7a22e7f033fb4c32ce9f5edc27c03ccc5c21424d6a0ef871d79e8a89a502a707bdceb3bfbd7a5b3c8e16b1cd30e149bf2fdf8cccea9e  system-lxc@.service
 873b53592786a978659bda8d32de5ed9a9f163ca298c4f4112f10bf635a8170c4060cc15b57ff72b3afd50075cd1c5dbc10030f00b166e2540397da9e1c5e46b  user-mmsd-tng.service
 5eab6a59c81232b188df45482e325b2d1cb9e038ca147a1b6983c1c095d8194fba804793c5e291b201a820976c8f506aadd2daf7c52fe573a3af708fc9984641  system-ModemManager.service
@@ -350,6 +365,7 @@ e12d8e98e28a795f879aebcceb32a991ee4abcb3bc5ec458aa5378bb52ff86cf39be04bc4a196925
 4c4c3f1e5e829ff67dd35df59120ab59730ff1f1ca0aab93f16d670132979a99099fad59e6c736908cc19df9172c9bdfe476ec721a1cc28de8c2210da46ce1f1  system-q6voiced.service
 621189aa251655796795f4fa0cd79360bb67573e7327e545064eaadafc83cc7b382a405d6ba80662e0a4ece3876e4270e3563d859a6ba63b5e3854b39c35873e  system-qbootctl.service
 998f70776a2857b44202079ecb1ec76331f998155c8a4a15ce036b2fb916d82cba5d750d66509e562f93482c2301a262e8efc220fe54ac2ee1a445801823e465  system-diag-router.service
+acf3a4e63674ea3ab2f5183f34e7515b60b53cfbd01ddc511e776241dfe013dc0fb113adde2e7c4a93219c00b203cf6251c2a271c529ddeed2a9872ca45cae29  system-repowerd.service
 11bb0ff9ab32f0f230c665db2738e37e5226fa200621b9207baf92e0632a38f840395a55ef6e827763911cf78f3bad95cd3456e77cc01b30b8abce96dc13df9d  system-rmtfs.service
 1a0958e4fe232967946e9f2b17a13434b137236ba5d18442175d648b084d82df3a9fc5723c1621be899ee290b99777ac3c0ee6ad733e72d8e70f63b37ad00036  system-rtkit-daemon.service
 d5bf5f01c0feafab4edfc39b75eded608dc3efcd3b918739e3ed2ab11340c9cc9b6fb97c0706ddd3d49b726c5f62e8cdb0048aefafd916f3ad9defc6ff9783bc  system-sensorfwd.service

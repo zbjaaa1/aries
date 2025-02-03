@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kleopatra
-pkgver=99999_git20250129
+pkgver=99999_git20250202
 pkgrel=0
-_commit="d91bc1792998d35028846f3db875b68d9767a818"
+_commit="49f8b5f6c7f747b60fc9ea1dcbb6be0125a2dc3b"
 arch="all !armhf !s390x"
 url="https://www.kde.org/applications/utilities/kleopatra/"
 pkgdesc="Certificate Manager and Unified Crypto GUI"
@@ -46,7 +46,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/kleopatra.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-29/kleopatra-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-02/kleopatra-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -72,5 +72,5 @@ package() {
 }
 
 sha512sums="
-35fb2d8753503b8e49cd6bc0e8d6f16214caba705473fef51c43b2782cb52c87b9928994313f03f6cd91e3c9dfab813f90f806da37fc7cab3f9f1a09aa9f2718  kleopatra-d91bc1792998d35028846f3db875b68d9767a818.tar.xz
+735d845cc1c6405620560112a1276a11b64eea2a22d47d54a3b47f96f45bb6410f1aef7eabe9864f474dd61aae3bcec76a61255c9dcb6a1c4a8fcd63268a3c63  kleopatra-49f8b5f6c7f747b60fc9ea1dcbb6be0125a2dc3b.tar.xz
 "

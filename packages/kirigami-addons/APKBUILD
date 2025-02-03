@@ -2,9 +2,9 @@
 # group=kde-other
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kirigami-addons
-pkgver=99999_git20250129
+pkgver=99999_git20250202
 pkgrel=0
-_commit="d039b132b4a864a9cf25af67cdf73317e227c96d"
+_commit="b18ebb40b3ae6652d993ac0a1bf8341f713beff8"
 pkgdesc="Add-ons for the Kirigami framework"
 url="https://invent.kde.org/libraries/kirigami-addons"
 # armhf blocked by extra-cmake-modules
@@ -26,7 +26,7 @@ makedepends="
 checkdepends="xvfb-run"
 subpackages="$pkgname-dev $pkgname-lang"
 _repo_url="https://invent.kde.org/libraries/kirigami-addons.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-29/kirigami-addons-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-02/kirigami-addons-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/kirigami-addons-$_commit"
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-0a4a9862b646b3dde90a82a6894106580a7be6a0f8d82c9f8e926766e46ac21901824f8c877c7c0293d58e17b306521233bd3a9dc1fb0729e8972e66106343c2  kirigami-addons-d039b132b4a864a9cf25af67cdf73317e227c96d.tar.xz
+313aae8526ffa3afe4f0240e49fb69f3e4ef05bbb9753f451b18f7d69ffa8d18548ec95058606d60a808124ba604822855df8c395cd81cc00680b1d738fbd169  kirigami-addons-b18ebb40b3ae6652d993ac0a1bf8341f713beff8.tar.xz
 "

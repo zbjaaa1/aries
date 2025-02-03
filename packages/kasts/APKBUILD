@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kasts
-pkgver=99999_git20250129
+pkgver=99999_git20250202
 pkgrel=0
-_commit="13412e79f59a1f9315c6eea9ff6938da6a9d549b"
+_commit="0f9b397d965cbdd91ac90e160708d1cbc8865221"
 pkgdesc="Kirigami-based podcast player"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -24,6 +24,7 @@ makedepends="
 	kcoreaddons-dev
 	kcrash-dev
 	ki18n-dev
+	kiconthemes-dev
 	kirigami-addons-dev
 	kirigami-dev
 	networkmanager-qt-dev
@@ -42,7 +43,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/multimedia/kasts.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-01-29/kasts-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-02/kasts-$_commit.tar.xz"
 options="!check" # No tests
 
 options="!check"
@@ -65,5 +66,5 @@ package() {
 }
 
 sha512sums="
-b026bc097197b434386a88d37dd48aacd6b32ecb58e201f4494969bd24763b139b0913978a753ee8586c8b42026c87bdb0604c205faee1d176ee2fb6ae27f5f9  kasts-13412e79f59a1f9315c6eea9ff6938da6a9d549b.tar.xz
+d45fe09600b3b130ba9ce55fbb3775b9e46ca05f9c5494d18df3df90a92dd01d5bd5f54db4c682d5a64945fe392dc097f2ba1f4cd6a3096592caf18587b95fb8  kasts-0f9b397d965cbdd91ac90e160708d1cbc8865221.tar.xz
 "

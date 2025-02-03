@@ -145,6 +145,13 @@ mr-settings:
       - packages/
   timeout: 10 h
 
+.build-retry:
+  extends: .build
+  retry:
+    max: 2
+    when:
+      - script_failure
+
 build-x86_64:
   extends: .build
   script:
@@ -162,20 +169,17 @@ build-aarch64:
     - .ci/build-aarch64.sh
 
 build-armv7:
-  extends: .build
-  resource_group: qemu
+  extends: .build-retry
   script:
     - .ci/build-armv7.sh
 
 build-armhf:
-  extends: .build
-  resource_group: qemu
+  extends: .build-retry
   script:
     - .ci/build-armhf.sh
 
 build-riscv64:
-  extends: .build
-  resource_group: qemu
+  extends: .build-retry
   script:
     - .ci/build-riscv64.sh
 

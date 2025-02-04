@@ -6,8 +6,11 @@ pkgver=6.13_git20250131
 pkgrel=0
 _nextver="${pkgver#*_git}"
 pkgdesc="Linux next kernel"
-arch="aarch64"
-_carch="arm64"
+arch="armv7 aarch64"
+case "$CARCH" in
+	aarch64) _carch="arm64";defconfig="defconfig";;
+	armv7) _carch="arm";defconfig="qcom_defconfig";;
+esac
 _flavor="generic-trailblazer"
 url="https://kernel.org"
 license="GPL-2.0-only"
@@ -42,7 +45,7 @@ prepare() {
 	unset LDFLAGS
 	make ARCH="$_carch" CC="${CC:-gcc}" \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-next-$_nextver" \
-		defconfig pmos.config devices.config
+		"$defconfig" pmos.config devices.config
 }
 
 build() {
@@ -52,10 +55,14 @@ build() {
 }
 
 package() {
-	install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
+	if [ "$CARCH" != "armv7" ]; then
+		install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
 			"$pkgdir/boot/linux.efi"
+	fi
 
-	make modules_install dtbs_install \
+	mkdir -p "$pkgdir"/boot
+
+	make zinstall modules_install dtbs_install \
 		ARCH="$_carch" \
 		INSTALL_PATH="$pkgdir"/boot/ \
 		INSTALL_MOD_PATH="$pkgdir" \
@@ -70,6 +77,6 @@ package() {
 
 sha512sums="
 09b9d8df3cf66c53f3f03bef9394cee09e628e22eda6deb25e930ba23b838c7da01032821cd25db48f60bb07ee28fbcfea6b3f7b5a46ec1216b79bc544047900  linux-next-next-20250131.tar.gz
-8de0a3791ea671528a9fc753071683dfea68ea4f4c22060fc0ca8a4b1b3d76eaa2a3fd40bb013173f0e55da15dde91cf285902779beb35781b6c90f39244ce11  devices.config
+0abacf346ee3be1f0511b4d3656d92aacd821360226f1e21776700fe64d71119999cc0d98a59bf141482f12cd5678213c3b29e1a4c420dc201fc736082d44d58  devices.config
 eaceb011997e5f19ad8c5e9b4d291ebe264d83953f9b21d5b1a0c479602edb235252657f297b1a59c7a11dd2205d40360197489a3337ba6f8e040ecf2b51f527  pmos.config
 "

@@ -111,6 +111,9 @@ def check_versions(packages):
               " HEAD against HEAD~1.")
         commit = "HEAD~1"
 
+    if "linux-next" in packages:
+        packages.remove("linux-next")
+
     for package in packages:
         # Get versions, skip new packages
         head = get_package_version(package, "HEAD")

@@ -1,7 +1,7 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-oneplus-kebab
 pkgdesc="OnePlus 8T"
-pkgver=3
+pkgver=9999
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
@@ -17,6 +17,8 @@ makedepends="
 	dtc
 	"
 subpackages="
+	$pkgname-kernel-devel:kernel_devel
+	$pkgname-kernel-mainline:kernel_mainline
 "
 source="
 	deviceinfo
@@ -29,13 +31,24 @@ build() {
 }
 
 package() {
-	depends="linux-postmarketos-qcom-sm8250"
 	devicepkg_package $startdir $pkgname
 
 	dtc -O dtb -o "$srcdir/dtbo.img" -I dts "$srcdir/sm8250-oneplus-kebab-empty.dts"
-	install -Dm644 "$srcdir/dtbo.img" "$subpkgdir/boot/dtbo.img"
+	install -Dm644 "$srcdir/dtbo.img" "$pkgdir/boot/dtbo.img"
+}
+
+kernel_devel() {
+	depends="linux-postmarketos-external u-boot-qcom-debug-sm8250-oneplus-kebab"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+kernel_mainline() {
+	depends="linux-postmarketos-qcom-sm8250 u-boot-qcom-sm8250-oneplus-kebab"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 sha512sums="
+99878fc0b6dd2a139e7a755078f55a54bee277599464d87ed353b403b7f8c8b264436a8eea489d3a812e213b91e58ee1929b8370500fc1591642ed9032372331  deviceinfo
+7fe3223f84a3cf9502e671dcc0623490e67d69b1ce22d2ba28e8991964afa729c63fda923ee2170d98c012c431233d47d3b19a66af89f7f292efd1457bc92b44  modules-initfs
+06269dcbd405a18576a476bb976d39bcf91e8c7885a87716f510d66abc2ffe3bfabe56c286ad6fc88878de07427e58965ac833ac0e8cfa7ad393c2fa3b535c88  sm8250-oneplus-kebab-empty.dts
 "

@@ -3,13 +3,13 @@
 
 pkgname=linux-next
 pkgver=6.13_git20250131
-pkgrel=0
+pkgrel=1
 _nextver="${pkgver#*_git}"
 pkgdesc="Linux next kernel"
 arch="armv7 aarch64"
 case "$CARCH" in
-	aarch64) _carch="arm64";defconfig="defconfig";;
-	armv7) _carch="arm";defconfig="qcom_defconfig";;
+	aarch64) _carch="arm64";_defconfig="defconfig";;
+	armv7) _carch="arm";_defconfig="qcom_defconfig";;
 esac
 _flavor="generic-trailblazer"
 url="https://kernel.org"
@@ -46,7 +46,7 @@ prepare() {
 	unset LDFLAGS
 	make ARCH="$_carch" CC="${CC:-gcc}" \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-next-$_nextver" \
-		"$defconfig" pmos.config devices.config
+		"$_defconfig" pmos.config devices.config
 }
 
 build() {

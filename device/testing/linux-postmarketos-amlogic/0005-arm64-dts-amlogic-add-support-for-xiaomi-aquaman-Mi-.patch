@@ -1,11 +1,8 @@
-From bc878e3beb9d294e46830248ae9ff27ad3eb0a96 Mon Sep 17 00:00:00 2001
-From: =?UTF-8?q?Ferass=20El=C2=A0Hafidi?= <funderscore@postmarketos.org>
-Date: Thu, 30 Jan 2025 18:02:46 +0000
-Subject: [PATCH v2 2/2] arm64: dts: amlogic: add support for xiaomi-aquaman/Mi
+From dcd4210b40300adcaaad33d7d967be679963aeeb Mon Sep 17 00:00:00 2001
+From: Ferass El Hafidi <funderscore@postmarketos.org>
+Date: Sun, 2 Feb 2025 14:14:20 +0000
+Subject: [PATCH v4 2/2] arm64: dts: amlogic: add support for xiaomi-aquaman/Mi
  TV Stick
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
 
 Xiaomi Mi TV Stick is a small Amlogic-based Android TV stick released in
 2020.  It is known as `xiaomi-aquaman` internally.  Specifications:
@@ -20,12 +17,12 @@ the Mi TV Stick:
  * a white LED is present
  * adjust memory to have 1 GB of RAM available
 
-Signed-off-by: Ferass El Hafidi <funderscore@postmarketos.org>
+Signed-off-by: Ferass El Hafidi <funderscore@postmarketos.org>
 ---
  arch/arm64/boot/dts/amlogic/Makefile          |   1 +
- .../meson-gxl-s805y-xiaomi-aquaman.dts        | 288 ++++++++++++++++++
+ .../meson-gxl-s805y-xiaomi-aquaman.dts        | 285 ++++++++++++++++++
  .../boot/dts/amlogic/meson-gxl-s805y.dtsi     |  10 +
- 3 files changed, 299 insertions(+)
+ 3 files changed, 296 insertions(+)
  create mode 100644 arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
  create mode 100644 arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi
 
@@ -43,10 +40,10 @@ index 2fbda8419..0921707f1 100644
  dtb-$(CONFIG_ARCH_MESON) += meson-gxl-s905d-p230.dtb
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
 new file mode 100644
-index 000000000..c29cc01d8
+index 000000000..ccd0029c0
 --- /dev/null
 +++ b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y-xiaomi-aquaman.dts
-@@ -0,0 +1,288 @@
+@@ -0,0 +1,285 @@
 +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
 +/*
 + * Copyright (c) 2025 Ferass El Hafidi <funderscore@postmarketos.org>
@@ -330,9 +327,6 @@ index 000000000..c29cc01d8
 +&usb {
 +	status = "okay";
 +	dr_mode = "otg";
-+};
-+
-+&usb2_phy0 {
 +	vbus-supply = <&vcc_5v>;
 +};
 diff --git a/arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi b/arch/arm64/boot/dts/amlogic/meson-gxl-s805y.dtsi

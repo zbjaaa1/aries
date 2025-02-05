@@ -61,7 +61,7 @@ kernel_videostrong_kii_pro() {
 
 kernel_xiaomi_aquaman() {
 	pkgdesc="Kernel for Xiaomi Mi TV Stick (S805Y)"
-	depends="linux-postmarketos-amlogic"
+	depends="linux-postmarketos-amlogic soc-amlogic-s905-boot"
 
 	mkdir -p "$subpkgdir"/boot/
 	echo "bootargs=console=tty0 console=ttyAML0,115200n8 rootwait root=/dev/sda2" > "$subpkgdir"/boot/uEnv.ini

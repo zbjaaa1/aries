@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=angelfish
-pkgver=99999_git20250203
+pkgver=99999_git20250204
 pkgrel=0
-_commit="9fa0c7fb0e17cb4c4fafc573a7650b6a3a6831fa"
+_commit="b016606b0da489ec79e4ce05b4f99987864399fc"
 pkgdesc="Small Webbrowser for Plasma Mobile"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
@@ -39,7 +39,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/network/angelfish.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-03/angelfish-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-04/angelfish-$_commit.tar.xz"
 options="net" # net required to download Rust dependencies
 
 provides="plasma-angelfish=$pkgver-r$pkgrel" # Backwards compatibility
@@ -66,5 +66,5 @@ package() {
 }
 
 sha512sums="
-4c33ae59db9ea52afc9f42bf6af3f620b32bda478d0b55eaf19f3624f848f8c9ebb8a35f6a847e9b18198e45ee53538078e3bd3119c8d722145600c4669b8e72  angelfish-9fa0c7fb0e17cb4c4fafc573a7650b6a3a6831fa.tar.xz
+f9140da1321f2529137806d9f9e9a2f1cedb9599e1dedcb07cbe6af47561c9906ee62c2c593185d62405598fb3a1aed522ba4da3e432e8f8c4aa660c2608af92  angelfish-b016606b0da489ec79e4ce05b4f99987864399fc.tar.xz
 "

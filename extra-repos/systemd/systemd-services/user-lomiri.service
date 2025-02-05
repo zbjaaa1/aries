@@ -1,0 +1,34 @@
+[Unit]
+Description=Lomiri Shell
+Documentation=https://lomiri.com
+
+# D-Bus is necessary for contacting logind. Logind is required.
+Wants=dbus.socket
+After=dbus.socket
+
+# Make sure indicators are loaded after we load
+Wants=lomiri-indicators.target
+Before=lomiri-indicators.target
+
+# We are a graphical session
+Before=graphical.target
+
+# Prevent starting on systems without virtual consoles
+ConditionPathExists=/dev/tty0
+
+[Service]
+Environment=LANG=C.UTF-8
+Environment=XDG_CURRENT_DESKTOP=Lomiri
+Environment=XDG_SESSION_DESKTOP=Lomiri
+Environment=XDG_SESSION_TYPE=wayland
+ExecStart=/usr/libexec/lomiri-systemd-wrapper --mode=full-greeter
+ExecStopPost=/usr/bin/dbus-update-activation-environment --systemd WAYLAND_DISPLAY= MIR_SOCKET=
+TimeoutStartSec=30
+PAMName=login
+WorkingDirectory=~
+SyslogIdentifier=lomiri
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=graphical.target

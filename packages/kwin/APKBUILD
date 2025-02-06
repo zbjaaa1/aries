@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kwin
-pkgver=99999_git20250203
+pkgver=99999_git20250205
 pkgrel=0
-_commit="f56cd25095c1f67a13c13c797b972b59dc8c738b"
+_commit="e8393f6c3fddb7a8591b8a600da8633689205be4"
 pkgdesc="An easy to use, but flexible, composited Window Manager"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -80,15 +80,15 @@ makedepends="$depends_dev
 	samurai
 	systemd-dev
 	"
-checkdepends="xvfb-run"
+checkdepends="xwayland-run"
 
 case "$pkgver" in
 	*.90*) _rel=unstable;;
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/kwin.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-04/kwin-$_commit.tar.xz"
-subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/kwin-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-doc $pkgname-lang $pkgname-systemd"
 options="!check" # Broken
 
 builddir="$srcdir/kwin-$_commit"
@@ -105,20 +105,12 @@ build() {
 }
 
 check() {
-	xvfb-run ctest --test-dir build --output-on-failure
+	wlheadless-run -- ctest --test-dir build
 }
 
 package() {
 	DESTDIR="$pkgdir" cmake --install build
-
-	# We don't ship systemd
-	rm -r "$pkgdir"/usr/lib/systemd
-
-	# kwin_wayland has CAP_SYS_NICE set. Because of this, libdbus doesn't trust the
-	# environment and ignores it, causing for example keyboard shortcuts to not work
-	# Remove CAP_SYS_NICE from kwin_wayland to make them work again
-
 }
 sha512sums="
-672b3a9f61cf2f60950ad75147ea8969d85b6c3134595d9733a3ccee1a3f16c48b39db8108a3c0f4b87ba9f840dedba8eb445b802c2fe28553a7e83185aeb3c6  kwin-f56cd25095c1f67a13c13c797b972b59dc8c738b.tar.xz
+7b24131a73ea13810b331e2adb5d2a625fdb87343bafc17e6766e6de699c693e87b2d3a637cfb556f52acea31da8c14c95e0bc68f22a694a9ee279442b6f1679  kwin-e8393f6c3fddb7a8591b8a600da8633689205be4.tar.xz
 "

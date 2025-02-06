@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kdegraphics-mobipocket
-pkgver=99999_git20241022
+pkgver=99999_git20250204
 pkgrel=0
-_commit="3e7ea95b8cee8c791d56f3da877860a145b5030b"
+_commit="94a048ef4e7c96fbe801f9ff5812b52f2108746c"
 pkgdesc="A collection of plugins to handle mobipocket files"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -21,7 +21,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/graphics/kdegraphics-mobipocket.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-04/kdegraphics-mobipocket-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/kdegraphics-mobipocket-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 options="!check" # No tests
 
@@ -41,5 +41,5 @@ package() {
 }
 
 sha512sums="
-cd7b6f9854df2d590ae66ee101d60ac5d45967f4bdbf8711b6ec4ee96d064d6c55570065d49d98cc410ca95ae2f6f5514af23f091370dd86762920fa133d5f89  kdegraphics-mobipocket-3e7ea95b8cee8c791d56f3da877860a145b5030b.tar.xz
+96cf38f519dfa26ca7e4ddc8014a0e83dcb5d110cc0e97aed488939cf0515c4f3e0c7c85a8867b737de761fb48369a9b03515dbcfd54dbd12fa481b28ec53957  kdegraphics-mobipocket-94a048ef4e7c96fbe801f9ff5812b52f2108746c.tar.xz
 "

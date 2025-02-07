@@ -15,6 +15,7 @@ depends="
 "
 makedepends="devicepkg-dev"
 source="
+	boot-image.its
 	deviceinfo
 	modules-initfs
 "
@@ -61,15 +62,20 @@ kernel_videostrong_kii_pro() {
 
 kernel_xiaomi_aquaman() {
 	pkgdesc="Kernel for Xiaomi Mi TV Stick (S805Y)"
-	depends="linux-postmarketos-amlogic soc-amlogic-s905-boot"
+	depends="dtc linux-postmarketos-amlogic soc-amlogic-s905-boot"
 
 	mkdir -p "$subpkgdir"/boot/
-	echo "bootargs=console=tty0 console=ttyAML0,115200n8 rootwait root=/dev/sda2" > "$subpkgdir"/boot/uEnv.ini
-	echo "pmos_env_dtb=meson-gxl-s805y-xiaomi-aquaman.dtb" >> "$subpkgdir"/boot/uEnv.ini
+	echo "bootargs=console=tty0 console=ttyAML0,115200n8" > "$subpkgdir"/boot/uEnv.ini
+
+	mkdir -p "$pkgdir/usr/share/u-boot/amlogic-tvbox"
+	install -D -m644 "$srcdir/boot-image.its" \
+		"$pkgdir/usr/share/u-boot/amlogic-tvbox"
+
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 sha512sums="
-1d10cbbe36d021b2b34493f521822a67c0e31cea2f25703198116ad760e2f4cba202a10a89c9b42b2b26cdb5a0b615dcbb5dbaf43b29bc65d4f437292f1da0ec  deviceinfo
+de320b343c1434e6a42eb7511f7d133ead2b74e49c12b8161d4f29a15a0f3298bb0717a301e54e0e8bc81a2dcf1b31bc342a807ab88592ffec57e897bfab5710  boot-image.its
+6762f260ab612ad5faf2d7196edfb669f721101dbf7723864ac58152ffa835dde6210fbc8a1ca945f5faf52e83ad6cd6e3796c227e7dd1e8d28b7d4effe26718  deviceinfo
 52948c2884a6f6384e12b7a598f70878526d0d3293c214425170145231144ec7de805c038641741a4a5d75b50e554f6a3fa3769784a674217ed032f9b6a233c8  modules-initfs
 "

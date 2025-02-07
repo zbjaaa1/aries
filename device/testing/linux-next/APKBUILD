@@ -9,6 +9,11 @@ pkgdesc="Linux next kernel"
 arch="armv7 aarch64"
 case "$CARCH" in
 	aarch64) _carch="arm64";_defconfig="defconfig";;
+	# FIXME: We should not be using qcom_defconfig. Instead we should be using multi_v7_defconfig.
+	# The problem is two-fold:
+	# - We need to reduce the amount of mainline kernels.
+	# - We need to find a way to not duplicate upstream defconfigs into our repo.
+	# Please see: https://gitlab.postmarketos.org/postmarketOS/pmaports/-/merge_requests/6133#note_468011
 	armv7) _carch="arm";_defconfig="qcom_defconfig";;
 esac
 _flavor="generic-trailblazer"

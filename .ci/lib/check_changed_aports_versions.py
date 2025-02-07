@@ -111,6 +111,8 @@ def check_versions(packages):
               " HEAD against HEAD~1.")
         commit = "HEAD~1"
 
+    # We need to ignore pkgrel checking for linux-next. It's automatically
+    # upgraded anyways and just blocks merging devices into linux-next.
     if "linux-next" in packages:
         packages.remove("linux-next")
 

@@ -637,6 +637,11 @@ get_usb_udc() {
 }
 
 setup_usb_configfs_udc() {
+	# shellcheck disable=SC2154
+	if grep -q "pmos.nogadget" /proc/cmdline ||
+		[ "$deviceinfo_disable_usb_gadget" = "true" ]; then
+		return
+	fi
 	# Check if there's an USB Device Controller
 	local _udc_dev
 	_udc_dev="$(get_usb_udc)"
@@ -715,6 +720,11 @@ setup_usb_network_configfs() {
 }
 
 setup_usb_network() {
+	# shellcheck disable=SC2154
+	if grep -q "pmos.nogadget" /proc/cmdline ||
+		[ "$deviceinfo_disable_usb_gadget" = "true" ]; then
+		return
+	fi
 	# Only run once
 	_marker="/tmp/_setup_usb_network"
 	[ -e "$_marker" ] && return

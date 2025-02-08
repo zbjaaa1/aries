@@ -1,0 +1,10 @@
+#!/bin/sh
+
+# Relying on X11 nesting is probably not a good idea in the long run
+# So let's have a script to remove this hack once it's no longer necessary
+
+if [ "$(realpath /var/lib/tinydm/default-session.desktop)" = /usr/share/xsessions/phosh-nested.desktop ]; then
+	tinydm-set-session -f -s /usr/share/wayland-sessions/phosh.desktop
+fi
+
+exit 0

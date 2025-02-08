@@ -1,7 +1,7 @@
 # Reference: https://postmarketos.org/uipkg
 # Maintainer: Newbyte <newbyte@postmarketos.org>
 pkgname=postmarketos-ui-phosh
-pkgver=22.5
+pkgver=23.0
 pkgrel=0
 pkgdesc="(Wayland) Mobile UI initially developed for the Librem 5"
 url="https://phosh.mobi"
@@ -31,9 +31,12 @@ source="
 	01_postmarketos-ui-phosh.gschema.override
 	mimeapps.list
 	udiskie.desktop
+	etc-X11-xinit-xserverrc
+	etc-xdg-awesome-phosh-nested.lua
+	usr-share-xsessions-phosh-nested.desktop
 	"
 options="!check pmb:gpu-accel pmb:systemd"
-subpackages="$pkgname-openrc $pkgname-systemd"
+subpackages="$pkgname-openrc $pkgname-systemd $pkgname-nested:nested"
 
 package() {
 	install -Dm644 "$srcdir"/01_postmarketos-ui-phosh.gschema.override \
@@ -62,8 +65,21 @@ systemd() {
 	mkdir "$subpkgdir"
 }
 
+nested() {
+	install_if="$pkgname=$pkgver-r$pkgrel postmarketos-base-downstream"
+	depends="$pkgname xorg-server xf86-video-fbdev xf86-input-libinput awesome"
+	replaces="xinit"
+	install="$subpkgname.post-install $subpkgname.pre-uninstall"
+	install -Dm644 "$srcdir"/usr-share-xsessions-phosh-nested.desktop "$subpkgdir"/usr/share/xsessions/phosh-nested.desktop
+	install -Dm644 "$srcdir"/etc-xdg-awesome-phosh-nested.lua "$subpkgdir"/etc/xdg/awesome/phosh-nested.lua
+	install -Dm755 "$srcdir"/etc-X11-xinit-xserverrc "$subpkgdir"/etc/X11/xinit/xserverrc
+}
+
 sha512sums="
 e577b8073df680ccee75ef5b6bb1f2877d5727687d63d6fd9211298e791b6c9f593eb79278c77a4b4918e3c57333c2a012030baf5a3c8d6d16000cc63a030f84  01_postmarketos-ui-phosh.gschema.override
 a741e8db9e4232334b924326c48be4e4c8f7a2382a7608926918a7491c518b2dda551e55a00d4d5fcf58c7950a78dc35d5cc5eaab53ad93a56de40887071f242  mimeapps.list
 53f5c565b4ca8a12f12b63ec84a0194ef530703565d123203d41582a35a54d66afaf3a676df158ae0effe327dcfc1c6496a082ce9dbe803b2547417c3c3fad6e  udiskie.desktop
+db8ee6060b546168a73354482d1a9a6c1e5e91a254e93a1b25a919f69a3214384aa52723a09cc05919a367e6b760d69536544f318d14a3f02b75787ce3c26271  etc-X11-xinit-xserverrc
+b8cd9f7c00d6b789c31bb15877546713f53a2858293f81e3cdcf702e0edc1d91e4d5cbb0e54481109ced721d190bbda0e452aef2edfc2c47402b93f7a8ccd6f6  etc-xdg-awesome-phosh-nested.lua
+4580be67ceb64752890a4c8bb597bb50a940ffca1b8b2fd7686ea438b7db90ad25946e346844888e70649355b84e5b9897bd019bf01958a95f80ee4548b377ad  usr-share-xsessions-phosh-nested.desktop
 "

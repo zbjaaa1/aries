@@ -1,0 +1,38 @@
+From a6758c56f0c06b440a1712da6b46b16fb0da9570 Mon Sep 17 00:00:00 2001
+From: Aster Boese <asterboese@mailbox.org>
+Date: Fri, 29 Nov 2024 21:52:33 -0500
+Subject: [PATCH] homed: include linux/quota.h
+
+musl doesn't have various macros expected of homed, but luckily for us linux-headers does, so just include that.
+---
+ src/home/homed-home.c     | 1 +
+ src/home/homework-quota.c | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/src/home/homed-home.c b/src/home/homed-home.c
+index 757881c2e6..8ef5813640 100644
+--- a/src/home/homed-home.c
++++ b/src/home/homed-home.c
+@@ -3,6 +3,7 @@
+ #if HAVE_LINUX_MEMFD_H
+ #include <linux/memfd.h>
+ #endif
++#include <linux/quota.h>
+ 
+ #include <sys/mman.h>
+ #include <sys/quota.h>
+diff --git a/src/home/homework-quota.c b/src/home/homework-quota.c
+index c9516829d8..2e4748fc13 100644
+--- a/src/home/homework-quota.c
++++ b/src/home/homework-quota.c
+@@ -1,6 +1,7 @@
+ /* SPDX-License-Identifier: LGPL-2.1-or-later */
+ #include <sys/quota.h>
+ 
++#include "linux/quota.h"
+ #include "blockdev-util.h"
+ #include "btrfs-util.h"
+ #include "errno-util.h"
+-- 
+2.47.0
+

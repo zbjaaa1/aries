@@ -29,6 +29,20 @@ package() {
 	mkdir -p "$pkgdir"/lib "$pkgdir"/usr/share/kernel/external
 
 	if is_envkernel; then
+		if [ -e "$builddir/arch/$_carch/boot/vmlinuz.efi" ]; then
+			# ZBOOT EFI decompressor for EFI booting
+			install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz.efi" \
+				"$pkgdir/boot/linux.efi"
+
+			# Old GZIP'd kernel image for boot.img compatibility
+			install -Dm644 "$builddir/arch/$_carch/boot/vmlinuz" \
+				"$pkgdir/boot/vmlinuz"
+		else
+			echo "WARNING: CONFIG_ZBOOT not enabled!"
+			install -Dm644 "$builddir/arch/$_carch/boot/Image.gz" \
+				"$pkgdir/boot/vmlinuz"
+		fi
+
 		make modules_install dtbs_install \
 			ARCH="$_carch" \
 			INSTALL_PATH="$pkgdir"/boot \

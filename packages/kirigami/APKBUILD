@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kirigami
-pkgver=99999_git20250204
+pkgver=99999_git20250206
 pkgrel=0
-_commit="561e69f57b724a802a9e9a4b53170cd3fe98d096"
+_commit="3094b350b672a9bf6236a37e19d946885abeea9a"
 pkgdesc="A QtQuick based components set"
 arch="all !armhf" # armhf blocked by qt6-qtdeclarative
 url="https://community.kde.org/Frameworks"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kirigami.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/kirigami-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kirigami-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-libs $pkgname-lang"
 
 options="!check"
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-f03e6697f25dbf718e45d484d9208f1440253ab64d6a06d501daef05ca632335de4c028f41445caa526befa7f162e461487680486b4223d8e612ece8215b8477  kirigami-561e69f57b724a802a9e9a4b53170cd3fe98d096.tar.xz
+6521c7b14dc999075186e9998dea9f0fc7791cffb99707e5b924f5c6fdfd91c84e2f57990c0d7ff596908b751b5433ae363db0630aaa64321dabc9c1fa4a123f  kirigami-3094b350b672a9bf6236a37e19d946885abeea9a.tar.xz
 "

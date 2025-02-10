@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=solid
-pkgver=99999_git20250127
+pkgver=99999_git20250206
 pkgrel=0
-_commit="657a21f0f72c0f16ca10bf6e5647a0162bad627c"
+_commit="2313e2d26c0fdf3899110897d85918d558136fa2"
 pkgdesc="Hardware integration and detection"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	upower-dev
 	"
 _repo_url="https://invent.kde.org/frameworks/solid.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/solid-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/solid-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-libs $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-ed6cd0b51f6ff95f0422576ac4af78f87e949b78052f7d07a15a6181ca44316e0f9a3bc651cdc19720c9e2b6040f86fb1053c18c3cf1cd0e642e57a4f17f9ff4  solid-657a21f0f72c0f16ca10bf6e5647a0162bad627c.tar.xz
+b5d7b9ed322b79b0120206b80badc8ea26613ea2089aec8cf72a29bca5a58bba107f9cc69cd9c471f24cb67197a805bc5c3a3c1558cc8d441a9f39820afbb237  solid-2313e2d26c0fdf3899110897d85918d558136fa2.tar.xz
 "

@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-mobile
-pkgver=99999_git20250202
+pkgver=99999_git20250206
 pkgrel=0
-_commit="a292bac8b057bd4b2034d1463de9a39d5fefaecd"
+_commit="a7d3ecef1424c4e5befa4973edf428ea8ee3a3c5"
 pkgdesc="Modules providing phone functionality for Plasma"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -74,7 +74,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-mobile.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/plasma-mobile-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/plasma-mobile-$_commit.tar.xz
 	99-flashlight.rules
 	"
 options="!check" # No tests
@@ -101,6 +101,6 @@ package() {
 }
 
 sha512sums="
-3cfb1db2e9858e681d22417eb693dd324081c6a09a6959aa0b9158cd08ce2a0c640adbfa26ab238eec53de75fa6e7510530e782bd41ad124539058b1d3c1763c  plasma-mobile-a292bac8b057bd4b2034d1463de9a39d5fefaecd.tar.xz
+fbbceabf57799c23698cae0f357de5669799959b4808218130eaa62a8b6ac10986a55be2d0a4d44b9f48b4504cd3af69fea1109197af1c93c7e07411b84f75e8  plasma-mobile-a7d3ecef1424c4e5befa4973edf428ea8ee3a3c5.tar.xz
 4badc25cbb7dc84d6af54cff5f3c09dcc37da86b7e930bdcab6d75f8dd90ef0dd9c8a3837ab696b1f4de9cad82d5e64ddd44904640a92e910a8f45524542be95  99-flashlight.rules
 "

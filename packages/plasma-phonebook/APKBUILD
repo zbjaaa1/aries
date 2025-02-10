@@ -2,9 +2,9 @@
 # group=kde-mobile
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-phonebook
-pkgver=99999_git20241225
+pkgver=99999_git20250125
 pkgrel=0
-_commit="79873c58fbc29c4a9f5482f2a9a24709d9ef9b28"
+_commit="534cbb894a14c21e12dee7fd5ff46ae9e81bec51"
 pkgdesc="Contacts application which allows adding, modifying and removing contacts"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -30,7 +30,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/plasma-mobile/plasma-phonebook.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/plasma-phonebook-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/plasma-phonebook-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 options="!check" # No tests
 
@@ -53,5 +53,5 @@ package() {
 }
 
 sha512sums="
-491ab02bf021b12c969e323bfdce64f22b1955748863cd7a6c3735efc1089624ecd204051132e6c6a8cdd35b828e2bff59ad8ab5836d831066c4938fb11f2f8b  plasma-phonebook-79873c58fbc29c4a9f5482f2a9a24709d9ef9b28.tar.xz
+eaad3da6a42d3d0472c8f81628929ea1e087b7636d857fedfd8091b9251ee9fc821ebb3c1566dce4c46a5b26c4a5ab8a94305f158ffb21f27c7a45f1156f323b  plasma-phonebook-534cbb894a14c21e12dee7fd5ff46ae9e81bec51.tar.xz
 "

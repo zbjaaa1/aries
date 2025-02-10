@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kitinerary
-pkgver=99999_git20250203
+pkgver=99999_git20250206
 pkgrel=0
-_commit="f4e3e8f6f966b7bcc6c96ff7feba7ca667973b80"
+_commit="342a93dbee0c099f53e0d8acf2aafb2dbe00dd31"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le FTBFS
 arch="all !armhf !ppc64le"
@@ -33,7 +33,7 @@ makedepends="$depends_dev
 	zlib-dev
 	"
 _repo_url="https://invent.kde.org/pim/kitinerary.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-05/kitinerary-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kitinerary-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 # broken with new libxml
 options="!check"
@@ -76,5 +76,5 @@ package() {
 }
 
 sha512sums="
-d64c89d86fe1564d20e1c1d46836cf3f10a606244245d455f74c15bac2e86398a557cacdd40aeb9036a196c57527f7be0a68ff6dad5b99884627580de5b5cb23  kitinerary-f4e3e8f6f966b7bcc6c96ff7feba7ca667973b80.tar.xz
+aadcf8fb95e4d6c652a16fb0ddc4ef2f5d3165b042233b7630698d47b4aa2a62b5d235ac701ce8839182aa97095add190d1f584716daf2db75ca7400ba06fccb  kitinerary-342a93dbee0c099f53e0d8acf2aafb2dbe00dd31.tar.xz
 "

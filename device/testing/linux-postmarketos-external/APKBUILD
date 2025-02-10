@@ -1,0 +1,47 @@
+maintainer="jane400 <jane400@postmarketos.org>"
+pkgname=linux-postmarketos-external
+pkgver=1
+pkgrel=0
+pkgdesc="kernel from pmbootstrap --envkernel installed into /boot"
+arch="noarch"
+license="GPL-3.0-or-later"
+url="https://kernel.org"
+options="
+	!check
+	pmb:cross-native
+"
+_outdir=".output"
+_carch="arm64"
+builddir="$srcdir/linux"
+
+is_envkernel() {
+	[ -e "$builddir/$_outdir/vmlinux" ]
+}
+
+build() {
+	if ! is_envkernel; then
+		echo "There is no kernel compiled in '$_outdir'. This will build an unbootable system."
+		echo "Please run make O=$_outdir and then try to use \`pmbootstrap --envkernel linux-postmarketos-external\` again"
+	fi
+}
+
+package() {
+	mkdir -p "$pkgdir"/lib "$pkgdir"/usr/share/kernel/external
+
+	if is_envkernel; then
+		make modules_install dtbs_install \
+			ARCH="$_carch" \
+			INSTALL_PATH="$pkgdir"/boot \
+			INSTALL_MOD_PATH="$pkgdir"/boot \
+			INSTALL_MOD_STRIP=1 \
+			INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+
+		install -D "$builddir"/include/config/kernel.release \
+			"$pkgdir"/boot/kernel.release
+
+		rm -f "$pkgdir"/boot/lib/modules/*/build "$pkgdir"/boot/lib/modules/*/source
+	fi
+
+	ln -s ../../boot/lib/modules "$pkgdir"/lib/modules
+	ln -s ../../../../boot/kernel.release "$pkgdir"/usr/share/kernel/external/kernel.release
+}

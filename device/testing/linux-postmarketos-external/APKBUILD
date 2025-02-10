@@ -3,7 +3,7 @@ pkgname=linux-postmarketos-external
 pkgver=1
 pkgrel=0
 pkgdesc="kernel from pmbootstrap --envkernel installed into /boot"
-arch="noarch"
+arch="aarch64"
 license="GPL-3.0-or-later"
 url="https://kernel.org"
 options="
@@ -15,7 +15,7 @@ _carch="arm64"
 builddir="$srcdir/linux"
 
 is_envkernel() {
-	[ -e "$builddir/$_outdir/vmlinux" ]
+	[ -e "$builddir/vmlinux" ]
 }
 
 build() {
@@ -42,6 +42,6 @@ package() {
 		rm -f "$pkgdir"/boot/lib/modules/*/build "$pkgdir"/boot/lib/modules/*/source
 	fi
 
-	ln -s ../../boot/lib/modules "$pkgdir"/lib/modules
-	ln -s ../../../../boot/kernel.release "$pkgdir"/usr/share/kernel/external/kernel.release
+	ln -s ../boot/lib/modules "$pkgdir"/lib/modules
+	ln -s ../../../boot/kernel.release "$pkgdir"/usr/share/kernel/external/kernel.release
 }

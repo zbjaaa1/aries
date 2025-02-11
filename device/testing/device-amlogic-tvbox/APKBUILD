@@ -9,6 +9,7 @@ license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
+	dtc
 	postmarketos-base
 	soc-amlogic-s905
 	u-boot-tools
@@ -35,21 +36,36 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
+aml_boot_prep() {
+	# uEnv.ini: Used to set kernel cmdline, and DTB if booting a legacy uImage
+	mkdir -p "$2"/boot/
+	echo "bootargs=console=tty0 console=ttyAML0,115200n8" > "$2"/boot/uEnv.ini
+	echo "pmos_env_dtb=$1" >> "$2"/boot/uEnv.ini
+
+	# FIT image used to boot Amlogic devices if their vendor U-Boot build supports it
+	mkdir -p "$2"/usr/share/u-boot/amlogic-tvbox
+	sed "s@\\[\\[\\[DEVICETREE\\]\\]\\]@/boot/dtbs/amlogic/$1@" "$srcdir/boot-image.its" > "$2"/usr/share/u-boot/amlogic-tvbox/boot-image.its
+	chmod 644 "$2"/usr/share/u-boot/amlogic-tvbox/boot-image.its # Perms fixup
+}
+
 kernel_p201() {
 	pkgdesc="Kernel for Amlogic P201-based TV box (S905)"
 	depends="linux-postmarketos-amlogic u-boot-amlogic-s905-tv"
+	aml_boot_prep "meson-gxbb-p201.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 kernel_p212() {
 	pkgdesc="Kernel for Amlogic P212-based TV box (S905X)"
 	depends="linux-postmarketos-amlogic u-boot-amlogic-s905x-tv"
+	aml_boot_prep "meson-gxl-s905x-p212.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 kernel_p241() {
 	pkgdesc="Kernel for Amlogic P241-based TV box (S805X/S805Y)"
 	depends="linux-postmarketos-amlogic u-boot-amlogic-s905x-tv"
+	aml_boot_prep "meson-gxl-s805x-p241.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
@@ -57,25 +73,19 @@ kernel_videostrong_kii_pro() {
 	pkgdesc="Kernel for Videostrong KII Pro (S905)"
 	depends="linux-postmarketos-amlogic u-boot-amlogic-s905-tv"
 	_pmb_recommends="firmware-videostrong-kii-pro"
+	aml_boot_prep "meson-gxbb-kii-pro.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 kernel_xiaomi_aquaman() {
 	pkgdesc="Kernel for Xiaomi Mi TV Stick (S805Y)"
-	depends="dtc linux-postmarketos-amlogic soc-amlogic-s905-boot"
-
-	mkdir -p "$subpkgdir"/boot/
-	echo "bootargs=console=tty0 console=ttyAML0,115200n8" > "$subpkgdir"/boot/uEnv.ini
-
-	mkdir -p "$pkgdir/usr/share/u-boot/amlogic-tvbox"
-	install -D -m644 "$srcdir/boot-image.its" \
-		"$pkgdir/usr/share/u-boot/amlogic-tvbox"
-
+	depends="linux-postmarketos-amlogic soc-amlogic-s905-boot"
+	aml_boot_prep "meson-gxl-s805y-xiaomi-aquaman.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }
 
 sha512sums="
-de320b343c1434e6a42eb7511f7d133ead2b74e49c12b8161d4f29a15a0f3298bb0717a301e54e0e8bc81a2dcf1b31bc342a807ab88592ffec57e897bfab5710  boot-image.its
+17e803e341c362f54df2116125549ededc41deb89cd6f57974133e18053b30af35fc2b60cdb732b10efadf95234f154bdd7b32410c139f0166adfe9b4ffe02dd  boot-image.its
 6762f260ab612ad5faf2d7196edfb669f721101dbf7723864ac58152ffa835dde6210fbc8a1ca945f5faf52e83ad6cd6e3796c227e7dd1e8d28b7d4effe26718  deviceinfo
 52948c2884a6f6384e12b7a598f70878526d0d3293c214425170145231144ec7de805c038641741a4a5d75b50e554f6a3fa3769784a674217ed032f9b6a233c8  modules-initfs
 "

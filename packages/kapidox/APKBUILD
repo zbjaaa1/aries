@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kapidox
-pkgver=99999_git20250103
+pkgver=99999_git20250207
 pkgrel=0
-_commit="1e2523224bcaffd04f75dafb3fc1bb33b31ef9b2"
+_commit="138264f3d695d0bd891350947994aa9f054b2144"
 arch="noarch !armhf" # armhf blocked by extra-cmake-modules
 pkgdesc="Scripts and data for building API documentation (dox) in a standard format and style"
 url="https://community.kde.org/Frameworks"
@@ -27,7 +27,7 @@ makedepends="
 checkdepends="bash"
 subpackages="$pkgname-pyc"
 _repo_url="https://invent.kde.org/frameworks/kapidox.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kapidox-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kapidox-$_commit.tar.xz"
 options="!check" # No useful tests
 
 options="!check"
@@ -45,5 +45,5 @@ package() {
 }
 
 sha512sums="
-151dcc48d423fd7cd0f07a7a8f2fb4e697313064b25af540e690880072bc188c39e36b31526fe9b2168abafcd7cf26962e2a1355dd0e0b4fcb4d4192eabe6c14  kapidox-1e2523224bcaffd04f75dafb3fc1bb33b31ef9b2.tar.xz
+af8024319f2e813844b8e9d919977a25bd023e8f104f151eca4c8257d43ec306a111f76388171dc352e6a5f042498d15b5ede66df5ffb6d6d0a6206e3a4a6db3  kapidox-138264f3d695d0bd891350947994aa9f054b2144.tar.xz
 "

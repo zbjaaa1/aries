@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-bigscreen
-pkgver=99999_git20250206
+pkgver=99999_git20250207
 pkgrel=0
-_commit="d3848e8212ebca3aaa639084e3d54940be4a1baa"
+_commit="ddb0dce30ce3233d13f18bdc0ba2b1ae84fb97f1"
 pkgdesc="A 10-feet interface made for TVs"
 url="https://invent.kde.org/plasma/plasma-bigscreen/"
 # armhf blocked by qt5-qtdeclarative
@@ -48,7 +48,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-bigscreen.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/plasma-bigscreen-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/plasma-bigscreen-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/plasma-bigscreen-$_commit"
@@ -70,5 +70,5 @@ package() {
 }
 
 sha512sums="
-2a46d2ad6a5e6dc6f428548794a7cc04bbf8b910269d39941c19d41299ec9bb015191e29fa36d38d363b463c85811f1a8a18cec92695b5c202e3e68b1f05194e  plasma-bigscreen-d3848e8212ebca3aaa639084e3d54940be4a1baa.tar.xz
+b6a6b511278c4708302547791f3525f67fd2ff4949d7c8654176675143b41a19580207aabd9b4939e2a41b0964fbbff7261221359273635c02034a17c934c63d  plasma-bigscreen-ddb0dce30ce3233d13f18bdc0ba2b1ae84fb97f1.tar.xz
 "

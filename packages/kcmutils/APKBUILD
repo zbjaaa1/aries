@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kcmutils
-pkgver=99999_git20250204
+pkgver=99999_git20250207
 pkgrel=0
-_commit="8f6f57d8df6e51b1edbd393940ed51134d84a91c"
+_commit="a080469ff0498c962f295b0382476be6875290af"
 pkgdesc="Utilities for interacting with KCModules"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -29,7 +29,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kcmutils.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kcmutils-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kcmutils-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -53,5 +53,5 @@ package() {
 }
 
 sha512sums="
-2b561b40e6dd50501248e203ebcfd11979f649a8e5d225b2c7160367da8e2f2580241ae6030a87cdbfbdbb6b88e2edd5205b2f1affe307bb65d6ccee346b55dd  kcmutils-8f6f57d8df6e51b1edbd393940ed51134d84a91c.tar.xz
+69821ecfb0518873dac825132064768334e114168d3c1077051d2f463f405fe9eb4b2da825bc52428f5e0755880c5e28d651ea2529cd811d9b32bd73155ff10c  kcmutils-a080469ff0498c962f295b0382476be6875290af.tar.xz
 "

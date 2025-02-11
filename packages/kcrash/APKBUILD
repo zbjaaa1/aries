@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kcrash
-pkgver=99999_git20250129
+pkgver=99999_git20250207
 pkgrel=0
-_commit="052229cbabc53dbb6bc23b4bd62e23a15def9613"
+_commit="325903d7f1e96ceaf575cebcc9b854fb4e32d606"
 pkgdesc="Support for application crash analysis and bug report from apps"
 arch="all !armhf"
 url="https://community.kde.org/Frameworks"
@@ -23,7 +23,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kcrash.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kcrash-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kcrash-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-7722fcd1d8d2bdf1adac13222126374dcb557f741d472aabc885aefd96473f3483ff4384f7c11386ed6da9328a7504b577f9084fcb3af67b06b47879043e80b9  kcrash-052229cbabc53dbb6bc23b4bd62e23a15def9613.tar.xz
+13f1a671e4a4af8af0fe65ab3ff722da01c97d1e936576b8bdd3730efdf9f4fa393c2afe6b72937599a3b23fd8db1c7020829eae8137af0700287f652297337d  kcrash-325903d7f1e96ceaf575cebcc9b854fb4e32d606.tar.xz
 "

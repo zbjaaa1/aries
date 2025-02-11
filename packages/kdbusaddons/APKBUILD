@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kdbusaddons
-pkgver=99999_git20250129
+pkgver=99999_git20250207
 pkgrel=0
-_commit="17a7f7f1e94f0f07e13ed9711d619db4940ac8d7"
+_commit="7c042a75bafb06c0eba625477017d9605660e187"
 pkgdesc="Addons to QtDBus"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -21,7 +21,7 @@ makedepends="
 	"
 checkdepends="dbus"
 _repo_url="https://invent.kde.org/frameworks/kdbusaddons.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/kdbusaddons-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kdbusaddons-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -45,5 +45,5 @@ package() {
 }
 
 sha512sums="
-86f6f95a80c93de8695dcc4e5b9df63cfd906823a00b913fcb389b8cb9436dad1b17e0680ce1608be1283d42976e6cbd320bff63e994c25046c88a3d73f5fba4  kdbusaddons-17a7f7f1e94f0f07e13ed9711d619db4940ac8d7.tar.xz
+91b56243cca4c11c3ee516402dbe4aceed5691e1a1d059f38d6e94b0dd61d0cb07bc0fb6ec2bcab632b9f80d74401791beb942592d5985001bf67bfb1164215e  kdbusaddons-7c042a75bafb06c0eba625477017d9605660e187.tar.xz
 "

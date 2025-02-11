@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=threadweaver
-pkgver=99999_git20250126
+pkgver=99999_git20250207
 pkgrel=0
-_commit="adb44669cf95f75ec0d27643ec46ac29891e9c2e"
+_commit="a622a0939318d32588bd31332de619cc8c81f570"
 pkgdesc="High-level multithreading framework"
 arch="all !armhf" # armhf blocked by qt6-qtdeclarative
 url="https://community.kde.org/Frameworks"
@@ -22,7 +22,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/threadweaver.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-06/threadweaver-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/threadweaver-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -46,5 +46,5 @@ package() {
 }
 
 sha512sums="
-22a40c0e6636a327ae58c7ebdad515584306cd5445fe7c786d2f86802802724898d5b37647b13688c2aa55a3198ba12f7323cf132a312a2940b882c536e68c05  threadweaver-adb44669cf95f75ec0d27643ec46ac29891e9c2e.tar.xz
+dcb435777f7f65f3d2336147b33fb93bec2bd1c57379654526670b87fbcf456565648b0bd5978249697c97957a55934505f390126804e54f756d2676428e00ec  threadweaver-a622a0939318d32588bd31332de619cc8c81f570.tar.xz
 "

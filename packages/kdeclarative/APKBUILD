@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kdeclarative
-pkgver=99999_git20250207
+pkgver=99999_git20250210
 pkgrel=0
-_commit="7f1ebce08fdd42808378cfb529aaf978e5b35117"
+_commit="7ea5f3ba439a9e73b9a06d54ea89df4a32d48e0a"
 pkgdesc="Provides integration of QML and KDE Frameworks"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -34,7 +34,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kdeclarative.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kdeclarative-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kdeclarative-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -51,7 +51,7 @@ build() {
 
 check() {
 	# quickviewsharedengine requires OpenGL
-	xvfb-run ctest --test-dir build --output-on-failure -E "quickviewsharedengine"
+	xvfb-run ctest --test-dir build -E "quickviewsharedengine"
 }
 
 package() {
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-cf6bfd3182fb1ae4385432730c7589d06ee8670e3441a34e3ab8645a81c58d857c2c3f513e6850ce8d51224edd2e620751e40764822d370a49a2805027e0174e  kdeclarative-7f1ebce08fdd42808378cfb529aaf978e5b35117.tar.xz
+20ee26355f5d82be38e3cdb2ed031c5159a47aa79449d005dd391203685cd7dc0d1ab3afbd7e4039c1e435b718fe0eee82225810f6c71ffae9381cf26926ec02  kdeclarative-7ea5f3ba439a9e73b9a06d54ea89df4a32d48e0a.tar.xz
 "

@@ -24,7 +24,7 @@ makedepends="$depends_dev
 checkdepends="xvfb-run"
 subpackages="$pkgname-dev $pkgname-lang"
 _repo_url="https://invent.kde.org/libraries/kuserfeedback.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kuserfeedback-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kuserfeedback-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/kuserfeedback-$_commit"
@@ -39,7 +39,7 @@ build() {
 
 check() {
 	# openglinfosourcetest requires OpenGL
-	xvfb-run ctest --test-dir build --output-on-failure -E "openglinfosourcetest"
+	xvfb-run ctest --test-dir build -E "openglinfosourcetest"
 }
 
 package() {

@@ -27,7 +27,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/kunifiedpush.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kunifiedpush-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kunifiedpush-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 
 options="!check"
@@ -42,7 +42,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {

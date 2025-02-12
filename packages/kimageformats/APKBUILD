@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kimageformats
-pkgver=99999_git20250207
+pkgver=99999_git20250210
 pkgrel=0
-_commit="b28cf4c352dd2b7e6e74835c05ed8418d6e19745"
+_commit="36a6ef7d78d95fbd8cffcbf1ef49624cc2f6c2ca"
 pkgdesc="Image format plugins for Qt"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -24,7 +24,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kimageformats.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kimageformats-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kimageformats-$_commit.tar.xz"
 
 case "$CARCH" in
 s390x)
@@ -48,9 +48,9 @@ build() {
 
 check() {
 	case "$CARCH" in
-		armv7) xvfb-run ctest --test-dir build --output-on-failure -E "kimageformats-read-(psd|jxl|xcf)" ;;
-		s390x) xvfb-run ctest --test-dir build --output-on-failure -E "kimageformats-(read-psd|write-avif)" ;;
-		*) xvfb-run ctest --test-dir build --output-on-failure -E "kimageformats-read-psd" ;;
+		armv7) xvfb-run ctest --test-dir build -E "kimageformats-read-(psd|jxl|xcf)" ;;
+		s390x) xvfb-run ctest --test-dir build -E "kimageformats-(read-psd|write-avif)" ;;
+		*) xvfb-run ctest --test-dir build -E "kimageformats-read-psd" ;;
 	esac
 }
 
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-26e226980081aa5c5efa0e90509e34dac13911f06b9975a751125f745214678bd58e79889994a22a7b83bbad528977bcc8787c13e896a860f6a34e8dd14b195b  kimageformats-b28cf4c352dd2b7e6e74835c05ed8418d6e19745.tar.xz
+539f8af7b0160b6bad1116289e0af7538bc41168388c6eeeaee3f03ec88407b53f2896f59bae00d0db0cf5183941e986d52f78939adc545cde85954fad010937  kimageformats-36a6ef7d78d95fbd8cffcbf1ef49624cc2f6c2ca.tar.xz
 "

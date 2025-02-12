@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kalarm
-pkgver=99999_git20250208
+pkgver=99999_git20250211
 pkgrel=0
-_commit="c7e9068a1b113f0828ad47fecb4a51aaab27d74d"
+_commit="378140afda54c617899fb453863d89c9fac51f5a"
 pkgdesc="Personal alarm scheduler"
 url="https://kontact.kde.org/"
 # armhf blocked by qt6-qtdeclarative
@@ -59,7 +59,7 @@ makedepends="
 	vlc-dev
 	"
 _repo_url="https://invent.kde.org/pim/kalarm.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kalarm-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kalarm-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # Tests are broken
 
@@ -75,7 +75,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -83,5 +83,5 @@ package() {
 }
 
 sha512sums="
-c1a77bae4c8e5985d247a79ff6ab23c0d1fe947cdc0fe1340a52edaf0300aac73793f3fee7596ac6338d7252f5ae76708e7be836046563bd2614dc67f706f7a9  kalarm-c7e9068a1b113f0828ad47fecb4a51aaab27d74d.tar.xz
+e383fe3ed1823f9d952985489dfc82840000b3f603169f737f2294f5b1e1d3b135e8eaf1229434c4ad4057d680ed57c9c9557a13e3e73ae2c5ee6927b6952956  kalarm-378140afda54c617899fb453863d89c9fac51f5a.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kcalendarcore
-pkgver=99999_git20250207
+pkgver=99999_git20250210
 pkgrel=0
-_commit="2d99ee87e2223ba1640ba503b37dda274876494a"
+_commit="c8dcc031afdd2b60ad56d752b31361331c12bb23"
 pkgdesc="The KDE calendar access library"
 arch="all !armhf" # armhf blocked by extra-cmake-modules
 url="https://community.kde.org/Frameworks"
@@ -23,7 +23,7 @@ makedepends="$depends_dev
 	"
 subpackages="$pkgname-dev $pkgname-doc"
 _repo_url="https://invent.kde.org/frameworks/kcalendarcore.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kcalendarcore-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kcalendarcore-$_commit.tar.xz"
 options="!check" # RecursOn-ConnectDaily(2|3|6) make the builders stuck
 
 replaces="kcalcore"
@@ -42,7 +42,7 @@ build() {
 
 check() {
 	# testrecurtodo, testreadrecurrenceid, testicaltimezones, testmemorycalendar and testtimesininterval are broken
-	ctest --test-dir build --output-on-failure -E "test(recurtodo|readrecurrenceid|icaltimezones|memorycalendar|timesininterval)"
+	ctest --test-dir build -E "test(recurtodo|readrecurrenceid|icaltimezones|memorycalendar|timesininterval)"
 }
 
 package() {
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-1fdc3083e2683fe5fc6a02706951e79763fea75fb32a7b96f6aa1f1113cfe6e31fa274f69914875b6ae3232f9cc9e07852ebb2299a745f0489114b6701b3b12f  kcalendarcore-2d99ee87e2223ba1640ba503b37dda274876494a.tar.xz
+89ecc103662f2ae2634f19195822702e2fceac094508a1881c6287884fcffec4e843fa4bb452919794b159262005882a3accb074dafaf05129f44c95c08ad0ee  kcalendarcore-c8dcc031afdd2b60ad56d752b31361331c12bb23.tar.xz
 "

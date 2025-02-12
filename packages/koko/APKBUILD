@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=koko
-pkgver=99999_git20250203
+pkgver=99999_git20250211
 pkgrel=0
-_commit="f62e9849ca8a87b82015e4bfb6a3acae5344feaf"
+_commit="8689635d1598000f89acd1d04ba0b71b01021e07"
 pkgdesc="Image gallery application for Plasma Mobile"
 url="https://invent.kde.org/graphics/koko"
 # armhf blocked by qt6-qtdeclarative
@@ -41,7 +41,7 @@ makedepends="
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/graphics/koko.git"
 _data_date=2023-09-02
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/koko-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/koko-$_commit.tar.xz
 	https://dev.alpinelinux.org/archive/koko/cities1000-$_data_date.zip
 	https://dev.alpinelinux.org/archive/koko/admin1CodesASCII-$_data_date.txt
 	https://dev.alpinelinux.org/archive/koko/admin2Codes-$_data_date.txt
@@ -82,7 +82,7 @@ build() {
 }
 
 check() {
-	ctest --test-dir build --output-on-failure
+	ctest --test-dir build
 }
 
 package() {
@@ -90,7 +90,7 @@ package() {
 }
 
 sha512sums="
-230093353861f8ba94cb7344f9a0e3e32c5547340648f8433e56b9966857596e1038391262bae302c08f6a91e24e1e13b5d685e4d2c1733e78f6e5b3e4753c29  koko-f62e9849ca8a87b82015e4bfb6a3acae5344feaf.tar.xz
+ead7b2e27860e5d95073b2d81ea8479f925b98b38b6150fa238c7726564c59850936eb302adac4a66d1716d2acb2577dbbc1ff4ffdb7288269979ae23dd91ccd  koko-8689635d1598000f89acd1d04ba0b71b01021e07.tar.xz
 780b1a27bacd1c5ec4b5c4d37b2cedbdd0dfef1d4761b9d10385d6bf5fdaddb90f08afc9e69f8c7d995684682a9ab6575dbec19460125ed456e12045381cbffd  cities1000-2023-09-02.zip
 6729409e1a229df729d568eabec42ca0ac4abbb6efcb62612bbeaa8682b77c562a7460d86d20329fe5c53858c5d62cc1915cec485760ffe55c4e66274bb99941  admin1CodesASCII-2023-09-02.txt
 8de976fe0642b7f3d3133f3928cb050e2f7fd25d65c8bd82ddf06d275f8054b31bfb20f019ce410383bbd466181aaf9469a55e1e36c97c7f550eccb7ec865a3c  admin2Codes-2023-09-02.txt

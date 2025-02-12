@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=dolphin
-pkgver=99999_git20250210
+pkgver=99999_git20250211
 pkgrel=0
-_commit="2b762d00910841d32e1e3778ad50a7b304b6c058"
+_commit="fb0a8a99ab275f8d35403070316d7bcc7074d397"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/system/dolphin"
@@ -55,7 +55,7 @@ checkdepends="
 	"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang $pkgname-zsh-completion"
 _repo_url="https://invent.kde.org/system/dolphin.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/dolphin-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/dolphin-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/dolphin-$_commit"
@@ -71,7 +71,7 @@ build() {
 
 check() {
 	# kfileitemmodeltest, placesitemmodeltest, dolphinmainwindowtest and kitemlistcontrollertest are broken
-	xvfb-run ctest --test-dir build --output-on-failure -E "(kfileitemmodel|placesitemmodel|dolphinmainwindow|kitemlistcontroller)test"
+	xvfb-run ctest --test-dir build -E "(kfileitemmodel|placesitemmodel|dolphinmainwindow|kitemlistcontroller)test"
 }
 
 package() {
@@ -82,5 +82,5 @@ package() {
 }
 
 sha512sums="
-993f320964067a8228876823e987596895a87d98f68b1959bc848d76959dc4295e1e34ad1da504e33e0642fff1fa15ca6f74c0691d06c3f1a4187f34ab625c9e  dolphin-2b762d00910841d32e1e3778ad50a7b304b6c058.tar.xz
+6f28d4afd8bc151de7d6b6273384ac5f31ece94078dea05c397183a005ef8f1b54ecc8bace727188b77a32a58ccb120b14a0a33488f6606fbc5a5ddb69b9d95f  dolphin-fb0a8a99ab275f8d35403070316d7bcc7074d397.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=krunner
-pkgver=99999_git20250207
+pkgver=99999_git20250210
 pkgrel=0
-_commit="1989c597aeee95eac28e14d768f5287129a4c44a"
+_commit="070225c158ddc4e130f489a250c09d159ccbe518"
 pkgdesc="Framework for providing different actions given a string query"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -33,7 +33,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/frameworks/krunner.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/krunner-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/krunner-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -50,7 +50,7 @@ build() {
 
 check() {
 	# dbusrunnertest and runnermanagertest is broken
-	dbus-run-session -- xvfb-run ctest --test-dir build --output-on-failure -E "(dbusrunner|runnermanager)test"
+	dbus-run-session -- xvfb-run ctest --test-dir build -E "(dbusrunner|runnermanager)test"
 }
 
 package() {
@@ -58,5 +58,5 @@ package() {
 }
 
 sha512sums="
-d8bdd14fc845ba3b6a3b9e3fe902e5ddc37e6a94ad08a54f66bcd476aab44657d4865346209183337b2e592a0fc2a8e69544c18d2e7f9f0bce93b7db5787329e  krunner-1989c597aeee95eac28e14d768f5287129a4c44a.tar.xz
+0ec6cf79d9d9ccd9766fa06dd0575b7784c6807e6bc4a3d05047667a2b46be6100432360910e81c7bbbc16a9efc443a7abff080056a08752d8e713e4704fa8bc  krunner-070225c158ddc4e130f489a250c09d159ccbe518.tar.xz
 "

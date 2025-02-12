@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=ktorrent
-pkgver=99999_git20250131
+pkgver=99999_git20250211
 pkgrel=0
-_commit="37961bbc7b0364f7632ed6b7a09aa183a4f964d4"
+_commit="3915d37d2f19b7079ee0c1a5cd3b3a9ee3c2e6d8"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt5-qtwebengine
 arch="all !armhf !ppc64le !s390x !riscv64"
@@ -54,7 +54,7 @@ checkdepends="
 	"
 subpackages="$pkgname-doc $pkgname-lang"
 _repo_url="https://invent.kde.org/network/ktorrent.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/ktorrent-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/ktorrent-$_commit.tar.xz"
 
 builddir="$srcdir/$pkgname-$_commit"
 
@@ -70,7 +70,7 @@ build() {
 
 check() {
 	# ipblocklisttest requires itself installed
-	xvfb-run ctest --test-dir build --output-on-failure -E "ipblocklisttest"
+	xvfb-run ctest --test-dir build -E "ipblocklisttest"
 }
 
 package() {
@@ -78,5 +78,5 @@ package() {
 }
 
 sha512sums="
-cddaca38fb63aaa36ad4e424967237c9f8fe4a80212a7740a7fb1144b64ae488b239d59be7800a9d8d80782e6d1feddee4ef832608c15af60d3c070b1105e4ee  ktorrent-37961bbc7b0364f7632ed6b7a09aa183a4f964d4.tar.xz
+a19bf00d29b655cacc90beaf7e310d44afe4d18056b5dc28a30a9e65212b5c1caf895ae4218b3b905a4d540e10757a3bd73558fcbf1f2783ebd90e250e33f1ae  ktorrent-3915d37d2f19b7079ee0c1a5cd3b3a9ee3c2e6d8.tar.xz
 "

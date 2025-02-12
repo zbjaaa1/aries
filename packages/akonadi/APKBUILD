@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=akonadi
-pkgver=99999_git20250209
+pkgver=99999_git20250211
 pkgrel=0
-_commit="53de69912b4743ba77faaab6b4c3b767a1ef5475"
+_commit="8b57040fa8fcb8bd6c7ef9ec6bf078e7c340d7a2"
 pkgdesc="A cross-desktop storage service for PIM data and meta data providing concurrent read, write, and query access"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by kaccounts-integration
@@ -49,7 +49,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/pim/akonadi.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/akonadi-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/akonadi-$_commit.tar.xz"
 subpackages="$pkgname-dbg $pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -93,12 +93,12 @@ check() {
 		skipped_tests="$skipped_tests|$test"
 	done
 	skipped_tests="$skipped_tests)test"
-	dbus-run-session xvfb-run ctest --test-dir build --output-on-failure -E "$skipped_tests"
+	dbus-run-session xvfb-run ctest --test-dir build -E "$skipped_tests"
 }
 
 package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-b1ef49749b7159ded00909836f9b9c036a2a0f56b151f4565bf84f501391c6f15e521e4a92c2235be632a24482888cf4b06d3be1fdca0513d802af4403f03266  akonadi-53de69912b4743ba77faaab6b4c3b767a1ef5475.tar.xz
+748593239d23785cf953119b2f3248602c5930ded91504313bfee2a4bd90a874956b56e952584cea71e9f0a3bd863d47b6bc2475d1aabe8ed3eef94c04a0bda4  akonadi-8b57040fa8fcb8bd6c7ef9ec6bf078e7c340d7a2.tar.xz
 "

@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kdeconnect
-pkgver=99999_git20250206
+pkgver=99999_git20250211
 pkgrel=0
-_commit="8de87ceedf177e3e4e07d23f04f231935a000b58"
+_commit="ad7fd2b83e6e19076f936d3eb59d5c78a93dd481"
 pkgdesc="Adds communication between KDE and your smartphone"
 url="https://community.kde.org/KDEConnect"
 # armhf blocked by qt6-qtdeclarative
@@ -46,7 +46,7 @@ makedepends="
 checkdepends="xvfb-run"
 subpackages="$pkgname-doc $pkgname-lang $pkgname-nftables::noarch $pkgname-zsh-completion"
 _repo_url="https://invent.kde.org/network/kdeconnect-kde.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kdeconnect-kde-$_commit.tar.xz
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kdeconnect-kde-$_commit.tar.xz
 	60_kdeconnect.nft
 	"
 builddir="$srcdir/$pkgname-kde-$pkgver"
@@ -69,7 +69,7 @@ build() {
 
 check() {
 	# testsslsocketlinereader, testnotificationlistener and sendfiletest are broken
-	xvfb-run ctest --test-dir build --output-on-failure -E "testsslsocketlinereader|testnotificationlistener|sendfiletest"
+	xvfb-run ctest --test-dir build -E "testsslsocketlinereader|testnotificationlistener|sendfiletest"
 }
 
 package() {
@@ -84,6 +84,6 @@ nftables() {
 }
 
 sha512sums="
-9b06f616c7cddb8596f4590294c601010ff0e073718cdb60dbf2664e280287b9abc95ca7224cf272175991d74ff754663014e7dd46cbea0e4a9bcbc1809df7c4  kdeconnect-kde-8de87ceedf177e3e4e07d23f04f231935a000b58.tar.xz
+cf23009a49859fbb8fd48fdc81e5eb8b3b5684f468ec6b117b9ae87691e7f969d5e212f045799a4f846bd4c37809eac342950751f3b9b007f0e28f29ce396eff  kdeconnect-kde-ad7fd2b83e6e19076f936d3eb59d5c78a93dd481.tar.xz
 0ccc2cb0ffd3892698b45bcf723cfdd23ad98f0e2b0436cd0a91d9ed13c6992853e2c4092ee8a0edc6216f1f262151e99e344b8f16c52237e9ff8de62fd37cae  60_kdeconnect.nft
 "

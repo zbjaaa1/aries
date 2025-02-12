@@ -23,7 +23,7 @@ makedepends="
 	wayland-protocols
 	"
 _repo_url="https://invent.kde.org/frameworks/kidletime.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kidletime-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kidletime-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc"
 
 options="!check"
@@ -40,7 +40,7 @@ build() {
 
 check() {
 	# solidmttest is broken
-	ctest --test-dir build --output-on-failure -E "solidmttest"
+	ctest --test-dir build -E "solidmttest"
 }
 
 package() {

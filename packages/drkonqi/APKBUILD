@@ -44,7 +44,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/drkonqi.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/drkonqi-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/drkonqi-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -61,7 +61,7 @@ build() {
 
 check() {
 	# connectiontest requires a network connection
-	ctest --test-dir build --output-on-failure -E "connectiontest"
+	ctest --test-dir build -E "connectiontest"
 }
 
 package() {

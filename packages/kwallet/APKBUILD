@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kwallet
-pkgver=99999_git20250207
+pkgver=99999_git20250210
 pkgrel=0
-_commit="70fea0d0d5a1e945946d888f71d56ffbe381573a"
+_commit="56d03237a2c5d5537d8178dc5c16268b93c5142c"
 pkgdesc="Secure and unified container for user passwords"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -35,7 +35,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/frameworks/kwallet.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kwallet-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kwallet-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang $pkgname-bin"
 provides="dbus:org.freedesktop.Secrets"
 # 2nd highst priority after gnome-keyring, mainly for KDE
@@ -58,7 +58,7 @@ check() {
 	case "$CARCH" in
 		s390x) excluded_checks="(blowfishtest)";;
 	esac
-	ctest --test-dir build --output-on-failure -E "$excluded_checks"
+	ctest --test-dir build -E "$excluded_checks"
 }
 
 package() {
@@ -72,5 +72,5 @@ bin() {
 }
 
 sha512sums="
-ce0cf8f77139df781abcc73697e9b888c6d9272baab91703129dac21ef2a35c93d79dfa3b88c37af830d4d85c7c3fbd66d8fca9987e631f1a8c6b366c2d7d397  kwallet-70fea0d0d5a1e945946d888f71d56ffbe381573a.tar.xz
+64124fd1e5f5ff03bb73593d156c7f2caa023246d4ab90a8053c0f440a93871791c04c0e5f9089b63569557b79fa23e10f30457d7223e0af9f7aed42c0b9ebec  kwallet-56d03237a2c5d5537d8178dc5c16268b93c5142c.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kate
-pkgver=99999_git20250210
+pkgver=99999_git20250211
 pkgrel=0
-_commit="f8e48dbc53ed4ec0e474945392e330b1a74479a3"
+_commit="9aae4d0f2c5a2dc24ecb568f1468bf1c09336a11"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/utilities/org.kde.kate"
@@ -37,7 +37,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/utilities/kate.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kate-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kate-$_commit.tar.xz"
 subpackages="kate-common:kate_common kwrite:kwrite kwrite-doc:kwrite_doc kwrite-lang:kwrite_lang $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -62,7 +62,7 @@ build() {
 check() {
 	# kateapp-session_manager_test and kateapp-filetree_model_test are broken
 	# kateapp-sessions_action_test requires OpenGL
-	ctest xvfb-run ctest --test-dir build/kate --output-on-failure -E "(kateapp-session_manager|kateapp-sessions_action|kateapp-filetree_model)_test" -j1
+	ctest xvfb-run ctest --test-dir build/kate -E "(kateapp-session_manager|kateapp-sessions_action|kateapp-filetree_model)_test" -j1
 }
 
 package() {
@@ -111,5 +111,5 @@ kwrite_lang() {
 }
 
 sha512sums="
-229fe29873ebd8a1c035c060374e4dabb69b4cdd03cde58e350eceac878154eb61a113e22db948f00ddffa19d5cba316a524ef9e050cf53469e8e998e93e19bd  kate-f8e48dbc53ed4ec0e474945392e330b1a74479a3.tar.xz
+b4e32897bd76ad33af47136c05658087556f981efe779c266d2930913a3d93fa4a1dc551ef4d30f85763ddf29eb1cea89321acbe47edaa95b13adc17e13f26ba  kate-9aae4d0f2c5a2dc24ecb568f1468bf1c09336a11.tar.xz
 "

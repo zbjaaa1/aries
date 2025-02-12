@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kxmlgui
-pkgver=99999_git20250208
+pkgver=99999_git20250211
 pkgrel=0
-_commit="8859a12447d3264342e9b5e007680b303e19ae5b"
+_commit="513ac8de40dcd87d6f38fd3c6cacb0dad6dc93d9"
 pkgdesc="User configurable main windows"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -36,7 +36,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/frameworks/kxmlgui.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-10/kxmlgui-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kxmlgui-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -53,7 +53,7 @@ build() {
 
 check() {
 	# kxmlgui_unittest, ktoolbar_unittest and ktooltiphelper_unittest are broken
-	LC_ALL=C xvfb-run ctest --test-dir build --output-on-failure -E '(kxmlgui|ktoolbar|ktooltiphelper)_unittest'
+	LC_ALL=C xvfb-run ctest --test-dir build -E '(kxmlgui|ktoolbar|ktooltiphelper)_unittest'
 }
 
 package() {
@@ -61,5 +61,5 @@ package() {
 }
 
 sha512sums="
-0f591c75eab75721ae70f20039485cc7dd43ee4d278cf81a12d3648141a9a6680ff0517ace9f1a2dae854433b6ba352a4c3d0f206cb0216dcef32c3f188f2641  kxmlgui-8859a12447d3264342e9b5e007680b303e19ae5b.tar.xz
+d2f9b800dc71669bbe8491dbfcd1fa92871bb3ab3d4aa6750e4761c55b58755535602a3e583ae98c4b9e1a5bc4f151587a507c08c777fdd415a404d899967ddf  kxmlgui-513ac8de40dcd87d6f38fd3c6cacb0dad6dc93d9.tar.xz
 "

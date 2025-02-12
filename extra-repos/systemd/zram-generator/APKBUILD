@@ -1,0 +1,33 @@
+# Contributor:
+# Maintainer:
+pkgname=zram-generator
+pkgver=1.2.1
+pkgrel=0
+pkgdesc=" Systemd unit generator for zram devices "
+url="https://github.com/systemd/zram-generator/tree/v1.2.1"
+arch="all"
+license="MIT"
+makedepends="
+	cargo
+	ronn
+	rust
+	systemd-dev
+"
+subpackages="$pkgname-doc"
+source="$pkgname-$pkgver.tar.gz::https://github.com/systemd/zram-generator/archive/refs/tags/v$pkgver.tar.gz"
+
+build() {
+	make build man
+}
+
+check() {
+	make check
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+f7d4ca7a0962b3d800307e1d0af790cb58da3be981544ad1d1ea809066c8545a8572b15ae00c2816908a90605abfd2b774fd208d3042bc6a8d4806c5d72a53e5  zram-generator-1.2.1.tar.gz
+"

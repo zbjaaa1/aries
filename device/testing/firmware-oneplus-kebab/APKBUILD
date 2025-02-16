@@ -1,0 +1,93 @@
+pkgname=firmware-oneplus-kebab
+pkgver=1
+pkgrel=0
+pkgdesc="Firmware for OnePlus 8T (kebab)"
+url="https://github.com/ninelore/firmware-oneplus-kebab"
+arch="aarch64"
+license="proprietary"
+options="!check !strip !archcheck !tracedeps pmb:cross-native"
+makedepends="
+	qca-swiss-army-knife
+	pil-squasher
+"
+replaces="
+	linux-firmware-ath11k
+	linux-firmware-qca
+	linux-firmware-qcom
+"
+subpackages="
+	$pkgname-adsp:adsp
+	$pkgname-bluetooth:bluetooth
+	$pkgname-cdsp:cdsp
+	$pkgname-gpu:gpu
+	$pkgname-ipa:ipa
+	$pkgname-modem:modem
+	$pkgname-slpi:slpi
+	$pkgname-wifi:wifi
+	$pkgname-venus:venus
+"
+_commit="90da2f0602ffbbde95a2970a5faef3075fb9292c"
+source="$url/archive/$_commit/firmware-oneplus-kebab-$_commit.tar.gz"
+builddir="$srcdir/firmware-oneplus-kebab-$_commit"
+
+package() {
+	mkdir -p "$pkgdir"
+}
+
+adsp() {
+	pil-squasher "$builddir/adsp/adsp.mbn" "$builddir/adsp/adsp.mdt"
+	install -Dm644 "$builddir/adsp/adsp.mbn" -t $subpkgdir/lib/firmware/postmarketos
+}
+
+bluetooth() {
+	for file in $builddir/bluetooth/*; do
+		install -Dm644 $file -t "$subpkgdir/lib/firmware/qca/"
+	done
+}
+
+cdsp() {
+	pil-squasher "$builddir/cdsp/cdsp.mbn" "$builddir/cdsp/cdsp.mdt"
+	install -Dm644 "$builddir/cdsp/cdsp.mbn" -t $subpkgdir/lib/firmware/postmarketos
+}
+
+gpu() {
+	for file in $builddir/gpu/*; do
+		install -Dm644 $file -t "$subpkgdir/lib/firmware/qcom/"
+	done
+}
+
+ipa() {
+	pil-squasher "$builddir/ipa/ipa_fws.mbn" "$builddir/ipa/ipa_fws.mdt"
+	install -Dm644 "$builddir/ipa/ipa_fws.mbn" -t $subpkgdir/lib/firmware/postmarketos
+
+	pil-squasher "$builddir/ipa/ipa_uc.mbn" "$builddir/ipa/ipa_uc.mdt"
+	install -Dm644 "$builddir/ipa/ipa_uc.mbn" -t $subpkgdir/lib/firmware/postmarketos
+}
+
+modem() {
+	for file in $builddir/modem/*; do
+		install -Dm644 $file -t "$subpkgdir/lib/firmware/qcom/sdx55m"
+	done
+}
+
+slpi() {
+	pil-squasher "$builddir/slpi/slpi.mbn" "$builddir/slpi/slpi.mdt"
+	install -Dm644 "$builddir/slpi/slpi.mbn" -t $subpkgdir/lib/firmware/postmarketos
+}
+
+wifi() {
+	cd "$builddir/wlan"
+	ath11k-bdencoder -c board-2.json
+	install -Dm644 "$builddir/wlan/board-2.bin" -t "$subpkgdir/lib/firmware/ath11k/QCA6390/hw2.0"
+	install -Dm644 "$builddir/wlan/amss20.bin" -t "$subpkgdir/lib/firmware/ath11k/QCA6390/hw2.0"
+	install -Dm644 "$builddir/wlan/m3.bin" -t "$subpkgdir/lib/firmware/ath11k/QCA6390/hw2.0"
+}
+
+venus() {
+	pil-squasher "$builddir/venus/venus.mbn" "$builddir/venus/venus.mdt"
+	install -Dm644 "$builddir/venus/venus.mbn" -t $subpkgdir/lib/firmware/postmarketos
+}
+
+sha512sums="
+8cdb245fc4538c093e5a41856fb58d51cd3bd4e1a0a5984bc511400c6b1373639e6c9b27174e9d43606867fbaee70abc20aa7ba352c9054108eafe26f47f2108  firmware-oneplus-kebab-90da2f0602ffbbde95a2970a5faef3075fb9292c.tar.gz
+"

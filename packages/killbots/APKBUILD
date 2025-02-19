@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=killbots
-pkgver=99999_git20250208
+pkgver=99999_git20250212
 pkgrel=0
-_commit="6127d1d84e883a198a689727f435ccbeec46d346"
+_commit="f3a062a7cc2cc8da664dbb04e6a487af911ff309"
 pkgdesc="A simple game of evading killer robots"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -29,7 +29,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/games/killbots.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/killbots-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/killbots-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-08d3c231e5d80d18e1db0a61f797251a071506b9c2966e7c74eb0581d7f15d4f5aa4f759a9577771539627487d84bc76a8531951e507f2eae634919cac364767  killbots-6127d1d84e883a198a689727f435ccbeec46d346.tar.xz
+4e13a01872346dda9c53232db9fa1ec34230ac035bb7a823dd1efd1609a1f944b00c116def993eab474008f81e1e573447fe3e22fc7b3fe872f5242d9b33c793  killbots-f3a062a7cc2cc8da664dbb04e6a487af911ff309.tar.xz
 "

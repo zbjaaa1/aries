@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=milou
-pkgver=99999_git20250207
+pkgver=99999_git20250212
 pkgrel=0
-_commit="d4dab368a20ca0e50671208773fca25e9e429fe1"
+_commit="073615aab1befdebf80a59495cc95eb6122fb22f"
 pkgdesc="A dedicated search application built on top of Baloo"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -30,7 +30,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/milou.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/milou-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/milou-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -53,5 +53,5 @@ package() {
 }
 
 sha512sums="
-104db46291dfc072317ba05125b7ee822818a0f791203e1e81a2b2e314bf134c17bceb50d6c76224264f087fb962f98dd21dd03e6ecde10eca7a903be7f8befd  milou-d4dab368a20ca0e50671208773fca25e9e429fe1.tar.xz
+ba6e595a5c38a4c200704a85ab375eb956ea8915d3e1d47a838649ae16c14a628436d18085cfd9acd6f67c17a01c4d23b85e5f114205321fcf3214f30a85fe0f  milou-073615aab1befdebf80a59495cc95eb6122fb22f.tar.xz
 "

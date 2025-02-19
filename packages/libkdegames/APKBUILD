@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=libkdegames
-pkgver=99999_git20250208
+pkgver=99999_git20250212
 pkgrel=0
-_commit="47c5cdf57299b4e85460eea4dbbb46e005392110"
+_commit="135bc2a5596ac2d2682254784b8aa170389b668f"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/applications/games"
@@ -44,7 +44,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/games/libkdegames.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/libkdegames-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/libkdegames-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang carddecks::noarch"
 
 options="!check"
@@ -74,5 +74,5 @@ carddecks() {
 }
 
 sha512sums="
-a2cf1fa046fbf5ed9604fe0b930f7eb8a490e5c76b19b8193d7ba26bf02bf4cfcdb1276993bfc68d2d2826e546dc1bfb0d06ad9bfa75bebc81119e38b0b7ea27  libkdegames-47c5cdf57299b4e85460eea4dbbb46e005392110.tar.xz
+824d59556caa488ab1bcf131264a4cb6820d38b9d862bc7f7b6467ad9318f2a53988f660d2c83792f80b1a0be7856d6461cbbaa439d5c5886817c5355861f3b5  libkdegames-135bc2a5596ac2d2682254784b8aa170389b668f.tar.xz
 "

@@ -2,18 +2,19 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=krdc
-pkgver=99999_git20250211
+pkgver=99999_git20250212
 pkgrel=0
-_commit="617310bef2f454d160ec76fe46a03f8043e0afab"
+_commit="546b408738b2fd336c7297de247cc58701a8f09d"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/applications/internet/krdc/"
 pkgdesc="Remote Desktop Client"
 license="GPL-2.0-or-later AND GFDL-1.2-only"
-depends="freerdp2"
+depends="freerdp"
 makedepends="
 	extra-cmake-modules
-	freerdp2-dev
+	freerdp-dev
+	fuse3-dev
 	kbookmarks-dev
 	kcmutils-dev
 	kcompletion-dev
@@ -36,7 +37,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/network/krdc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/krdc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/krdc-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -59,5 +60,5 @@ package() {
 }
 
 sha512sums="
-9b526fa0dd43e3c4472b54c6cce639642b1a3d3564e8b1aab661c5d6903ce657e2bdbb8f2abc0996692ee572f84137b842da9511fc281704606440eba37adcc9  krdc-617310bef2f454d160ec76fe46a03f8043e0afab.tar.xz
+218f0aa66c4d2d6ea0d667d1b696d980e1f9d983b15d8135d34feeb0f1a09829f720c399489add7d030fbd641790baf9a845f25dbf11449c505c5cce474199f9  krdc-546b408738b2fd336c7297de247cc58701a8f09d.tar.xz
 "

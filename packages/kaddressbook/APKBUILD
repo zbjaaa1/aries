@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kaddressbook
-pkgver=99999_git20250206
+pkgver=99999_git20250212
 pkgrel=0
-_commit="e602cbb351b22dd2ff40336fb45a09da03cdc278"
+_commit="4971881746e9adbba3262aff97c5d8b7d61add5c"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine
 arch="all !armhf !ppc64le !s390x !riscv64"
@@ -36,7 +36,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/pim/kaddressbook.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kaddressbook-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/kaddressbook-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -59,5 +59,5 @@ package() {
 }
 
 sha512sums="
-618ec8763c90dbf850425b9e0a376f3e13920b3f860ddaea6ba6fa162be6b728fc41744c8ce90dc0c6f10d6d36a6fbe77c54c5af43258ac36d5d04accdb4204a  kaddressbook-e602cbb351b22dd2ff40336fb45a09da03cdc278.tar.xz
+f63e1fed99a91e9bd2e6d4c94dfcbfaffece6a0a198e088ec5755ce29cda999ccfb10aede7371e8d5e98db28966372ca38d05bdcb1e1c74e8245dc5bee35e6de  kaddressbook-4971881746e9adbba3262aff97c5d8b7d61add5c.tar.xz
 "

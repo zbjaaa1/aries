@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=plasma-activities
-pkgver=99999_git20250201
+pkgver=99999_git20250212
 pkgrel=0
-_commit="cf59f7b21e71bdd0cdc33591b0086d2763f15ec0"
+_commit="b75fa14471e693718fd93982f9f2724337a0fd3d"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 pkgdesc="Core components for the KDE's Activities"
@@ -28,7 +28,7 @@ makedepends="$depends_dev
 	"
 subpackages="$pkgname-dev $pkgname-libs $pkgname-doc"
 _repo_url="https://invent.kde.org/plasma/plasma-activities.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/plasma-activities-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/plasma-activities-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/plasma-activities-$_commit"
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-e188caa5214e3fab838b3c16643c903acdb226880d12637603285d5307a5937c897f55a75957a3c6b9559f72c280e20c2976d5f8f20b2001f90b1bf6681125ce  plasma-activities-cf59f7b21e71bdd0cdc33591b0086d2763f15ec0.tar.xz
+74a44e8779da3c214fe6ff16d987bc711631f7ce4fe59658833da24491b341c0feecc76891d64c40bd6063b93e3e156b929a08fe34252c30f5e901c27eced392  plasma-activities-b75fa14471e693718fd93982f9f2724337a0fd3d.tar.xz
 "

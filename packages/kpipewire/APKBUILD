@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=kpipewire
-pkgver=99999_git20250207
+pkgver=99999_git20250212
 pkgrel=0
-_commit="6bb330e4d9981fe36a2519a03011f6ea5f2ee9e6"
+_commit="723824966c471aa8e823addcdeaa33edee6f1371"
 pkgdesc="Components relating to pipewire use in Plasma"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -40,7 +40,7 @@ case "$pkgver" in
 esac
 subpackages="$pkgname-dev $pkgname-lang"
 _repo_url="https://invent.kde.org/plasma/kpipewire.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-11/kpipewire-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/kpipewire-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/kpipewire-$_commit"
@@ -62,5 +62,5 @@ package() {
 }
 
 sha512sums="
-b1989c32a6e902e4d6345ed7065cd407cf6006c99a0abf2314fd5ce059ed6f08698ef4e81111e251a78ac6880735d7df1a68499a2688e994916338641ec7cf02  kpipewire-6bb330e4d9981fe36a2519a03011f6ea5f2ee9e6.tar.xz
+b1994aeff316f94f641910979cf9808cb68d95730f4c34020d473e6b4889100be5318b166876a77f9be91a5dab2daaceff405617caf52f3eae1f0b2a84cd6e91  kpipewire-723824966c471aa8e823addcdeaa33edee6f1371.tar.xz
 "

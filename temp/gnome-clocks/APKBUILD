@@ -1,0 +1,69 @@
+# DO NOT MERGE
+# Problems with that version:
+# - systemd integration doesn't work
+#   (child usernamespace can't call timerfd_create, although getpcaps,pscaps report okay)
+# - when no service is running, dbus activation won't work
+
+pkgname=gnome-clocks
+pkgver=9999_git20250213
+_commit="3e8321e523e9b62b21399c456ca9cb3c72046e7b"
+pkgrel=0
+pkgdesc="Clock application"
+url="https://apps.gnome.org/Clocks"
+arch="all"
+license="GPL-2.0-or-later"
+depends="gsettings-desktop-schemas"
+makedepends="
+	desktop-file-utils
+	geoclue-dev
+	geocode-glib-dev>=3.26.4-r1
+	gettext-dev
+	glib-dev
+	gnome-desktop-dev
+	gsound-dev
+	gtk4.0-dev
+	itstool
+	libadwaita-dev
+	libcap-dev
+	libgweather4-dev
+	meson
+	systemd-dev
+	vala
+	"
+checkdepends="appstream-glib"
+subpackages="$pkgname-lang $pkgname-doc $pkgname-systemd"
+source="https://gitlab.gnome.org/GNOME/gnome-clocks/-/archive/$_commit/gnome-clocks-$_commit.tar.gz
+	0001-Add-argument-to-start-initial-instance-in-the-backgr.patch
+	0002-WIP.patch
+
+	gnome-clocks.desktop
+	"
+builddir="$srcdir/$pkgname-$_commit"
+
+build() {
+	abuild-meson . output
+	meson compile -C output
+}
+
+check() {
+	meson test --no-rebuild --print-errorlogs -C output
+}
+
+# /usr/bin/gnome-clocks is currently using setcap...
+options="setcap"
+makedepends="$makedepends libcap-utils"
+package() {
+	DESTDIR="$pkgdir" meson install --no-rebuild -C output
+
+	setcap 'cap_wake_alarm=+ep' "$pkgdir"/usr/bin/gnome-clocks
+
+	install -Dm644 "$srcdir"/gnome-clocks.desktop \
+		"$pkgdir"/etc/xdg/autostart/gnome-clocks.desktop
+}
+
+sha512sums="
+d5607c879cbacde69a4da42ccd488c8665e5cec31b487616036f30894f53efd49b8051215f19322d1c58f857ddd7957ed2d70d2c438948dad3906a3ea7d0c222  gnome-clocks-3e8321e523e9b62b21399c456ca9cb3c72046e7b.tar.gz
+d91bd15df4719a532bf2a17d760c5a90ef36616128be0a423550508237613d559ad0b2e25413fd8f4339113d27e40423a8aa63f04011d234dd50a1993419f061  0001-Add-argument-to-start-initial-instance-in-the-backgr.patch
+ee124bd60eb843aee16c17eb6146a83c95c84fcdbe50467d4a1da4e72d5c4da46117cc35cc3183066f8caf674aad74944f426aa98fac62ad0b02de71c3576ba4  0002-WIP.patch
+c8439890965b8c81f61381559282935eafc86fcb6d3c537048ab9366249a3daabc50bce96218e2724e5740c06b029e3f9484977f615b0620117d333b0b010790  gnome-clocks.desktop
+"

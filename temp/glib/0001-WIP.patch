@@ -1,0 +1,262 @@
+From 99e29953556424d5930f3536f75176b20c2c007f Mon Sep 17 00:00:00 2001
+From: jane400 <jane400@postmarketos.org>
+Date: Sat, 8 Feb 2025 16:45:27 +0100
+Subject: [PATCH] WIP
+
+---
+ glib/galarm.c    | 164 +++++++++++++++++++++++++++++++++++++++++++++++
+ glib/galarm.h    |  24 +++++++
+ glib/glib.h      |   1 +
+ glib/meson.build |   2 +
+ meson.build      |   1 +
+ 5 files changed, 192 insertions(+)
+ create mode 100644 glib/galarm.c
+ create mode 100644 glib/galarm.h
+
+diff --git a/glib/galarm.c b/glib/galarm.c
+new file mode 100644
+index 000000000..00ce8c870
+--- /dev/null
++++ b/glib/galarm.c
+@@ -0,0 +1,164 @@
++
++// TODO: windows https://learn.microsoft.com/en-us/windows/win32/power/system-wake-up-events
++
++// TODO: linux https://linux.die.net/man/2/timerfd_settime
++// using BOOTTIME: https://gitlab.gnome.org/World/Phosh/gmobile/-/blob/main/src/gm-timeout.c?ref_type=heads
++// https://docs.gtk.org/glib/method.Source.set_callback.html
++// https://gitlab.gnome.org/GNOME/glib/-/issues/2739
++
++// TODO: macos IOPMSchedulePowerEvent
++
++// TODO: android https://developer.android.com/develop/background-work/services/alarms/schedule
++
++// FIXME: I don't now how to order these headers
++#include "config.h"
++#include "glib.h"
++
++#if defined(G_PLATFORM_WIN32)
++  #define CHOOSEN_WIN32
++#elif defined(HAVE_SYS_TIMERFD_H)
++  #define CHOOSEN_TIMERFD
++#endif
++
++#ifdef CHOOSEN_WIN32
++  #include <synchapi.h>
++  #include <gwin32.h>
++#endif
++
++#ifdef CHOOSEN_TIMERFD
++  #include <fcntl.h>
++  #include <sys/timerfd.h>
++  #include <unistd.h>
++#endif
++
++#include "gmessages.h"
++
++#include "galarm.h"
++
++/**
++ * GAlarm:
++ *
++ * `GAlarm` schedules an wake-up on the specifc time.
++ *
++ * Some platforms just wake up and don't explictly notify us wheter we caused it,
++ * so we cannot provide an callback here. Use this is combination with
++ * `g_timeout_add` and take care that the system time has changed.
++ *
++ * This requires the capability `CAP_WAKE_ALARM` on linux.
++ * 
++ * Note that the Alarm can fire multiple times, as the system clock may change.
++ *
++ * Since: TODO
++ */
++struct _GAlarm
++{
++  GDateTime *datetime;
++#ifdef CHOOSEN_WIN32
++  HANDLE handle;
++#endif
++#ifdef CHOOSEN_TIMERFD
++  guint timeout_event_source;
++  int fd;
++#endif
++};
++
++#ifdef CHOOSEN_TIMERFD
++static void update_alarm(GAlarm *alarm);
++#endif
++
++/**
++ * g_alarm_new: (constructor)
++ * @datetime: (not nullable) (transfer none): a #GDateTime.
++ *
++ * Registers a new alarm on the system.
++ * If the platform is not supported, this function is a no-op.
++ *
++ * Returns: (transfer full) (nullable): a new #GTimer.
++ **/
++GAlarm *
++g_alarm_new (GDateTime *datetime)
++{
++  GAlarm *alarm = NULL;
++#ifdef CHOOSEN_WIN32
++  HANDLE handle;
++#endif
++#ifdef CHOOSEN_TIMERFD
++  int fd;
++#endif
++
++  g_assert_nonnull(datetime);
++
++  // TODO: Windows implemnetation not tested, has been written blindly
++#ifdef CHOOSEN_WIN32
++  handle = CreateWaitableTimerW(NULL, FALSE, NULL);
++  // Signature: Function succeds => non-zero, GetLastError() for details
++  if (!SetWaitableTimer(handle, g_date_time_to_unix_usec(datetime) * 10, 0, NULL, NULL, TRUE)) {
++    g_warning ("Unable to create alarm (%s)", g_win32_error_message (GetLastError ()));
++    CloseHandle(handle);
++    return NULL;
++  }
++  alarm = g_new (GAlarm, 1);
++  alarm->datetime = g_date_time_ref (datetime);
++  alarm->handle = handle;
++#endif
++
++#ifdef CHOOSEN_TIMERFD
++  // TODO: add logging
++  // return -1 on error
++  fd = timerfd_create (CLOCK_REALTIME_ALARM, TFD_NONBLOCK | TFD_CLOEXEC);
++  if (fd == -1) {
++    g_warning ("Unable to create alarm (%s)", strerror(errno));
++    return NULL;
++  }
++  alarm = g_new (GAlarm, 1);
++  alarm->datetime = g_date_time_ref (datetime);
++  alarm->fd = fd;
++  update_alarm (alarm);
++#endif
++
++  return alarm;
++}
++
++/**
++ * g_alarm_destroy:
++ * @alarm: a #GAlarm to destroy.
++ *
++ * Deregisters and destroys an alarm, freeing associated resources.
++ **/
++void
++g_alarm_destroy (GAlarm *alarm)
++{
++  g_return_if_fail (alarm != NULL);
++
++#ifdef CHOOSEN_TIMERFD
++  if (alarm->timeout_event_source > 0)
++    g_source_remove (alarm->timeout_event_source);
++  if (alarm->fd != -1)
++    close (alarm->fd);
++#endif
++#ifdef CHOOSEN_WIN32
++  CancelWaitableTimer(alarm->handle);
++  CloseHandle(alarm->handle);
++  alarm->handle = NULL;
++#endif
++
++  g_date_time_unref (alarm->datetime);
++  g_free (alarm);
++}
++
++#ifdef CHOOSEN_TIMERFD
++static void
++update_alarm(GAlarm *alarm)
++{
++  struct itimerspec time_spec = { 0 };
++  g_assert(alarm->datetime);
++
++  g_return_if_fail(alarm->fd != -1);
++
++  // TODO: Logging
++  time_spec.it_value.tv_sec = g_date_time_to_unix (alarm->datetime);
++  if (timerfd_settime(alarm->fd, TFD_TIMER_ABSTIME, &time_spec, NULL)) {
++      g_warning ("Unable to set alarm (%s)", strerror(errno));
++  }
++}
++#endif
+diff --git a/glib/galarm.h b/glib/galarm.h
+new file mode 100644
+index 000000000..3e1eb9c5d
+--- /dev/null
++++ b/glib/galarm.h
+@@ -0,0 +1,24 @@
++#ifndef __G_ALARM_H__
++#define __G_ALARM_H__
++
++#if !defined (__GLIB_H_INSIDE__) && !defined (GLIB_COMPILATION)
++#error "Only <glib.h> can be included directly."
++#endif
++
++#include <glib/gdatetime.h>
++#include <glib/gmain.h>
++
++G_BEGIN_DECLS
++
++typedef struct _GAlarm		GAlarm;
++
++// TODO: before readyness: add GLIB_AVAILABLE_IN_2_.., Since: + formatting
++GLIB_AVAILABLE_IN_ALL
++GAlarm* g_alarm_new (GDateTime *datetime);
++
++GLIB_AVAILABLE_IN_ALL
++void g_alarm_destroy (GAlarm *alarm);
++
++G_END_DECLS
++
++#endif /* __G_ALARM_H__ */
+diff --git a/glib/glib.h b/glib/glib.h
+index 40e501997..73e017ecd 100644
+--- a/glib/glib.h
++++ b/glib/glib.h
+@@ -29,6 +29,7 @@
+ 
+ #define __GLIB_H_INSIDE__
+ 
++#include <glib/galarm.h>
+ #include <glib/galloca.h>
+ #include <glib/garray.h>
+ #include <glib/gasyncqueue.h>
+diff --git a/glib/meson.build b/glib/meson.build
+index 2522356ee..b6ae0b797 100644
+--- a/glib/meson.build
++++ b/glib/meson.build
+@@ -168,6 +168,7 @@ install_headers(glib_deprecated_headers,
+ glib_sub_headers = files(
+   'glib-autocleanups.h',
+   'glib-typeof.h',
++  'galarm.h',
+   'galloca.h',
+   'garray.h',
+   'gasyncqueue.h',
+@@ -262,6 +263,7 @@ glib_deprecated_sources = files(
+ )
+ 
+ glib_sources += files(
++  'galarm.c',
+   'garcbox.c',
+   'garray.c',
+   'gasyncqueue.c',
+diff --git a/meson.build b/meson.build
+index f0820909b..6fa29c66e 100644
+--- a/meson.build
++++ b/meson.build
+@@ -444,6 +444,7 @@ headers = [
+   'sys/statvfs.h',
+   'sys/sysctl.h',
+   'sys/time.h', # MSC does not come with this by default
++  'sys/timerfd.h',
+   'sys/times.h',
+   'sys/types.h',
+   'sys/ucred.h',
+-- 
+2.48.1
+

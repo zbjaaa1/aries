@@ -5,7 +5,7 @@
 pkgname=systemd
 pkgver=256.5
 _pkgver="musl-v${pkgver//_/-}"
-pkgrel=6
+pkgrel=7
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
@@ -115,6 +115,10 @@ subpackages="
 
 	$pkgname-bash-completion
 	$pkgname-zsh-completion
+
+	run0:_run0
+	run0-zsh-completion:run0_zcomp:noarch
+	run0-bash-completion:run0_bcomp:noarch
 	"
 
 source="
@@ -346,6 +350,14 @@ resolved_bcomp() {
 
 resolved_zcomp() {
 	_default_zshcomp _resolvectl
+}
+
+_run0() {
+	pkgdesc="A command to elevate privileges interactively"
+	depends="$pkgname=$pkgver-r$pkgrel"
+
+	amove etc/pam.d/systemd-run0
+	amove usr/bin/run0
 }
 
 logind() {

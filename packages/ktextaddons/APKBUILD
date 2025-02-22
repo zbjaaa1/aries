@@ -4,11 +4,11 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=ktextaddons
-pkgver=99999_git20250212
+pkgver=99999_git20250220
 pkgrel=0
-_commit="e562ef6d76fcc82d1ac1e27127cae76c39a48036"
+_commit="fc20378586641572b6ce14b142135af985aa9028"
 pkgdesc="Various text handling addons"
-# armhf blocked by extra-cmake-modules
+# armhf blocked by qt6-qtdeclarative -> ki18n
 arch="all !armhf"
 url="https://invent.kde.org/libraries/ktextaddons/"
 license="LGPL-2.0-or-later AND GPL-2.0-or-later"
@@ -23,8 +23,7 @@ depends_dev="
 	qtkeychain-dev
 	syntax-highlighting-dev
 	"
-makedepends="
-	$depends_dev
+makedepends="$depends_dev
 	doxygen
 	extra-cmake-modules
 	graphviz
@@ -32,8 +31,8 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/libraries/ktextaddons.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/ktextaddons-$_commit.tar.xz"
-subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-20/ktextaddons-$_commit.tar.xz"
+subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
 builddir="$srcdir/ktextaddons-$_commit"
@@ -44,7 +43,7 @@ build() {
 		-DCMAKE_INSTALL_PREFIX=/usr \
 		-DCMAKE_INSTALL_LIBDIR=lib \
 		-DBUILD_DESIGNERPLUGIN=ON \
-		-DBUILD_QCH=ON
+		-DBUILD_QCH=OFF # Currently broken
 	cmake --build build
 }
 
@@ -69,5 +68,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-f2813e732fde9a2c06298a42b550dfc2df04b663a1a425898c83a1509391cc13e0219c18551b431f2bf7d1f1b43605853bc4a063fe6b1925c8a912fcfb35146c  ktextaddons-e562ef6d76fcc82d1ac1e27127cae76c39a48036.tar.xz
+f391cfbbe234f344bc53fa85ed8d8108a12f1a466ea1c93238b5e3424f70378a4142720d27abae5dca8d903fb4bdc08237e745bf5eda868140b78995e6cca372  ktextaddons-fc20378586641572b6ce14b142135af985aa9028.tar.xz
 "

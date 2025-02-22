@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=rkward
-pkgver=99999_git20250212
+pkgver=99999_git20250219
 pkgrel=0
-_commit="f323eed3722c41ce42da09da5c2ade1ac47f91b0"
+_commit="e64677c6e33203c564e8351365b546244890d01a"
 # armhf blocked by extra-cmake-modules
 # s390x, ppc64le, riscv64 and loongarch64 blocked by qt5-qtwebengine
 arch="all !armhf !s390x !ppc64le !riscv64 !loongarch64"
@@ -33,7 +33,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/education/rkward.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/rkward-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-19/rkward-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-e9da37629b899cad335243436508d558840d8435e7b7b3040e679a24ab211947179ca9baa936172d7f9914a74f9f0494c583a4ce09ffeded6c4418df7af14c84  rkward-f323eed3722c41ce42da09da5c2ade1ac47f91b0.tar.xz
+66c15c77c51e804f0f0802a322c4e25a6a8319d22ebe49855b5fc38f861fbd1ba388e09d4c5c198969f116750add3776a6cc51bcee4fca551e90d6133e202db5  rkward-e64677c6e33203c564e8351365b546244890d01a.tar.xz
 "

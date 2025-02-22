@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-plasma
 pkgname=kde-cli-tools
-pkgver=99999_git20250212
+pkgver=99999_git20250218
 pkgrel=0
-_commit="34375669abc3e567828c0bafd6787cfb1d14c312"
+_commit="0bed66bd9feced2cf04c75a8c6d3903e94377f5a"
 pkgdesc="Tools based on KDE Frameworks 5 to better interact with the system"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -37,7 +37,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/kde-cli-tools.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/kde-cli-tools-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-19/kde-cli-tools-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # Broken
 
@@ -59,5 +59,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-6f83c177e578f2579532032ff197dfa83138ab2e03b924741bc934365134153854d5d4429cebef1538f7ed8ca9345641d697203d76d66f28bb1ea162822c9d74  kde-cli-tools-34375669abc3e567828c0bafd6787cfb1d14c312.tar.xz
+cf11ea829033eb47ed8a337298f471a2ded04a62e33b6c8853dffabcef184080fd03a8189f5d2d99f37e3de589541c0bb01f1ae9bc21047fd37fda007e0821f1  kde-cli-tools-0bed66bd9feced2cf04c75a8c6d3903e94377f5a.tar.xz
 "

@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kmplot
-pkgver=99999_git20250212
+pkgver=99999_git20250219
 pkgrel=0
-_commit="0c6db4efd7b37d3c528fd968828e28b8692faf0b"
+_commit="68cf93f5784985442f33cfe79d3ac90da4fcacba"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://edu.kde.org/kmplot"
@@ -26,7 +26,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/education/kmplot.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/kmplot-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-19/kmplot-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-ce2fe3b9f9782c403d1f30895e88291461ba08e5597b7f0f78ebc564ad6e6528dada3077bc821063ed4c4475660533886bf4be5db1f8ba02bae0c40aa25ee213  kmplot-0c6db4efd7b37d3c528fd968828e28b8692faf0b.tar.xz
+db7188a659e3da3293a49b736a7984a5f8e79187922985145c5dfe343cbfb697e5efd9b87b8f672b93bb20772b00537a0daaca4b84a1aea299bb2120621d068e  kmplot-68cf93f5784985442f33cfe79d3ac90da4fcacba.tar.xz
 "

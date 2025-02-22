@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=libksane
-pkgver=99999_git20250201
+pkgver=99999_git20250212
 pkgrel=0
-_commit="3862422bf3c2eb25501324846ee334fb6060bab4"
+_commit="03d6173f161f55208ccb463ab93ea399da262df6"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://www.kde.org/applications/graphics/"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/graphics/libksane.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-12/libksane-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-19/libksane-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-b06e047ece455ac8a498c860578b26e76637b813d9b7ed46327efcb27d29c4198afda299c65ca0f0384b4d82b200c442bbcae6363c2b1382a640e644272b1466  libksane-3862422bf3c2eb25501324846ee334fb6060bab4.tar.xz
+969e0f60f14cad2ab04535c15b9e47c6c9ef2d1f85f425d8f2be1bcef8a317d4bd2886a995a87bea168c4a7cc1909365f57ed60e8dea8a9bb93292d8108d272c  libksane-03d6173f161f55208ccb463ab93ea399da262df6.tar.xz
 "

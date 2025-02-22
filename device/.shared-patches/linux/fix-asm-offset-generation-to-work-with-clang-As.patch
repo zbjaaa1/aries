@@ -1,0 +1,27 @@
+From 4d735839552d21d17f8d7d0ce6844034e4327b9d Mon Sep 17 00:00:00 2001
+From: SoundDrill31 <84176052+sounddrill31@users.noreply.github.com>
+Date: Sun, 9 Jun 2024 21:12:32 +0530
+Subject: [PATCH] kbuild: fix asm-offset generation to work with clang As
+ suggested here
+ https://github.com/MiCode/Xiaomi_Kernel_OpenSource/issues/2469#issuecomment-1583842583
+
+---
+ include/linux/kbuild.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/include/linux/kbuild.h b/include/linux/kbuild.h
+index 22a72198c14b..def34fd99cb3 100644
+--- a/include/linux/kbuild.h
++++ b/include/linux/kbuild.h
+@@ -2,9 +2,9 @@
+ #define __LINUX_KBUILD_H
+ 
+ #define DEFINE(sym, val) \
+-        asm volatile("\n->" #sym " %0 " #val : : "i" (val))
++        asm volatile("\n.ascii \"->" #sym " %0 " #val "\"" : : "i" (val))
+ 
+-#define BLANK() asm volatile("\n->" : : )
++#define BLANK() asm volatile("\n.ascii \"->\"" : : )
+ 
+ #define OFFSET(sym, str, mem) \
+ 	DEFINE(sym, offsetof(struct str, mem))

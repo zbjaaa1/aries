@@ -1,0 +1,28 @@
+From 17154cec67a5add459937be96fb9c76bda813fda Mon Sep 17 00:00:00 2001
+From: Aster Boese <asterboese@mailbox.org>
+Date: Fri, 21 Feb 2025 19:55:39 -0500
+Subject: [PATCH] target aarch64 assembly with llvm on arm64
+
+For some reason LLVM doesn't properly cross-compile on earlier kernel versions.
+This patch explicitly tells it that it is targeting aarch64.
+
+Taken from https://github.com/iovisor/bcc/issues/1202#issuecomment-333740246
+---
+ arch/arm64/Makefile | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/arch/arm64/Makefile b/arch/arm64/Makefile
+index 5d76c71c..b6adbe37 100755
+--- a/arch/arm64/Makefile
++++ b/arch/arm64/Makefile
+@@ -21,6 +21,7 @@ KBUILD_DEFCONFIG := defconfig
+ 
+ KBUILD_CFLAGS	+= -mgeneral-regs-only
+ KBUILD_CFLAGS	+= -fno-pic
++KBUILD_CFLAGS   += -target aarch64
+ ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
+ KBUILD_CPPFLAGS	+= -mbig-endian
+ AS		+= -EB
+-- 
+2.48.1
+

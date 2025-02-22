@@ -16,14 +16,7 @@ _flavor="amazon-douglas"
 url="https://kernel.org"
 license="GPL-2.0-only"
 options="!strip !check !tracedeps pmb:cross-native"
-makedepends="bash bc bison devicepkg-dev flex openssl-dev perl gcc6"
-
-# Compiler: GCC 6
-if [ "${CC:0:5}" != "gcc6-" ]; then
-	CC="gcc6-$CC"
-	HOSTCC="gcc6-gcc"
-	CROSS_COMPILE="gcc6-$CROSS_COMPILE"
-fi
+makedepends="bash bc bison clang devicepkg-dev flex lld llvm openssl-dev perl"
 
 # Source
 _repository="kernel_douglas"
@@ -34,7 +27,11 @@ source="
 	$_config
 	disable-sound.patch
 	gcc10-extern_YYLOC_global_declaration.patch
-"
+	fix-asm-offset-generation-to-work-with-clang-As.patch
+	fix-register-sp-unsuitable.patch
+	linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
+	0001-target-aarch64-assembly-with-llvm-on-arm64.patch
+	"
 builddir="$srcdir/$_repository-$_commit"
 _outdir="out"
 
@@ -45,15 +42,24 @@ prepare() {
 
 build() {
 	unset LDFLAGS
-	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
-		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+	make O="$_outdir" ARCH="$_carch" \
+    CC=clang LD=ld.lld AR=llvm-ar NM=llvm-nm STRIP=llvm-strip \
+    OBJCOPY=llvm-objcopy OBJDUMP=llvm-objdump READELF=llvm-readelf \
+    HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar HOSTLD=ld.lld \
+    KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
 }
 
 package() {
 	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" "$_flavor" "$_outdir"
 }
 
-sha512sums="eb3804fcbadb268429640a5171ea4788cf8974444a1aa1005801902dbce1c4d67d88cb43d0cee259dc082161a92b285de0a0d18d721220f6d2dff84a179a7dc5  linux-amazon-douglas-4ff2b5a4534e275748920ba4ad105af36495bf89.tar.gz
+sha512sums="
+eb3804fcbadb268429640a5171ea4788cf8974444a1aa1005801902dbce1c4d67d88cb43d0cee259dc082161a92b285de0a0d18d721220f6d2dff84a179a7dc5  linux-amazon-douglas-4ff2b5a4534e275748920ba4ad105af36495bf89.tar.gz
 a5c13415c5133eb71a40a71dc84c8d4f3ded3cc11650e46bfb9ffba2c01490f5008e659407c5977bd62a83069af23740f36d7236f6dfee0c5adad6d831772122  config-amazon-douglas.aarch64
 aed9fd018a6367214dd00aad9c376c93ed356efbd74e21b49316ab0a21bc372a2077eeed8810f66464544c5bbc7bca6c46985ef42e6cb8f95ad94a1644130d1c  disable-sound.patch
-2b48f1bf0e3f70703d2cdafc47d5e615cc7c56c70bec56b2e3297d3fa4a7a1321d649a8679614553dde8fe52ff1051dae38d5990e3744c9ca986d92187dcdbeb  gcc10-extern_YYLOC_global_declaration.patch"
+2b48f1bf0e3f70703d2cdafc47d5e615cc7c56c70bec56b2e3297d3fa4a7a1321d649a8679614553dde8fe52ff1051dae38d5990e3744c9ca986d92187dcdbeb  gcc10-extern_YYLOC_global_declaration.patch
+edec4f825dc1a88ff50957f7350d6b30b3713444addd3a82323343893bc58fdc5e08a5f8619a5955f21817cfc1798afb12285709b561ba6d145cd07fb1e384e5  fix-asm-offset-generation-to-work-with-clang-As.patch
+47c7c7d73ab20f3b4d961cef8bab9206203f3913d5de034ab0181ac0d75f22125f9b5124a21012ff47ed7ce443fb4498b26f9f7ce6fe381bd885ce9d1c069c36  fix-register-sp-unsuitable.patch
+75545ccd0082a119b9ad95fcef3523c939a5c946f8f3a5c3dde15cee1502f6c1011050a0ad5359426f018bb7ceea1c97a28c7665941bc89f365c8d11065ce0f6  linux3.7to4.5-ARM64-remove-Sun-Solaris-style-flag-on-section.patch
+75d071d29ceedf17e2699e3f71cf1f4ba719d64ec329f0d2b7dfaf9961d7a9a5dd7e076c9bc01dd47ba2186957993d8bc65a5faa87b7c7e641893ee3cb0a6958  0001-target-aarch64-assembly-with-llvm-on-arm64.patch
+"

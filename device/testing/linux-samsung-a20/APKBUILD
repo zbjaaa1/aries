@@ -11,14 +11,7 @@ _flavor="samsung-a20"
 url="https://kernel.org"
 license="GPL-2.0-only"
 options="!strip !check !tracedeps pmb:cross-native"
-makedepends="bash bc bison devicepkg-dev flex openssl-dev perl gcc6"
-
-# Compiler: GCC 6 (doesn't boot when compiled with newer versions)
-if [ "${CC:0:5}" != "gcc6-" ]; then
-	CC="gcc6-$CC"
-	HOSTCC="gcc6-gcc"
-	CROSS_COMPILE="gcc6-$CROSS_COMPILE"
-fi
+makedepends="bash bc bison clang devicepkg-dev flex lld llvm openssl-dev perl python3"
 
 # Source
 _repository="kernel_samsung_a20"
@@ -38,7 +31,10 @@ prepare() {
 
 build() {
 	unset LDFLAGS
-	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+	make O="$_outdir" ARCH="$_carch" \
+	  CC=clang AR=llvm-ar NM=llvm-nm STRIP=llvm-strip \
+    OBJDUMP=llvm-objdump READELF=llvm-readelf \
+    HOSTCC=clang HOSTCXX=clang++ HOSTAR=llvm-ar \
 		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
 }
 

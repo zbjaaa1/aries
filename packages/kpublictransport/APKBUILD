@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kpublictransport
-pkgver=99999_git20250219
+pkgver=99999_git20250221
 pkgrel=0
-_commit="4062a3226de05a725acbed316d2ba0b3de03a99f"
+_commit="ea250ed397ce3eaf0af91636c1b2dbda2e2cd14e"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://invent.kde.org/libraries/kpublictransport"
@@ -25,7 +25,7 @@ makedepends="$depends_dev
 	samurai
 	"
 _repo_url="https://invent.kde.org/libraries/kpublictransport.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-19/kpublictransport-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-22/kpublictransport-$_commit.tar.xz"
 options="!check" # Broken for now
 subpackages="$pkgname-dev"
 
@@ -49,5 +49,5 @@ package() {
 }
 
 sha512sums="
-ad35f0c473b812f226d80301ed17617683bf125d39611512542265904aee67250f4762ee2a8aa0f4b18194397702c593b3229b68e1c31a939abb5e88ecc8b1b5  kpublictransport-4062a3226de05a725acbed316d2ba0b3de03a99f.tar.xz
+b0ef929e056f259cedd46501b1f690ccc064e1e6f29d8a63843ef2748d45aaf337b57c88abfafa74fceea7d33c0efd597e4e9c8eb9ed32598c6e51890026940f  kpublictransport-ea250ed397ce3eaf0af91636c1b2dbda2e2cd14e.tar.xz
 "

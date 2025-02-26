@@ -1,0 +1,23 @@
+ ../fs/dlog_hook.c:213:30: error: use of undeclared identifier 'SDCARDFS_SUPER_MAGIC'
+
+diff --git a/fs/dlog_hook.c b/fs/dlog_hook.c
+index 4e9a53f6918f..5e09e7c0bebe 100755
+--- a/fs/dlog_hook.c
++++ b/fs/dlog_hook.c
+@@ -209,15 +209,6 @@ static int get_support_part_id(struct vfsmount *mnt)
+ 
+ static int is_sdcard(struct vfsmount *mnt)
+ {
+-	/* internal storage (external storage till Andorid 8.x) */
+-	if (mnt->mnt_sb->s_magic == SDCARDFS_SUPER_MAGIC)
+-		return true;
+-	/* external storage from Android 9.x */
+-	else if (mnt->mnt_sb->s_magic == SDFAT_SUPER_MAGIC)
+-		return true;
+-	else if (mnt->mnt_sb->s_magic == MSDOS_SUPER_MAGIC)
+-		return true;
+-
+ 	return false;
+ }
+ 
+

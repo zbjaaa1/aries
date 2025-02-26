@@ -1,0 +1,79 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-samsung-a70q
+pkgver=4.14.190
+pkgrel=0
+pkgdesc="Samsung A70 kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="samsung-a70q"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+	clang
+	make3.81
+	dtc
+"
+
+export CC="clang"
+export HOSTCC="clang"
+# GNU Make 3.81
+PATH="/usr/make3.81/bin:$PATH"
+
+# Source
+_owner="a70q-lineage"
+_repository="android_kernel_samsung_sm6150"
+_commit="e025b6e0e99cd943586980974ff13a3931f527f3"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://github.com/$_owner/$_repository/archive/$_commit.tar.gz
+	$_config
+	remove-broken-macro.patch
+	fix-check-lxdialog.patch
+	fix-asm-generic-import.patch
+	fix-dlog-hook.patch
+	use-system-dtc.patch
+	fix-kernel-old-uid-t-redefinition.patch
+	remove-comptime-asserts.patch
+"
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	REPLACE_GCCH=0
+	. downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+}
+
+sha512sums="
+5b06009c3c709f72426aaa9ef048529b689ea995ddcda122e7ef02b45b513b6d241063f7d66949987c1c445abebf62496805a27c9eb2b0c39656db3a1b948076  linux-samsung-a70q-e025b6e0e99cd943586980974ff13a3931f527f3.tar.gz
+f3f51f41b9fc5a18b316f0d72ddcc2966a6be24c1cd7bccd4326845e12e52978748fcaea61eb3a30d2971a87f315e684ad7bb10d29b6bb4f8bf82d2102a6c23e  config-samsung-a70q.aarch64
+2cdf9717da90808d7b558769985c4ac476ba6f8b22e29dee5c8f390530ff51fc229f6b2a0cf974872ba0ba545c5e13b83533ef0da899fe37e300aea2b394cd25  remove-broken-macro.patch
+f748320ebe3e630b37977b6ea9f09498251cbf27368a7851b0a514853df6ad85da90cd282f62de1fbe95c551d91db82279be13611867263f4bc8aac3398aef82  fix-check-lxdialog.patch
+30cb125282748fd5ad65753441cdcf5866bbdc7d4de09a7717f6e9dda58d2494ce48c47252f6cf2d2d25ca58c426aba0e649d6a1658443e6db54bf9eb5d6fa98  fix-asm-generic-import.patch
+f8abeb59c54ca14d00e910cdfde7c86d2972842bce28defbb164ea284255cf5f90cb90cedbcaeced4424f6060ef9d6e33bc139ab3ff56bc978a88b61394c6602  fix-dlog-hook.patch
+59af2232d9d641a303933e019d787f43dc6bc336b41cf64751ebef4b3f4d893de2698d068df034100a315555d02ffed5d4b2066a5d90c0abe7e51b29b3e7d533  use-system-dtc.patch
+def5b526fbc5c7344561a686469739e92dd058055cbd453fb47017bdc9560d0e77f3c35558b3ef7ad375bd976d15c80615d92144ff5dcef4576a3c83e3ae11b7  fix-kernel-old-uid-t-redefinition.patch
+d6c96aa4524839cb5f4f82e25bcf17d1871e61d9d570d4fa0579f947d0f9c0952b2143938e654299cac61fbc2338f015ff880dde8f1a50c45fdadd8aca87ff2c  remove-comptime-asserts.patch
+"

@@ -5,7 +5,7 @@
 pkgname=systemd
 pkgver=256.5
 _pkgver="musl-v${pkgver//_/-}"
-pkgrel=6
+pkgrel=7
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
@@ -40,6 +40,7 @@ makedepends="
 	libseccomp-dev
 	libselinux-dev
 	libxkbcommon-dev
+	linux-headers
 	linux-pam-dev
 	llvm15
 	lz4-dev
@@ -95,6 +96,8 @@ subpackages="
 	$pkgname-timesyncd-zsh-completion:timesyncd_zcomp:noarch
 	$pkgname-timesyncd-bash-completion:timesyncd_bcomp:noarch
 
+	$pkgname-homed
+
 	$pkgname-networkd
 	$pkgname-networkd-zsh-completion:networkd_zcomp:noarch
 	$pkgname-networkd-bash-completion:networkd_bcomp:noarch
@@ -111,6 +114,8 @@ subpackages="
 	$pkgname-journald-zsh-completion:journald_zcomp:noarch
 	$pkgname-journald-bash-completion:journald_bcomp:noarch
 
+	$pkgname-userdbd
+
 	$pkgname-libs
 
 	$pkgname-bash-completion
@@ -119,6 +124,7 @@ subpackages="
 
 source="
 	https://gitlab.com/postmarketOS/systemd/-/archive/$_pkgver/systemd-$_pkgver.tar.gz
+	0001-homed-include-linux-quota.h.patch
 	4.patch
 	systemd-apk-macros.sh
 	wired.network
@@ -149,6 +155,8 @@ _default_zshcomp() {
 }
 
 build() {
+	# Fix undefined reference to `libintl_dgettext' in homed
+	LDFLAGS="$LDFLAGS -lintl" \
 	abuild-meson \
 		-Dmode=release \
 		-Dsplit-bin=true \
@@ -166,8 +174,8 @@ build() {
 		-Dbootloader=disabled \
 		-Dutmp=false \
 		-Dldconfig=false \
-		-Duserdb=false \
-		-Dhomed=disabled \
+		-Duserdb=true \
+		-Dhomed=enabled \
 		-Dnss-myhostname=false \
 		-Dnss-mymachines=disabled \
 		-Dnss-resolve=disabled \
@@ -282,6 +290,29 @@ timesyncd_bcomp() {
 
 timesyncd_zcomp() {
 	_default_zshcomp _timedatectl
+}
+
+homed() {
+	pkgdesc="systemd homed"
+	depends="
+		$pkgname=$pkgver-r$pkgrel
+		$pkgname-userdbd
+		"
+
+	amove etc/systemd/homed.conf
+	amove usr/bin/homectl
+	amove usr/bin/systemd-home-fallback-shell
+	amove usr/lib/security/pam_systemd_home.so
+	amove usr/lib/systemd/system/systemd-homed-activate.service
+	amove usr/lib/systemd/system/systemd-homed-firstboot.service
+	amove usr/lib/systemd/system/systemd-homed.service
+	amove usr/lib/systemd/systemd-homed
+	amove usr/lib/systemd/systemd-homework
+	amove usr/share/dbus-1/interfaces/org.freedesktop.home1.Home.xml
+	amove usr/share/dbus-1/interfaces/org.freedesktop.home1.Manager.xml
+	amove usr/share/dbus-1/system-services/org.freedesktop.home1.service
+	amove usr/share/dbus-1/system.d/org.freedesktop.home1.conf
+	amove usr/share/polkit-1/actions/org.freedesktop.home1.policy
 }
 
 networkd() {
@@ -402,6 +433,20 @@ journald_zcomp() {
 	_default_zshcomp _journalctl
 }
 
+# dependency of systemd-homed
+userdbd() {
+	pkgdesc="systemd userdbd"
+	
+	amove etc/ssh/sshd_config.d/20-systemd-userdb.conf
+	amove usr/bin/userdbctl
+	amove usr/lib/systemd/sshd_config.d/20-systemd-userdb.conf
+	amove usr/lib/systemd/system/systemd-userdbd.service
+	amove usr/lib/systemd/system/systemd-userdbd.socket
+	amove usr/lib/systemd/systemd-userdbd
+	amove usr/lib/systemd/systemd-userwork
+	amove usr/lib/tmpfiles.d/20-systemd-userdb.conf
+}
+
 x11() {
 	pkgdesc="systemd x11"
 	install_if="$pkgname=$pkgver-r$pkgrel xorg-server-common"
@@ -419,6 +464,7 @@ dev() {
 
 sha512sums="
 5d1f4625b75b6637afa71519bc7048fe899b4f5785ce26316524ac78941e43cf6ba83391dae68497cfa4f8aaa35d953ec0c04ee581307ffc7007cf4b9d9c4454  systemd-musl-v256.5.tar.gz
+442690a2ad1681f46c33f59af2c74fab5a428e0f8098dc0447fbd325add94af3ab7e556e6800825ef5e9425863e5e4245288eac0f26310b895fd7d179029c71a  0001-homed-include-linux-quota.h.patch
 e8ced12eb67a261a5c2788487053451c352e0b2ebe3d72aaf84a3011dc92981affe4f036f693260fc8ee4a49f02de4522fd022e5783dba939023f13891ab228e  4.patch
 2f9ec875de67fc4bb401bebea88653cd34c22787a26a8122233fbb761bfbf190be72cfa0c26a433c30d703ee1e10489787d75492f0e1a76cbd5f6601e7e23d49  systemd-apk-macros.sh
 81c897fed8a3fbfb67ec591b2398a5d65e4af1b3ef379376c157c98d71f085b707f8ebc896d5571a94f99f8fc84fd6b43e3b879ca9b0d57fc6c4596034c7a777  wired.network

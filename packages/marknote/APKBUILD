@@ -2,9 +2,9 @@
 # group=kde-other
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=marknote
-pkgver=99999_git20250215
+pkgver=99999_git20250225
 pkgrel=0
-_commit="4577b532aaa6987aa20b26dc79bde3a5bd724a67"
+_commit="35213149e97ce6eeb7647d576f40fe5f1907f4ae"
 pkgdesc="A simple markdown note management app"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -34,7 +34,7 @@ makedepends="
 	"
 subpackages="$pkgname-lang"
 _repo_url="https://invent.kde.org/office/marknote.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-23/marknote-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-26/marknote-$_commit.tar.xz"
 options="!check" # No tests
 
 builddir="$srcdir/$pkgname-$_commit"
@@ -56,5 +56,5 @@ package() {
 }
 
 sha512sums="
-121f8a9457a606dc3492693c44df57279e5dd1078f1f04018a3aa4540e66cb94b00b93256cb905a19bde6806789b2ea1553ff8f3cd352dd18732d579f0ac44bb  marknote-4577b532aaa6987aa20b26dc79bde3a5bd724a67.tar.xz
+e1460b654cf17c8af9b30ef87aeb4bb6cc7c3cec5b9819431899c3b489a071a41a7d688f9b27ee0bba567609f54bb0e88ae392f26a60a3865671157781eb9eaa  marknote-35213149e97ce6eeb7647d576f40fe5f1907f4ae.tar.xz
 "

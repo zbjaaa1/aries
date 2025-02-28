@@ -6,7 +6,7 @@ pkgname=systemd
 # currently tracking git MR
 pkgver=256.11
 _pkgver="musl-v${pkgver//_/-}-split-usr"
-pkgrel=0
+pkgrel=1
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
@@ -328,6 +328,9 @@ resolved() {
 	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
+	# To not auto-install on existing systemd-based systems
+	# until we are ready to use it.
+	provider_priority=0
 
 	amove etc/systemd/resolved.conf
 	amove usr/sbin/resolvconf

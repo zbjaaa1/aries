@@ -1,7 +1,7 @@
 # Maintainer: Clayton Craft <clayton@craftyguy.net>
 pkgname=boot-deploy
 pkgver=0.18.1
-pkgrel=0
+pkgrel=1
 pkgdesc="tool for finalizing and deploying boot related files"
 url="https://gitlab.com/postmarketos/boot-deploy"
 arch="noarch"
@@ -11,6 +11,7 @@ source="
 
 	os-customization
 	use-busybox-sh.patch
+	HOOKS-README.md
 	"
 
 check() {
@@ -27,9 +28,13 @@ package() {
 	touch boot-deploy-trigger
 	install -Dm644 boot-deploy-trigger \
 		"$pkgdir"/usr/share/mkinitfs-triggers/boot-deploy
+
+	install -Dm644 "$srcdir"/HOOKS-README.md \
+		"$pkgdir"/etc/boot-deploy/hooks/HOOKS-README.md
 }
 sha512sums="
 676f789db8c51668650f2f1b7be2f0bb11d6404330ad6ee7926a8e4807e872652f6d14c14edd008340bb7312c15bb0701b28cfb6ef905464b2be4541bd0bbd69  boot-deploy-0.18.1.tar.gz
 a243975b9850d9933e0f917f7eb38fc4a76ea658c3dcc56f035f60ee6c62d6740c1107143b8210bdc0231d4c9b6b2003e458120985604eb09649322d359ae89f  os-customization
 5b3da17fab1b0e76b3686667c0c8c3a3e29a5794406875dd6375d73c5b1b47d60da6cf54720a3d8ad98b79c563af0863fedc87d2506b19055fb3fdea1cbd731d  use-busybox-sh.patch
+fab2e8701bef92d54e82ce8107d554b614d1456700794933855e92cb3ba7fb7c8ede79594965a7a542cd5debde496681368f92efd3660645bff3cd4a6c5afc5c  HOOKS-README.md
 "

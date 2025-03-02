@@ -6,7 +6,7 @@ pkgname=systemd
 # currently tracking git MR
 pkgver=256.11
 _pkgver="musl-v${pkgver//_/-}-split-usr"
-pkgrel=0
+pkgrel=1
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
@@ -267,7 +267,6 @@ udevd_zcomp() {
 timesyncd() {
 	pkgdesc="systemd Time Synchronization"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove etc/systemd/timesyncd.conf
 	amove usr/bin/timedatectl
@@ -290,7 +289,6 @@ timesyncd_zcomp() {
 networkd() {
 	pkgdesc="systemd Network Configuration"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove usr/bin/networkctl
 	amove etc/systemd/network
@@ -325,7 +323,6 @@ networkd_zcomp() {
 resolved() {
 	pkgdesc="systemd Network Name Resolution"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
 
@@ -422,6 +419,6 @@ dev() {
 
 sha512sums="
 3cd75d5ba29a3994230ecbe16ea106d4fe05d7d76e7cd9b9a6a63177f09d8c362c055a1fea49e6c9a10a949afc07a6c75fe75dad2bd302d94e41a81f8ddb2a15  systemd-musl-v256.11-split-usr.tar.gz
-2f9ec875de67fc4bb401bebea88653cd34c22787a26a8122233fbb761bfbf190be72cfa0c26a433c30d703ee1e10489787d75492f0e1a76cbd5f6601e7e23d49  systemd-apk-macros.sh
+a5f644408b4df9ec71c3c57c8bb9dc34001e196a64bcb9f9c35003b596fb14b9b4320dcb55ff165b7e0a47c92fcc02fa2dfba75d5a6aa73de950fed312c1f2ff  systemd-apk-macros.sh
 81c897fed8a3fbfb67ec591b2398a5d65e4af1b3ef379376c157c98d71f085b707f8ebc896d5571a94f99f8fc84fd6b43e3b879ca9b0d57fc6c4596034c7a777  wired.network
 "

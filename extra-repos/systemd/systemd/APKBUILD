@@ -267,7 +267,6 @@ udevd_zcomp() {
 timesyncd() {
 	pkgdesc="systemd Time Synchronization"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove etc/systemd/timesyncd.conf
 	amove usr/bin/timedatectl
@@ -290,7 +289,6 @@ timesyncd_zcomp() {
 networkd() {
 	pkgdesc="systemd Network Configuration"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove usr/bin/networkctl
 	amove etc/systemd/network
@@ -325,7 +323,6 @@ networkd_zcomp() {
 resolved() {
 	pkgdesc="systemd Network Name Resolution"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
 

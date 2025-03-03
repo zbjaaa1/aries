@@ -17,11 +17,13 @@ options="!check"
 # less
 # login-utils
 # so:libkmod.so.2
+#
+# linux-pam: pam_systemd.so is added since 1.7.0-r1
 depends="
 	kbd
 	kmod
 	less
-	linux-pam-pmos
+	linux-pam>=1.7.0-r1
 	login-utils
 	polkit>9990
 	rtkit

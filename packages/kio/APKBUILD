@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kio
-pkgver=99999_git20250227
+pkgver=99999_git20250303
 pkgrel=0
-_commit="c72e9e457c31fb71a630940a15e063b7c4ad0bee"
+_commit="2df82c5ab8580ffdc37299874acec80d2822d577"
 pkgdesc="Resource and network access abstraction"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -45,7 +45,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kio.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-27/kio-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-03/kio-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-dbg $pkgname-doc $pkgname-lang $pkgname-kwallet"
 options="!check" # Fails due to requiring physical devices not normally available and test 14 hangs
 
@@ -76,5 +76,5 @@ kwallet() {
 }
 
 sha512sums="
-21d7b515b7896630987de6ca2e6f1fd83f995d760ff5313116ad8d82d89aafee7e84bbb75880b42ddae884cc6449bd78b8adba6c5ef5a43b0d6ac739aea07612  kio-c72e9e457c31fb71a630940a15e063b7c4ad0bee.tar.xz
+e79ad74e9d1253452380173d57762e7c399e09fc13670fbd3774b77cc3242d3535a8f63fb343a5428af9b6fac83679943b274953e65d01ba11f7b30721eec1b3  kio-2df82c5ab8580ffdc37299874acec80d2822d577.tar.xz
 "

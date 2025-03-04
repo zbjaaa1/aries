@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kcalc
-pkgver=99999_git20250215
+pkgver=99999_git20250227
 pkgrel=0
-_commit="da9ce916ae153108b8c7d5c0f30f7558cd7026b1"
+_commit="f34fd3a66132c713792fff4acc087526e62c12ad"
 # armhf blocked by qt6-qtdeclarative -> ki18n
 arch="all !armhf"
 url="https://kde.org/applications/utilities/org.kde.kcalc"
@@ -27,7 +27,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/utilities/kcalc.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-27/kcalc-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-03/kcalc-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -50,5 +50,5 @@ package() {
 }
 
 sha512sums="
-75f8a021ea890d2366b1715dcc4758b9aa75b3bc63a0888d7148b47870468c00d092870b292bf9e59f9837d694bb9e067be96da0e1f6973b62853796440ac738  kcalc-da9ce916ae153108b8c7d5c0f30f7558cd7026b1.tar.xz
+394ec0f0fb70c2877c45ac32ed3e3c44582aea314f2aec7fe6a177a549fc3a3f7a15c87a45e22d48fc0e651a7c6ffe3f8cebde0e65e0c8a39d72221cb98fbbed  kcalc-f34fd3a66132c713792fff4acc087526e62c12ad.tar.xz
 "

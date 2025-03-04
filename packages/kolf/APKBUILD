@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kolf
-pkgver=99999_git20250219
+pkgver=99999_git20250301
 pkgrel=0
-_commit="cbc66638f7874c3f71d3fca047729edc8c4f2bc9"
+_commit="3f80c9f499542383623c129759cdc722f080b6ca"
 pkgdesc="A miniature golf game with 2d top-down view"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/games/kolf.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-02-27/kolf-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-03/kolf-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -51,5 +51,5 @@ package() {
 }
 
 sha512sums="
-4910bce7e1ef8bebad328f277c401431189dc1d25679c08d631fc5ebb34c37f3dadfa24208f6000b7335f83d221d6045e24f726acad9d92da610cf70d3006ea9  kolf-cbc66638f7874c3f71d3fca047729edc8c4f2bc9.tar.xz
+c84af46d90aabcc74b28978cd184a07bcad80c30a472bb8db3f5d0e9067e5f927471be80b7de8a742ef779ec00013e879e745dbc09e572d474864283354178f2  kolf-3f80c9f499542383623c129759cdc722f080b6ca.tar.xz
 "

@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=kwin
-pkgver=99999_git20250303
+pkgver=99999_git20250304
 pkgrel=0
-_commit="307c4981d563516989585b80850eb4236a6eb96a"
+_commit="77a2acfde683061d4016502f76cb39ec5773c18e"
 pkgdesc="An easy to use, but flexible, composited Window Manager"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -87,7 +87,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/kwin.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-03/kwin-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/kwin-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang $pkgname-systemd"
 options="!check" # Broken
 
@@ -112,5 +112,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-eff15b7737691cf87e4b125465f58f3738fc102e0ce23e552ca651f6e7290a6e80e17ae166c3866d337e681d3ff6657a1a8af6c77b63a6b3346830789c6d2f53  kwin-307c4981d563516989585b80850eb4236a6eb96a.tar.xz
+7cb1727cca3d7b31c5b6a5e6262364af6a81c5972e80a2359f0fafd13d1dc50333876f9b70e72dc2c782900800365f2f83a8f1f029a8e9b0815083957d1a8cca  kwin-77a2acfde683061d4016502f76cb39ec5773c18e.tar.xz
 "

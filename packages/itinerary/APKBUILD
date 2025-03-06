@@ -2,9 +2,9 @@
 # group=kde-applications
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=itinerary
-pkgver=99999_git20250303
+pkgver=99999_git20250304
 pkgrel=0
-_commit="df187a37323a5fda040e473a67761bd0532bd644"
+_commit="8ffe8153c7ee5bed93e3b58ffce070d6fd708bae"
 # armhf and s390x blocked by qt6-qtdeclarative
 # ppc64le blocked by kitinerary
 arch="aarch64 armv7 x86_64 x86"
@@ -52,7 +52,7 @@ checkdepends="
 	xvfb-run
 	"
 _repo_url="https://invent.kde.org/pim/itinerary.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-03/itinerary-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/itinerary-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -76,5 +76,5 @@ package() {
 }
 
 sha512sums="
-c85ec22e9869ba05a5d6d9ce5ae9464696feb3a1d4c93bb307b0af4a1388e8d4e4dbb74731c15f70f98af18ff9ebe14a96156b2426341b6122dfc2c004ef0034  itinerary-df187a37323a5fda040e473a67761bd0532bd644.tar.xz
+43834943227053641fe1ec7c555c40d706f8f8bab96822b444a523770f52876e7b3cb58693a4671a317250d52d0013afa470807f211f7a1b36235b75d4c2d58c  itinerary-8ffe8153c7ee5bed93e3b58ffce070d6fd708bae.tar.xz
 "

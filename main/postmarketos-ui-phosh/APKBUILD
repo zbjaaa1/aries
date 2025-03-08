@@ -3,7 +3,7 @@
 # Co-Maintainer: Pablo Correa Gomez <pabloyoyoista@postmarketos.org>
 # Co-Maintainer: fossdd <fossdd@pwned.life>
 pkgname=postmarketos-ui-phosh
-pkgver=23
+pkgver=24
 pkgrel=0
 pkgdesc="(Wayland) Mobile UI initially developed for the Librem 5"
 url="https://phosh.mobi"
@@ -20,20 +20,23 @@ depends="
 	postmarketos-base-ui-gnome-mobile
 	postmarketos-base-ui-qt-tweaks
 	postmarketos-base-ui-qt-wayland
-	tinydm
 	udiskie
 	xdg-desktop-portal-wlr
 	xdg-desktop-portal-phosh
+	greetd
+	greetd-phrog
 	"
 _pmb_recommends="
 	phosh-mobile-settings
 	"
 _pmb_groups="feedbackd"
+replaces="greetd-openrc"
 install="$pkgname.post-install $pkgname.post-upgrade"
 source="
 	01_postmarketos-ui-phosh.gschema.override
 	mimeapps.list
 	udiskie.desktop
+	greetd.confd
 	"
 options="!check pmb:gpu-accel pmb:systemd"
 subpackages="$pkgname-openrc $pkgname-systemd"
@@ -45,12 +48,14 @@ package() {
 		"$pkgdir"/usr/share/applications/mimeapps.list
 	install -Dm644 "$srcdir"/udiskie.desktop \
 		"$pkgdir"/etc/xdg/autostart/udiskie.desktop
+	install -Dm644 "$srcdir"/greetd.confd \
+		"$pkgdir"/etc/conf.d/greetd
 }
 
 openrc() {
 	install_if="$pkgname=$pkgver-r$pkgrel openrc"
 	install="$subpkgname.post-install"
-	depends="tinydm-openrc"
+
 	mkdir "$subpkgdir"
 }
 
@@ -66,4 +71,5 @@ sha512sums="
 e577b8073df680ccee75ef5b6bb1f2877d5727687d63d6fd9211298e791b6c9f593eb79278c77a4b4918e3c57333c2a012030baf5a3c8d6d16000cc63a030f84  01_postmarketos-ui-phosh.gschema.override
 a741e8db9e4232334b924326c48be4e4c8f7a2382a7608926918a7491c518b2dda551e55a00d4d5fcf58c7950a78dc35d5cc5eaab53ad93a56de40887071f242  mimeapps.list
 53f5c565b4ca8a12f12b63ec84a0194ef530703565d123203d41582a35a54d66afaf3a676df158ae0effe327dcfc1c6496a082ce9dbe803b2547417c3c3fad6e  udiskie.desktop
+ef776b716f784dfac43afb6898f4140cea1216f88ea22bf94150675340710df3a7409c37beac65ba40f0298361668e92a9a3f36c9c6ac44321a2960f27104344  greetd.confd
 "

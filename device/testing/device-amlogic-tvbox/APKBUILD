@@ -79,7 +79,7 @@ kernel_videostrong_kii_pro() {
 
 kernel_xiaomi_aquaman() {
 	pkgdesc="Kernel for Xiaomi Mi TV Stick (S805Y)"
-	depends="linux-postmarketos-amlogic soc-amlogic-s905-boot"
+	depends="linux-postmarketos-amlogic soc-amlogic-s905-boot linux-firmware-meson linux-firmware-brcm linux-firmware-rtl_bt"
 	aml_boot_prep "meson-gxl-s805y-xiaomi-aquaman.dtb" "$subpkgdir"
 	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
 }

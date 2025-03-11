@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=mailcommon
-pkgver=99999_git20250222
+pkgver=99999_git20250306
 pkgrel=0
-_commit="0577cf13119791c64951791ad4e3c74dbb1edc72"
+_commit="1db90d83143a1a400fa5e1b5fe60d6dcb5fda700"
 pkgdesc="KDE PIM library providing support for mail applications"
 # riscv64 disabled due to missing rust in recursive dependency
 arch="all !ppc64le !s390x !armhf !riscv64" # Limited by messagelib -> qt6-qtwebengine
@@ -47,7 +47,7 @@ makedepends="
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/mailcommon.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/mailcommon-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/mailcommon-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="!check" # Requires running dbus server
 
@@ -71,5 +71,5 @@ package() {
 }
 
 sha512sums="
-2a7fe1d8143e243fdbc553d56098ceb75b843efdf65d048bf6d0e51938d5acfcfcd493da9fd50284b5a891a3cab7c67a5d3be29dee9fa825e8bb89ea049eda37  mailcommon-0577cf13119791c64951791ad4e3c74dbb1edc72.tar.xz
+5cedbc132b4e1fcc5869f4410e668dc4ca8970daad7030955b257566c71f2a79dae7ceceafac598ce39676051c3eb0724675b9e6f6937ee2b3a257d8d3c5656e  mailcommon-1db90d83143a1a400fa5e1b5fe60d6dcb5fda700.tar.xz
 "

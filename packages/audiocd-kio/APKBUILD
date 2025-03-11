@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=audiocd-kio
-pkgver=99999_git20250304
+pkgver=99999_git20250306
 pkgrel=0
-_commit="903eeff2e48261999601e4f8d952639dba9cf8a1"
+_commit="bbba25bc0775b2c825bfa7afbe3c7ed14215a241"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://www.kde.org/applications/multimedia/"
@@ -28,7 +28,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/multimedia/audiocd-kio.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/audiocd-kio-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/audiocd-kio-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 options="!check" # No tests
 
@@ -52,5 +52,5 @@ package() {
 }
 
 sha512sums="
-43fa75f47e1593e2176600bf727cb2ba4beaa519f767fe3c3e7fc26d855919c409add826bcb8104d8fd70baaccf9217b2662059e777074cb565e2025e919c344  audiocd-kio-903eeff2e48261999601e4f8d952639dba9cf8a1.tar.xz
+35fa1fce53d2fd1982e3fa2915ac6db6a5236b1d48162e7ab0f1d8fc2b4b4c9a1bfc7a6c95cd6d494df00528569eec0925869a9c1d77f299d9b8775ad7e7dae5  audiocd-kio-bbba25bc0775b2c825bfa7afbe3c7ed14215a241.tar.xz
 "

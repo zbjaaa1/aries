@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=qqc2-breeze-style
-pkgver=99999_git20250203
+pkgver=99999_git20250306
 pkgrel=0
-_commit="5516e01090a8366dc82d1849561ab494f132c99e"
+_commit="c1fc5074e93374a13d6ad0856968cc16d53ece84"
 pkgdesc="Breeze inspired QQC2 style"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -30,7 +30,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/qqc2-breeze-style.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/qqc2-breeze-style-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/qqc2-breeze-style-$_commit.tar.xz"
 subpackages="$pkgname-dev"
 options="!check" # No tests
 
@@ -54,5 +54,5 @@ package() {
 }
 
 sha512sums="
-bb62bfffe2a046c1c78ddcbb59c138b40fe1f561b6792a31a6a0cf4680c30d85bff89588ac8da19c359b5ea9098ff2c9f7f3a7662c423c3ff2c48973699794c5  qqc2-breeze-style-5516e01090a8366dc82d1849561ab494f132c99e.tar.xz
+fe822f83efbb8139432d2eebe65a84d020c1d8c7126fa8f7deca55dd8892213b8bf5aa53d54bf5f800ef7cfd830dc37ae4924079cdbfa676dfb58b0f8a19b84b  qqc2-breeze-style-c1fc5074e93374a13d6ad0856968cc16d53ece84.tar.xz
 "

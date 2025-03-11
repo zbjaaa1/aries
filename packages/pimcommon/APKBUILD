@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=pimcommon
-pkgver=99999_git20250302
+pkgver=99999_git20250306
 pkgrel=0
-_commit="a8ca1025976218fdfa94adf58daf6e9466647df9"
+_commit="0cd7297feff9802d07510fb2c93edc82b5096f4e"
 pkgdesc="Common lib for KDEPim"
 # armhf blocked by extra-cmake-modules
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> akonadi
@@ -50,7 +50,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/pim/pimcommon.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-04/pimcommon-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/pimcommon-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="net" # net required for tests
 
@@ -74,5 +74,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-036fc91f26e919c849ec5a8534c074f59c92bd2201bcd52ba307dd9726bfdb36f057895e0832fa2a8e9c8335cb050d2b88c9c9b7d916a9b2b78b043596b8157d  pimcommon-a8ca1025976218fdfa94adf58daf6e9466647df9.tar.xz
+da84f4a0a016c2f3c01fd9f812d0e3c451435f5f61e8b19457de7eb2ef662723bea28494a79b163ddc57efc9bba44a0ac2ec2108f97ab5669881bced64fadb60  pimcommon-0cd7297feff9802d07510fb2c93edc82b5096f4e.tar.xz
 "

@@ -1,0 +1,57 @@
+# Reference: <https://postmarketos.org/devicepkg>
+# Maintainer: Caleb Connolly <caleb.connolly@linaro.org>
+
+pkgname=device-qcom-sdm845
+pkgdesc="Generic device package for Qualcomm SDM845 devices"
+pkgver=3
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="aarch64"
+options="!check !archcheck"
+depends="
+	alsa-ucm-conf-sdm845
+	fwupd>=1.8.6
+	hexagonfs-firmware-loader
+	linux-firmware-ath10k
+	linux-firmware-qcom
+	linux-postmarketos-qcom-sdm845
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+	soc-qcom
+	soc-qcom-modem
+	soc-qcom-qbootctl
+	systemd-boot
+	unl0kr-fbforcerefresh
+"
+makedepends="devicepkg-dev"
+source="
+	30-initramfs-firmware.files
+	81-libssc-180-degrees.rules
+	deviceinfo
+	q6voiced.conf
+"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+
+	install -Dm644 "$srcdir"/30-initramfs-firmware.files -t \
+		"$pkgdir"/usr/share/mkinitfs/files
+
+	install -Dm644 "$srcdir"/81-libssc-180-degrees.rules -t \
+		"$pkgdir"/usr/lib/udev/rules.d
+
+	install -Dm644 "$srcdir"/q6voiced.conf "$pkgdir"/etc/conf.d/q6voiced
+}
+
+sha512sums="
+73438ceec8ca76dec24a92718d456d17b01a23510ee0b0e6c1263e3f6c2ca82263a3e41298c0a8ebf3dd8439da354fc1c914fd475ad1cf5c669c200770df62fa  30-initramfs-firmware.files
+2c16ba75e0077b2b1eaefa4c73b287475505a1aeb291ec29316d41cc094277320f9d2aaabfd91eb1dc0f488ab2d61a94faef16e7afe0f1e226779113761b9a37  81-libssc-180-degrees.rules
+56c98e167c470d00f711b4173125fa2f6755a8fa5a4ad3cfca7c919c8ec57514126761962f1ee76dc9753532a4a651ca343ab7a2b76617104fb78dd43ac59d6e  deviceinfo
+5f3e1c286baea16a5b0a4a34cef7ad774d3aa5cc384e1deb4fba40d1f9372a708baf3b587e3edac69edcf04b5513f0111c1976b649b424cc721733ce4ddabc19  q6voiced.conf
+"

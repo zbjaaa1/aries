@@ -3,15 +3,14 @@
 # scripts.
 
 deviceinfo_format_version="0"
-deviceinfo_name="Qualcomm SDM845 device"
+deviceinfo_name="Qualcomm SDM845 Device"
 deviceinfo_manufacturer="Qualcomm"
-deviceinfo_codename="qualcomm-sdm845"
-deviceinfo_year="2023"
+deviceinfo_codename="qcom-sdm845"
+deviceinfo_year="2018"
 deviceinfo_arch="aarch64"
 
 # Device related
 deviceinfo_gpu_accelerated="true"
-deviceinfo_mesa_driver="msm"
 deviceinfo_chassis="handset"
 deviceinfo_keyboard="false"
 deviceinfo_external_storage="true"
@@ -20,18 +19,12 @@ deviceinfo_external_storage="true"
 deviceinfo_flash_method="fastboot-bootpart"
 # Where to flash boot.img, or in our case where to flash the pmOS boot partition.
 # This is a bit confusing.
-deviceinfo_flash_fastboot_partition_kernel="system"
+deviceinfo_flash_fastboot_partition_kernel="cust"
 deviceinfo_flash_fastboot_partition_system="userdata"
-deviceinfo_kernel_cmdline="earlycon console=tty0 console=ttyMSM0,115200"
+deviceinfo_kernel_cmdline="earlycon console=tty0 console=ttyMSM0,115200 PMOS_NOSPLASH PMOS_NO_OUTPUT_REDIRECT console=tty0"
 deviceinfo_getty="ttyMSM0;115200"
 deviceinfo_generate_systemd_boot="true"
 deviceinfo_boot_filesystem="fat32"
-
-# Look ma! no hands!
-# u-boot picks the right DTB for us, no need to specify it in systemd-boot.
-# deviceinfo_dtb=""
-deviceinfo_initfs_compression="zstd:fast"
-
 # Required for devices using UFS as storage (instead of e.g. eMMC)
 deviceinfo_rootfs_image_sector_size="4096"
 

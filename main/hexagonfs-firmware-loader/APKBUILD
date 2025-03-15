@@ -1,6 +1,6 @@
 pkgname=hexagonfs-firmware-loader
 pkgver=1.0.0
-pkgrel=0
+pkgrel=1
 pkgdesc="Prepare the HexagonFS directory from msm-firmware-loader mounts"
 url="https://postmarketos.org/"
 subpackages="$pkgname-openrc $pkgname-systemd"
@@ -8,10 +8,12 @@ arch="aarch64"
 license="MIT"
 options="!check"
 depends="hexagonrpcd msm-firmware-loader"
+_commit="b5e0f3a7082f499646b69839e8997213a18f674f"
 source="
 	hexagonrpcd.confd
-	https://gitlab.postmarketos.org/Adrian/hexagonfs-firmware-loader/-/archive/$pkgver/hexagonfs-firmware-loader-$pkgver.tar.gz
+	https://gitlab.postmarketos.org/postmarketOS/hexagonfs-firmware-loader/-/archive/$_commit/hexagonfs-firmware-loader-$_commit.tar.gz
 "
+builddir="$srcdir/hexagonfs-firmware-loader-$_commit"
 
 package() {
 	# Create mountpoint for the HexagonFS files
@@ -49,5 +51,5 @@ systemd() {
 
 sha512sums="
 64c50d1e92cc29b3e8c0e5ee0c14603c5d3b6c9f9671038928cb3093a1276e6004452e55c5f7e3793b72bbc0a7dc48063ed29ba779ece2edea5ac743fa1ec473  hexagonrpcd.confd
-77c2d49b21afab2ae848d9f32bb88b7bc10c10215ed4f418e8c71ed4e5772ef5a67eded5f420244de66f90b1bb9f53c168395b9587c50a8c1903556acb6b2c7d  hexagonfs-firmware-loader-1.0.0.tar.gz
+37a76521a509a921167c1ab49fc26d02763583edf808b003352c781f4ff583da405c17560f30e95bad65fc52784226df684bbf54641fcb2718a4d56bb784e5d5  hexagonfs-firmware-loader-b5e0f3a7082f499646b69839e8997213a18f674f.tar.gz
 "

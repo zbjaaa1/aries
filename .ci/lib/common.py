@@ -42,7 +42,7 @@ def add_upstream_git_remote():
     run_git(["remote", "add", "upstream",
              "https://gitlab.postmarketos.org/postmarketOS/pmaports.git"])
     # And fetch
-    run_git(["fetch", "-q", "upstream"])
+    run_git(["fetch", "-q", "--unshallow", "upstream"])
 
 
 def commit_message_has_string(needle):

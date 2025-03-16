@@ -1,0 +1,21 @@
+[connection]
+id=USB DHCP Network
+uuid=85bccf14-310a-453f-86f9-97fc0464bf1c
+type=ethernet
+interface-name=usb0
+autoconnect=yes
+autoconnect-priority=10
+# For USB Networking, the link quality is assumed to be very good, so don't retry.
+autoconnect-retries=1
+
+[ethernet]
+
+[ipv4]
+method=auto
+dhcp-timeout=3
+
+[ipv6]
+addr-gen-mode=default
+method=auto
+
+[proxy]

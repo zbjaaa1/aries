@@ -1,0 +1,16 @@
+/bin/sh: ../tools/dtc: not found
+
+diff --git a/scripts/Makefile.lib b/scripts/Makefile.lib
+index 37e7af82ed40..484827f82c64 100755
+--- a/scripts/Makefile.lib
++++ b/scripts/Makefile.lib
+@@ -303,7 +303,7 @@ cmd_dt_S_dtb=						\
+ $(obj)/%.dtb.S: $(obj)/%.dtb
+ 	$(call cmd,dt_S_dtb)
+ 
+-DTC = $(srctree)/tools/dtc
++DTC = dtc
+ 
+ quiet_cmd_dtc = DTC     $@
+ cmd_dtc = mkdir -p $(dir ${dtc-tmp}) ; \
+

@@ -1,0 +1,23 @@
+../arch/arm64/include/uapi/asm/posix_types.h:6:24: error: typedef redefinition with different types ('unsigned short' vs '__kernel_gid_t' (aka 'unsigned int'))
+    6 | typedef unsigned short __kernel_old_gid_t;                                                                                                              
+      |                        ^                                                
+../include/uapi/asm-generic/posix_types.h:55:24: note: previous definition is here
+   55 | typedef __kernel_gid_t  __kernel_old_gid_t;                             
+      |                         ^                                               
+
+diff --git a/include/uapi/asm-generic/posix_types.h b/include/uapi/asm-generic/posix_types.h
+index 5e6ea22bd525..7066d34e0c89 100755
+--- a/include/uapi/asm-generic/posix_types.h
++++ b/include/uapi/asm-generic/posix_types.h
+@@ -51,8 +51,8 @@ typedef unsigned int	__kernel_gid32_t;
+ #endif
+ 
+ #ifndef __kernel_old_uid_t
+-typedef __kernel_uid_t	__kernel_old_uid_t;
+-typedef __kernel_gid_t	__kernel_old_gid_t;
++typedef unsigned short	__kernel_old_uid_t;
++typedef unsigned short	__kernel_old_gid_t;
+ #endif
+ 
+ #ifndef __kernel_old_dev_t
+

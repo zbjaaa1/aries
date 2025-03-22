@@ -1,0 +1,22 @@
+From d6235780bee5d1be83d4ab51618b5a524bef4dc3 Mon Sep 17 00:00:00 2001
+From: Aster Boese <asterboese@mailbox.org>
+Date: Thu, 20 Mar 2025 01:12:50 -0400
+Subject: [PATCH 1/2] move autogen to use env sh instead of hardcoded bash path
+
+---
+ autogen.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/autogen.sh b/autogen.sh
+index 1fe2ab1..9af0183 100755
+--- a/autogen.sh
++++ b/autogen.sh
+@@ -1,4 +1,4 @@
+-#!/bin/bash
++#!/usr/bin/env sh
+ 
+ olddir=`pwd`
+ srcdir=`dirname $0`
+-- 
+2.48.1
+

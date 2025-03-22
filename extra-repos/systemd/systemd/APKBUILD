@@ -330,6 +330,9 @@ resolved() {
 	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
+	# To not auto-install on existing systemd-based systems
+	# until we are ready to use it.
+	provider_priority=0
 
 	amove etc/systemd/resolved.conf
 	amove usr/sbin/resolvconf

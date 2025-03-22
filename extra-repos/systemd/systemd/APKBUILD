@@ -6,12 +6,28 @@ pkgname=systemd
 # currently tracking git MR
 pkgver=256.11
 _pkgver="musl-v${pkgver//_/-}-split-usr"
-pkgrel=1
+pkgrel=3
 pkgdesc="System and service manager"
 url="https://github.com/systemd/systemd"
 arch="all !ppc64le !s390x" # blocked by pmboostrap not supporting
 license="MIT AND GPL-2.0-only AND LGPL-2.1-or-later"
 options="pmb:strict !check" # few tests fail, need to debug. We use alpine dbus for building, systemd-dbus for runtime
+
+# FIXME: it turns out abuild doesn't let you have arbitrary triggers?! what century is this???
+# So we have to trigger everything on everything and do a bunch of reloading that
+# isn't necessary most of the time...
+triggers="$pkgname.trigger=/usr/lib/systemd/catalog:\
+/usr/lib/udev/hwdb.d:\
+/usr/lib/binfmt.d:\
+/usr/lib/sysusers.d:\
+/usr/lib/tmpfiles.d:\
+/usr/lib/udev/rules.d:\
+/usr/lib/sysctl.d:\
+/usr/lib/systemd/system:\
+/usr/lib/systemd/user:\
+/etc/systemd/system:\
+/etc/systemd/user
+"
 
 makedepends="
 	acl
@@ -121,8 +137,8 @@ subpackages="
 
 source="
 	https://gitlab.postmarketos.org/postmarketOS/systemd/-/archive/$_pkgver/systemd-$_pkgver.tar.gz
-	systemd-apk-macros.sh
 	wired.network
+	systemd-apk-macros.sh
 	"
 builddir="$srcdir/systemd-$_pkgver"
 
@@ -243,6 +259,7 @@ udevd() {
 	provider_priority=100
 
 	amove etc/udev
+	amove usr/bin/udevadm
 	amove usr/lib/libudev*
 	amove usr/lib/systemd/system/initrd-udevadm-cleanup-db.service
 	amove usr/lib/systemd/system/sockets.target.wants/systemd-udev*
@@ -269,7 +286,6 @@ udevd_zcomp() {
 timesyncd() {
 	pkgdesc="systemd Time Synchronization"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove etc/systemd/timesyncd.conf
 	amove usr/bin/timedatectl
@@ -279,6 +295,9 @@ timesyncd() {
 	amove usr/share/dbus-1/system-services/org.freedesktop.timesync1.service
 	amove usr/share/dbus-1/system.d/org.freedesktop.timesync1.conf
 	amove usr/share/polkit-1/actions/org.freedesktop.timesync1.policy
+
+	# Generate install scripts automatically for services in this subpackage
+	default_systemd_install_scripts
 }
 
 timesyncd_bcomp() {
@@ -292,7 +311,6 @@ timesyncd_zcomp() {
 networkd() {
 	pkgdesc="systemd Network Configuration"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 
 	amove usr/bin/networkctl
 	amove etc/systemd/network
@@ -314,6 +332,9 @@ networkd() {
 	amove usr/share/polkit-1/actions/org.freedesktop.network1.policy
 
 	install -D -m0644 "$srcdir/wired.network" "$subpkgdir/usr/lib/systemd/network/80-wired.network"
+
+	# Generate install scripts automatically for services in this subpackage
+	default_systemd_install_scripts
 }
 
 networkd_bcomp() {
@@ -327,7 +348,6 @@ networkd_zcomp() {
 resolved() {
 	pkgdesc="systemd Network Name Resolution"
 	depends="$pkgname=$pkgver-r$pkgrel"
-	install="$subpkgname.post-install $subpkgname.pre-deinstall"
 	replaces="resolvconf"
 	provides="resolvconf"
 
@@ -342,6 +362,9 @@ resolved() {
 	amove usr/share/dbus-1/system-services/org.freedesktop.resolve1.service
 	amove usr/share/dbus-1/system.d/org.freedesktop.resolve1.conf
 	amove usr/share/polkit-1/actions/org.freedesktop.resolve1.policy
+
+	# Generate install scripts automatically for services in this subpackage
+	default_systemd_install_scripts
 }
 
 resolved_bcomp() {
@@ -424,6 +447,6 @@ dev() {
 
 sha512sums="
 3cd75d5ba29a3994230ecbe16ea106d4fe05d7d76e7cd9b9a6a63177f09d8c362c055a1fea49e6c9a10a949afc07a6c75fe75dad2bd302d94e41a81f8ddb2a15  systemd-musl-v256.11-split-usr.tar.gz
-2f9ec875de67fc4bb401bebea88653cd34c22787a26a8122233fbb761bfbf190be72cfa0c26a433c30d703ee1e10489787d75492f0e1a76cbd5f6601e7e23d49  systemd-apk-macros.sh
 81c897fed8a3fbfb67ec591b2398a5d65e4af1b3ef379376c157c98d71f085b707f8ebc896d5571a94f99f8fc84fd6b43e3b879ca9b0d57fc6c4596034c7a777  wired.network
+cc1c8f00a0ff1c94fcebe0e6d48b3d1a74c51b9d86bf255762cecda4b4d0c08e313f817aaaa301f41133eaf73c525e36c0f48659b263a7ed990080de9f3cec6c  systemd-apk-macros.sh
 "

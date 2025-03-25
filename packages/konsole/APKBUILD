@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=konsole
-pkgver=99999_git20250306
+pkgver=99999_git20250321
 pkgrel=0
-_commit="dc598f21fdf30da8339f67e2eb4fb9fd6fe38af4"
+_commit="1cf9a51988843a2c8a7671cbc419e5fe01ad149b"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
 url="https://kde.org/applications/system/konsole"
@@ -27,7 +27,6 @@ makedepends="
 	kguiaddons-dev
 	ki18n-dev
 	kiconthemes-dev
-
 	kio-dev
 	knewstuff-dev
 	knotifications-dev
@@ -45,7 +44,7 @@ makedepends="
 	"
 checkdepends="mesa-dri-gallium xvfb-run"
 _repo_url="https://invent.kde.org/utilities/konsole.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/konsole-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/konsole-$_commit.tar.xz"
 subpackages="$pkgname-doc $pkgname-lang"
 
 options="!check"
@@ -61,8 +60,6 @@ build() {
 }
 
 check() {
-	cd build
-
 	# DBusTest requires running DBus
 	local skipped_tests="("
 	local tests="
@@ -78,7 +75,7 @@ check() {
 		skipped_tests="$skipped_tests|$test"
 	done
 	skipped_tests="$skipped_tests)Test"
-	CTEST_OUTPUT_ON_FAILURE=TRUE xvfb-run ctest -E "$skipped_tests"
+	xvfb-run ctest --test-dir build -E "$skipped_tests"
 }
 
 package() {
@@ -86,5 +83,5 @@ package() {
 }
 
 sha512sums="
-fc25f383d6df4c3d1cb8d1ee680a2a57491e6b46d79398c8173377961584827512841103ca46a7b55180a028cd4ae7659aa731e385f1166bdfa0544942055f3f  konsole-dc598f21fdf30da8339f67e2eb4fb9fd6fe38af4.tar.xz
+bfe364f75a6b4795cf8f3e338fa56e76c2490ef42bf365389003d39d45738f08d9fb1c1df41c064621e3ff8c1fe8db05549cf5f53b2140b8ed4c6243befaaaee  konsole-1cf9a51988843a2c8a7671cbc419e5fe01ad149b.tar.xz
 "

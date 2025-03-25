@@ -2,9 +2,9 @@
 # group=kde-frameworks
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=purpose
-pkgver=99999_git20250306
+pkgver=99999_git20250323
 pkgrel=0
-_commit="d715d358630bed15d5a5e10c9e1001c58bca6364"
+_commit="6b86b057b6b786e7d33f5063b97febac7d7c0645"
 pkgdesc="Framework for providing abstractions to get the developer's purposes fulfilled"
 # armhf blocked by qt6-qtdeclarative
 # ppc64le, s390x and riscv64 blocked by qt6-qtwebengine -> kaccounts-integration
@@ -27,7 +27,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/purpose.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/purpose-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/purpose-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 options="!check" # fails on builders
 
@@ -54,5 +54,5 @@ package() {
 }
 
 sha512sums="
-d12cf2dc6ea8956c32703d967942f476089a3a908280eb3a1a19e86de2482728896b36528639460877bc8f0c7b95606b0f4cfc77d30436ba453b2658b6b6f348  purpose-d715d358630bed15d5a5e10c9e1001c58bca6364.tar.xz
+a30a6c47ccbf76c726bea9a07213a34591e2fbfe9cf432b995149ae041fb3fca9c655a2c1b603912946828b6296600527a318be689a17546f3aec14595ac8593  purpose-6b86b057b6b786e7d33f5063b97febac7d7c0645.tar.xz
 "

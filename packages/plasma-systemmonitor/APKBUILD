@@ -2,9 +2,9 @@
 # group=kde-plasma
 maintainer="team/kde <bribbers@disroot.org>"
 pkgname=plasma-systemmonitor
-pkgver=99999_git20250306
+pkgver=99999_git20250321
 pkgrel=0
-_commit="1cfba3457f8246859aadd0c95e20b43ad2931558"
+_commit="ff761dd3b8e92f877a93263d2314be5dc83f25aa"
 pkgdesc="An application for monitoring system resources"
 # armhf blocked by qt6-qtdeclarative
 arch="all !armhf"
@@ -38,7 +38,7 @@ case "$pkgver" in
 	*) _rel=stable;;
 esac
 _repo_url="https://invent.kde.org/plasma/plasma-systemmonitor.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/plasma-systemmonitor-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/plasma-systemmonitor-$_commit.tar.xz"
 subpackages="$pkgname-lang"
 
 options="!check"
@@ -62,5 +62,5 @@ package() {
 }
 
 sha512sums="
-7c8b4ca13a440db560deefd0212ee7eb18623c018b09bad82edea8e0834aefd04a8b84946467309bd44a289864ee3906dcf6d0753e42c0ab15d533e33a6960c2  plasma-systemmonitor-1cfba3457f8246859aadd0c95e20b43ad2931558.tar.xz
+b0ba70d3649c07f6a90c174527e4e4d279c438dc75ab901b12f72329673ee80b8de4823d0f2417c0c5af20032ea7710cd6a6b4a2360fea6994ac8941e5d4429f  plasma-systemmonitor-ff761dd3b8e92f877a93263d2314be5dc83f25aa.tar.xz
 "

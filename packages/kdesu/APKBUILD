@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-frameworks
 pkgname=kdesu
-pkgver=99999_git20250305
+pkgver=99999_git20250323
 pkgrel=0
-_commit="a4fce07ff76b296dbe41db9ea5e4657e8433ae92"
+_commit="3d9f36b3c7808f5f7f2a7b58c5e447e8968642ee"
 pkgdesc="Integration with su for elevated privileges"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
@@ -26,7 +26,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/frameworks/kdesu.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/kdesu-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/kdesu-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-doc $pkgname-lang"
 # Since the goal of this library is to elevate privileges, suid being needed should be obvious
 options="suid"
@@ -54,5 +54,5 @@ package() {
 }
 
 sha512sums="
-b42430d7f3b7dded70bc31fb36b9e294f7c9c5a0038426219801e7cd497b7bee51fc7875854a2e553fd1b8cc9c30fe052313dcc71ec4a02b04838bd289253528  kdesu-a4fce07ff76b296dbe41db9ea5e4657e8433ae92.tar.xz
+d58557de559dedc7be7972b920bd9ba42ef3d82cc41873639430d514637ead71716e96f690d09f93d863bd4ec845c834dea060b01b05ae645f9154b33dc05c6f  kdesu-3d9f36b3c7808f5f7f2a7b58c5e447e8968642ee.tar.xz
 "

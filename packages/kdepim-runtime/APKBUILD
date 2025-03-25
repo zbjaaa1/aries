@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kdepim-runtime
-pkgver=99999_git20250306
+pkgver=99999_git20250323
 pkgrel=0
-_commit="84347ea48a84785daf1ef69349f13af7310d0ea9"
+_commit="d7b233aac282f8f5bd934e0c9b17c26829d1363d"
 pkgdesc="Extends the functionality of kdepim"
 url="https://kontact.kde.org/"
 # armhf blocked by extra-cmake-modules
@@ -52,7 +52,7 @@ makedepends="
 	"
 subpackages="$pkgname-dbg $pkgname-lang"
 _repo_url="https://invent.kde.org/pim/kdepim-runtime.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-06/kdepim-runtime-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/kdepim-runtime-$_commit.tar.xz"
 
 options="!check"
 builddir="$srcdir/kdepim-runtime-$_commit"
@@ -74,5 +74,5 @@ package() {
 }
 
 sha512sums="
-fc096cab03fc31fd1b62387001b061ada0e409ae14d69af24b31cd3637df14a77f80841c3e215d6322d6d2c9899b2cf9e9ba06378d612904130c04887907df28  kdepim-runtime-84347ea48a84785daf1ef69349f13af7310d0ea9.tar.xz
+fc98ed36284a419fa971481d3f94afd717fc2796091b06c4aeb58c4db61c72ff3360e81a1ab28f3af579c255b6c882efc4297433368c84181aa96f578e7e7129  kdepim-runtime-d7b233aac282f8f5bd934e0c9b17c26829d1363d.tar.xz
 "

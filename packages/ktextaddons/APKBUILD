@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-other
 pkgname=ktextaddons
-pkgver=99999_git20250324
+pkgver=99999_git20250325
 pkgrel=0
-_commit="be1af3d972e572dd5c2ee01c6edd5a2e1485f1ac"
+_commit="ee49a56d66a82d53651458bfa18b50b6a0e3da4c"
 pkgdesc="Various text handling addons"
 # armhf blocked by qt6-qtdeclarative -> ki18n
 arch="all !armhf"
@@ -31,7 +31,7 @@ makedepends="$depends_dev
 	"
 checkdepends="xvfb-run"
 _repo_url="https://invent.kde.org/libraries/ktextaddons.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-24/ktextaddons-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-25/ktextaddons-$_commit.tar.xz"
 subpackages="$pkgname-dev $pkgname-lang"
 
 options="!check"
@@ -68,5 +68,5 @@ package() {
 	DESTDIR="$pkgdir" cmake --install build
 }
 sha512sums="
-64d699bc854932e57fecb5bb22c8f322a28ed60247afa8007843786a2e21b5274cc7ccc5c247b25dc014fb1eb7d3bd6c42bad193c42966edb3d8a8023320a5f1  ktextaddons-be1af3d972e572dd5c2ee01c6edd5a2e1485f1ac.tar.xz
+0aa58d615de3bf054625e4fb646bcf430ca39db31957af7a4bc48eba8b9e5f8f317b3d7f98ca027f88be5ea8beda073740c0fdc31ec0e626a7e38ce0bba6f392  ktextaddons-ee49a56d66a82d53651458bfa18b50b6a0e3da4c.tar.xz
 "

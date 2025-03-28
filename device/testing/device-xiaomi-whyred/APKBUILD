@@ -1,16 +1,28 @@
-# Maintainer: Nikita Utkin <shockck84@gmail.com>
 # Reference: <https://postmarketos.org/devicepkg>
+# Maintainer: Alexey Minnekhanov <alexeymin@postmarketos.org>
 pkgname=device-xiaomi-whyred
-pkgdesc="Xiaomi Redmi Note 5"
-pkgver=2
+pkgdesc="Xiaomi Redmi Note 5 Pro"
+pkgver=3
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
-depends="postmarketos-base linux-xiaomi-whyred mkbootimg mdss-fb-init-hack"
+depends="
+	firmware-qcom-adreno-a530
+	firmware-xiaomi-whyred
+	linux-postmarketos-qcom-sdm660
+	mkbootimg
+	msm-firmware-loader
+	postmarketos-base
+	soc-qcom-sdm660
+	soc-qcom-sdm660-rproc
+"
 makedepends="devicepkg-dev"
-source="deviceinfo"
+source="
+	deviceinfo
+	modules-initfs
+"
 
 build() {
 	devicepkg_build $startdir $pkgname
@@ -20,7 +32,7 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
-
 sha512sums="
-818662013b4fed6591feaa3fa20bfa2adabd013726eaaf559e7cd1e703267a7e815be0eca57645d38d6ea9841db465084ae468e3b42410e3f3f0f7c3420f54dd  deviceinfo
+58f593d27488f2e9c93772ec58b67a1f4ccc06fff38d13e5f88f66921a236945943c0289df0992c6b74dd1a2692684ca0c32f65475058a8d3a13ef5eca336f21  deviceinfo
+b76271e4415934c4f567ccb5052e64f4807eb718753b833958641c03cb6ba961f72c7c64d6fb613ab6cf64a9bee4b7857ecbbe4d251f583e3cc7282323335d6c  modules-initfs
 "

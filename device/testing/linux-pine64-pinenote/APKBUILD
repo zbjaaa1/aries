@@ -3,7 +3,7 @@
 # Maintainer: Antoine Martin (ayakael) <dev@ayakael.net>
 pkgname=linux-pine64-pinenote
 pkgver=6.12.0
-pkgrel=1
+pkgrel=2
 pkgdesc="Pine64 PineNote close to mainline fork"
 arch="aarch64"
 _carch="arm64"
@@ -23,7 +23,7 @@ makedepends="
 
 # Source
 _config="config-$_flavor.$arch"
-_commit="9d066a65f5cbaa8cd3bfc73a1b54fbac2d0f76ac"
+_commit="cba3d8fbe4a562c7ac0c776ed2b40d7b2d2b5fdf"
 source="
 	$pkgname-$_commit.tar.gz::https://github.com/m-weigand/linux/archive/$_commit.tar.gz
 	$_config
@@ -60,6 +60,6 @@ package() {
 }
 
 sha512sums="
-d3c2510f9f835a0570fbb812cec2f9e12e402878c1f9f214364ae1918bc4c00f69a1fc5e005cf6b85c0690e6fd5f6ce9e61efd88145a83725ed12b6b8c07b97e  linux-pine64-pinenote-9d066a65f5cbaa8cd3bfc73a1b54fbac2d0f76ac.tar.gz
-c9183c618318dd76ae74a0dacf7e09a6cd9d664008128fc82d7c4a3fc2510287a2f3d44ffba9ee3b8428ef7ce1c98b5a22f7da9a693de407b4746700b5283009  config-pine64-pinenote.aarch64
+6c540a1528b0f534284ee9f74adb27254d44f3ead7edba9ba29a1700c04f7b0975e8106c965c1ca7ede6cb1902d7f785db1f60823c6025e3c584bb68e255fea4  linux-pine64-pinenote-cba3d8fbe4a562c7ac0c776ed2b40d7b2d2b5fdf.tar.gz
+40c95a6156517b71d48a1f418201911a169d5a025d7268058faed96f1259dc26fe4533aaa1194aea2f34ed5c68e48b24a1dfa85ee022974b682a565f34960abe  config-pine64-pinenote.aarch64
 "

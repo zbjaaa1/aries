@@ -4,9 +4,9 @@
 # The group tag is just to easily find this APKBUILD by some scripts for automation
 # group=kde-applications
 pkgname=kruler
-pkgver=99999_git20250319
+pkgver=99999_git20250331
 pkgrel=0
-_commit="c11f8a3d579617bf7a6e4327499f9dc1228880cc"
+_commit="0ed4cf35023e3f11a5ca19b4c41257bb39d9da1c"
 # armhf blocked by extra-cmake-modules
 arch="all !armhf"
 url="https://kde.org/applications/graphics/org.kde.kruler"
@@ -24,7 +24,7 @@ makedepends="
 	samurai
 	"
 _repo_url="https://invent.kde.org/graphics/kruler.git"
-source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-03-25/kruler-$_commit.tar.xz"
+source="https://nightly.postmarketos.org/plasma-mobile/sources/2025-04-02/kruler-$_commit.tar.xz"
 subpackages=" $pkgname-lang"
 options="!check" # No tests
 
@@ -48,5 +48,5 @@ package() {
 }
 
 sha512sums="
-e73ac4326b26ad2278496d98ddbba8586cbdfa90e2124123d19c0bd603d1e965b225729323df9cd7b33e3afd77da715f311c2e1880ddf73e8c6fb5e537be93b3  kruler-c11f8a3d579617bf7a6e4327499f9dc1228880cc.tar.xz
+3ba6056781c952e0d855cf5b46a89801ea4dc0fe205538a748ef82160ec8e4e0729e684a041693bb58b5f8dd0f60dfa288a38f41c20be3bfa45210f765ff951c  kruler-0ed4cf35023e3f11a5ca19b4c41257bb39d9da1c.tar.xz
 "

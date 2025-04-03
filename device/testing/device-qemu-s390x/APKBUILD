@@ -1,0 +1,31 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-qemu-s390x
+pkgdesc="QEMU s390x"
+pkgver=1
+pkgrel=0
+url="https://postmarketos.org"
+license="MIT"
+arch="s390x"
+options="!check !archcheck"
+depends="
+	linux-qemu-s390x
+	postmarketos-base
+"
+makedepends="devicepkg-dev"
+source="
+	deviceinfo
+	modules-initfs
+"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+fe1e6f31fc4d08ec19119734145d0fbfd8b80a7c8a22130ad124ec556cb17587252ff0157e3af92c917d07141ed2c111ec4a948a82fc2a6c5d441c806ebbc262  deviceinfo
+e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
+"

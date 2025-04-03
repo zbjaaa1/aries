@@ -36,7 +36,6 @@ builddir="$srcdir/linux-next-next-$_nextver"
 prepare() {
 	default_prepare
 	cp "$srcdir/pmos.config" "$builddir"/arch/"$_carch"/configs/
-	cp "$srcdir/devices.config" "$builddir"/arch/"$_carch"/configs/
 
 	# Generate .config
 	unset LDFLAGS

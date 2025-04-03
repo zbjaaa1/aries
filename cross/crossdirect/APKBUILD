@@ -31,7 +31,7 @@ source="cargo.sh crossdirect.c rustc.sh rust-qemu-linker.sh"
 build() {
 	cd "$srcdir"
 	# Architectures and binaries
-	_archs="x86_64 armhf armv7 aarch64 riscv64"
+	_archs="x86_64 armhf armv7 aarch64 riscv64 ppc64le s390x"
 	for _arch in $_archs; do
 		[ "$_arch" == "$CARCH" ] && continue
 		_hostspec="$(arch_to_hostspec $_arch)"
@@ -48,7 +48,7 @@ build() {
 
 package() {
 	# Architectures and binaries
-	_archs="x86_64 armhf armv7 aarch64 riscv64"
+	_archs="x86_64 armhf armv7 aarch64 riscv64 ppc64le s390x"
 	_bins="c++ cc cpp g++ gcc clang clang++"
 
 	# Rust wrappers

@@ -1,0 +1,67 @@
+# Kernel config based on: arch/s390/configs/defconfig, heavily reduced
+
+pkgname=linux-qemu-s390x
+pkgver=6.13.0
+_kernver=${pkgver%.*}
+pkgrel=0
+pkgdesc="QEMU s390x kernel, mainline"
+arch="s390x"
+_carch="s390"
+_flavor="qemu-s390x"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+"
+
+# Source
+_config="config-$_flavor.$arch"
+source="https://cdn.kernel.org/pub/linux/kernel/v${pkgver%%.*}.x/linux-$_kernver.tar.xz
+	$_config"
+builddir="$srcdir"/linux-$_kernver
+_outdir="out"
+
+prepare() {
+	default_prepare
+
+	mkdir -p "$srcdir"/build
+	cp -v "$srcdir"/$_config "$srcdir"/build/.config
+	make -C "$builddir" O="$srcdir"/build ARCH="$_carch" \
+		olddefconfig
+}
+
+build() {
+	cd "$srcdir"/build
+	unset LDFLAGS
+	make ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-$_flavor"
+}
+
+package() {
+	cd "$srcdir/build/arch/$_carch/boot"
+
+	install -Dm644 "$srcdir/build/arch/$_carch/boot/bzImage" \
+			"$pkgdir/boot/vmlinuz"
+
+	install -D "$srcdir/build/include/config/kernel.release" \
+		"$pkgdir/usr/share/kernel/$_flavor/kernel.release"
+
+	cd "$srcdir"/build
+
+	make modules_install \
+		ARCH="$_carch" \
+		INSTALL_MOD_PATH="$pkgdir"
+}
+
+sha512sums="
+1137e6440132b0958f89165440e99208f82b204e7245ae69dc9c808df97d13ce8f58136db92407e0e93394fa7f6283ec7a34597c6e92a5b6d9025e0960357957  linux-6.13.tar.xz
+0b1014ec4a9e87d9594050db63d032ac98f714ada3f5f1c67077d1b1126b8675ef7bc4c45e6c0d695b3002b9e4480be2c00ea02d017902f27eb7c5aa46e2241d  config-qemu-s390x.s390x
+"

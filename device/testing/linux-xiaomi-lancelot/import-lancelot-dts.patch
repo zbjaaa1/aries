@@ -1,0 +1,22 @@
+diff --git a/arch/arm64/boot/dts/mediatek/lancelot.dts b/arch/arm64/boot/dts/mediatek/lancelot.dts
+index 26ba758f50e6..852e225d2b66 100644
+--- a/arch/arm64/boot/dts/mediatek/lancelot.dts
++++ b/arch/arm64/boot/dts/mediatek/lancelot.dts
+@@ -12,8 +12,6 @@
+  * See http://www.gnu.org/licenses/gpl-2.0.html for more details.
+  */
+ 
+-/dts-v1/;
+-/plugin/;
+ #include <dt-bindings/interrupt-controller/irq.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/pinctrl/mt6768-pinfunc.h>
+diff --git a/arch/arm64/boot/dts/mediatek/mt6768.dts b/arch/arm64/boot/dts/mediatek/mt6768.dts
+index 394b0cf69b43..90e10348f011 100644
+--- a/arch/arm64/boot/dts/mediatek/mt6768.dts
++++ b/arch/arm64/boot/dts/mediatek/mt6768.dts
+@@ -5105,3 +5105,4 @@ defined(CONFIG_MTK_CAM_SECURITY_SUPPORT)
+ #ifdef CONFIG_MTK_ENABLE_GENIEZONE
+ #include "mediatek/trusty.dtsi"
+ #endif
++#include "mediatek/lancelot.dts"

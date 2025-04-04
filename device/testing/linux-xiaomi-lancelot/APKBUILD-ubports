@@ -1,0 +1,69 @@
+# Reference: <https://postmarketos.org/vendorkernel>
+# Kernel config based on: arch/arm64/configs/(CHANGEME!)
+
+pkgname=linux-xiaomi-lancelot
+pkgver=4.14.320
+pkgrel=0
+pkgdesc="Xiaomi Redmi 9 kernel fork"
+arch="aarch64"
+_carch="arm64"
+_flavor="xiaomi-lancelot"
+url="https://kernel.org"
+license="GPL-2.0-only"
+options="!strip !check !tracedeps pmb:cross-native"
+makedepends="
+	bash
+	bc
+	bison
+	devicepkg-dev
+	findutils
+	flex
+	openssl-dev
+	perl
+	dtc
+	linux-headers
+	xz
+"
+
+# Source
+_repository="kernel-xiaomi-mt6768"
+_commit="9bc366fd99b1264d6b2464a26131580282a2fb70"
+_config="config-$_flavor.$arch"
+source="
+	$pkgname-$_commit.tar.gz::https://gitlab.com/ubports/porting/community-ports/android10/xiaomi-redmi-9/kernel-xiaomi-mt6768/-/archive/9bc366fd99b1264d6b2464a26131580282a2fb70/kernel-xiaomi-mt6768-9bc366fd99b1264d6b2464a26131580282a2fb70.tar.gz
+	$_config
+	01-fix-check-llxdialog.patch
+	selinux_include_generated_headers.patch
+	use_system_dtc.patch
+	dct_python3.patch
+"
+builddir="$srcdir/$_repository-$_commit"
+_outdir="out"
+
+prepare() {
+	default_prepare
+	REPLACE_GCCH=0 . downstreamkernel_prepare
+}
+
+build() {
+	unset LDFLAGS
+	make O="$_outdir" ARCH="$_carch" CC="${CC:-gcc}" \
+		KBUILD_BUILD_VERSION="$((pkgrel + 1 ))-postmarketOS"
+}
+
+package() {
+	downstreamkernel_package "$builddir" "$pkgdir" "$_carch" \
+		"$_flavor" "$_outdir"
+
+	make dtbs_install O="$_outdir" ARCH="$_carch" \
+		INSTALL_DTBS_PATH="$pkgdir"/boot/dtbs
+}
+
+sha512sums="
+2bbceb2a0eee6080c63b8f5e1518aef4a470a1a2631dc3a5ee1300822d86e873c225cc07d21b2e48912a4f362962d69a1ba7fb24a0b6ec63a5c5d723e6011d92  linux-xiaomi-lancelot-9bc366fd99b1264d6b2464a26131580282a2fb70.tar.gz
+e40ba63ed6501263b7537ca519d0ddb20ace09f8cee8cebdb112297f6b20dfc7ed2ceee49264c7b11d916af94dc12eaeae8d6b416f34387f78a7ad179fa918c2  config-xiaomi-lancelot.aarch64
+f748320ebe3e630b37977b6ea9f09498251cbf27368a7851b0a514853df6ad85da90cd282f62de1fbe95c551d91db82279be13611867263f4bc8aac3398aef82  01-fix-check-llxdialog.patch
+6ab9db01d35f7f5cc2c19ebe5f65a7dc479a1c68de587300cdde9a6c759d34610666c72f0f321cd450cf56c13df3b54a774e0f7ebdbf0f8608fbfd66b49d04e7  selinux_include_generated_headers.patch
+c9e562403cd572c66def9adea434731b77617f7561f1ce1079e21e8f02e8fd9cc1febd7e52c581e8e4b1c4aca21c5ca8c5813d2006be13051048d681a640ab3d  use_system_dtc.patch
+b1aef615711138992101466b7fea4762698ba87620a55f748bd66f20a2114122678e85c3bb85ef0ae0d394552d2f4577535086a5d80a878459aadc9a9fb42ce0  dct_python3.patch
+"

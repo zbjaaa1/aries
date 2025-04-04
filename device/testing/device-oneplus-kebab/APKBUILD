@@ -1,21 +1,29 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-oneplus-kebab
 pkgdesc="OnePlus 8T"
-pkgver=2
+pkgver=3
 pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
 options="!check !archcheck"
 depends="
-	linux-oneplus-kebab
 	mkbootimg
 	postmarketos-base
 "
-makedepends="devicepkg-dev"
-subpackages="$pkgname-weston"
+makedepends="
+	devicepkg-dev
+	dtc
+"
+subpackages="
+	$pkgname-kernel-downstream:kernel_downstream
+	$pkgname-kernel-mainline:kernel_mainline
+	$pkgname-nonfree-firmware:nonfree_firmware
+	$pkgname-weston
+"
 source="
 	deviceinfo
+	sm8250-oneplus-kebab-empty.dts
 	weston.ini
 "
 
@@ -27,6 +35,27 @@ package() {
 	devicepkg_package $startdir $pkgname
 }
 
+kernel_downstream() {
+	pkgdesc="Downstream kernel (not recommended, for debugging purposes)"
+	depends="linux-oneplus-kebab"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+kernel_mainline() {
+	pkgdesc="Mainline kernel (recommended)"
+	depends="linux-postmarketos-qcom-sm8250"
+
+	dtc -O dtb -o "$srcdir/dtbo.img" -I dts "$srcdir/sm8250-oneplus-kebab-empty.dts"
+	install -Dm644 "$srcdir/dtbo.img" "$subpkgdir/boot/dtbo.img"
+	devicepkg_subpackage_kernel $startdir $pkgname $subpkgname
+}
+
+nonfree_firmware() {
+	pkgdesc="Firmware for OnePlus 8T"
+	depends="firmware-oneplus-kebab"
+	mkdir "$subpkgdir"
+}
+
 weston() {
 	install_if="$pkgname weston"
 
@@ -35,8 +64,8 @@ weston() {
 		"$subpkgdir"/etc/xdg/weston/weston.ini
 }
 
-
 sha512sums="
-538e17ec6855924865cf1bb2650667232bf6c384e1e8918f40e660ad61c001bace4cc16b46609b067dad5bbf6e9d33339340c273d81aa0550dffe05fdb2f106c  deviceinfo
+ee8a511a14887261f250550512101461d7a3bec93a8d1d4d4348ca77893970944d752bc6bc0b83a40ac0b716984131286e0899e95626bd2885d52e5b1ae30531  deviceinfo
+06269dcbd405a18576a476bb976d39bcf91e8c7885a87716f510d66abc2ffe3bfabe56c286ad6fc88878de07427e58965ac833ac0e8cfa7ad393c2fa3b535c88  sm8250-oneplus-kebab-empty.dts
 4fdc188f9cd5c0316959322568916a6e36e67ff316e90fa7bd7c7b642cb137a9ff7002b0475728c6ba53abcbfe8c50d82112e4943460ee424aee4bbfd0efecfe  weston.ini
 "

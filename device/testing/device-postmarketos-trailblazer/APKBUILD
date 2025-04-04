@@ -3,8 +3,8 @@
 # Reference: <https://postmarketos.org/devicepkg>
 pkgname=device-postmarketos-trailblazer
 pkgdesc="postmarketOS Trailblazer generic ARM64"
-pkgver=12
-pkgrel=1
+pkgver=13
+pkgrel=0
 url="https://postmarketos.org"
 license="MIT"
 arch="aarch64"
@@ -18,6 +18,7 @@ depends="
 	linux-firmware-ath12k
 	linux-firmware-qca
 	linux-firmware-rtw88
+	linux-firmware-rtl_nic
 	rmtfs
 	pd-mapper
 	tqftpserv
@@ -39,6 +40,7 @@ subpackages="
 source="
 	deviceinfo
 	modules-initfs
+	initfs-hook.sh
 "
 
 build() {
@@ -81,5 +83,6 @@ kernel_postmarketos_amlogic() {
 
 sha512sums="
 12e7c1af63b24a37198a73e77d45cc5cbcb3ce34bbdb32d913cb3e427896ddcf2266269f8fe0c73c15c751a34ad738bd7fc958629ad066cd3c0a9faaaae7d67f  deviceinfo
-7642e07eb1d0d24c8b1d754371394ff5a5b532fb699be5cac75431b58755adb6f550bf4cf8cddde27ef4e7f20ea90a5368298b0e44f9d145f1f6d7a4026a550e  modules-initfs
+0a1f4b78c52d1b3906a2b1b6ae07d041662577eb4f4f017e970602009473d228ffd9ac966a40f56ac29aa5ce2306971fbe4fc5811d5c32a52999c07ec32cdb3d  modules-initfs
+05e8d72b1ee1c61aea7663c497d9f103c460a7f285aa28a2274101bd63ea9e1ed27c54c2855752647867b586dd8674b56fa54161d3ebe53e59f7041c938bc34f  initfs-hook.sh
 "

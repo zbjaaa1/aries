@@ -1,0 +1,52 @@
+maintainer="Aster Boese <asterboese@mailbox.org>"
+pkgname=libgeneral
+pkgver=84
+_commit="03e33a356abd0ced4bfce8df9e9644edeaf2920c"
+pkgrel=0
+pkgdesc="A collection of macros to aid in maintaining a consistent coding style for C++"
+url="https://github.com/tihmstar/libgeneral"
+arch="all"
+license="LGPL-2.1-or-later"
+makedepends="
+	autoconf
+	automake
+	libtool
+	m4
+"
+subpackages="$pkgname-dev"
+source="$pkgname-$pkgver.tar.gz::https://github.com/tihmstar/libgeneral/archive/refs/tags/$pkgver.tar.gz
+	0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+	0002-autoupdate-configure.ac.patch
+	0003-remove-git-dependency.patch
+"
+# No tests
+options="!check"
+
+build() {
+	./autogen.sh \
+		--build=$CBUILD \
+		--host=$CHOST \
+		--target="$CHOST" \
+		--prefix=/usr \
+		--mandir=/usr/share/man \
+		--sysconfdir=/etc \
+		--docdir=/usr/share/doc/procps \
+		--datarootdir=/usr/share
+
+	CFLAGS="$CFLAGS -DVERSION_COMMIT_COUNT=$pkgver -DVERSION_COMMIT_SHA=$_commit" \
+	make
+
+	# Consequences of not using git
+	sed -i -e "s/@VERSION_COMMIT_COUNT@/${pkgver}/g" libgeneral.pc
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+eca67fcac6b7f72a51e78cf250810b965b91426fcb4853f2f7037898d14a5cc35de523728a94e3bacb82306dbdf4a2f1423135c941e4c53f148353d6d7dd3435  libgeneral-84.tar.gz
+61cc1ad4f34650b56fa8a1cd6410533e313d87cef704aa32dbf10d7f680dc2279537ba465007ebe099bbff97c13cd8a3295072934f2153a913f8ec420280c23a  0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+6edf19cddd4a89e27767723a2322b128d0540245ae895b0afe85716f492fc660fff2d000b449aeee93456517c79e10078c0aa238ba5cdc8e0a9320a73d761750  0002-autoupdate-configure.ac.patch
+52d5eeeac73a7573df51d8a913214a62d70a8da1db0a949aeb29c8bc752a2e7e4b0a44e27f55322be2a07261b3d0ec9b400f232b9c04ef74fa18f1fb44983fa5  0003-remove-git-dependency.patch
+"

@@ -1,0 +1,53 @@
+maintainer="Aster Boese <asterboese@mailbox.org>"
+pkgname=libfragmentzip
+pkgver=76
+pkgrel=0
+pkgdesc="A library allowing to download single files from a remote zip archive"
+url="https://github.com/tihmstar/libfragmentzip"
+arch="all"
+license="LGPL-3.0-or-later"
+depends=""
+makedepends="
+	autoconf
+	automake
+	curl-dev
+	libgeneral-dev
+	libtool
+	m4
+"
+install=""
+subpackages="$pkgname-dev"
+source="https://github.com/tihmstar/$pkgname/archive/refs/tags/$pkgver.zip
+	0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+	0002-autoupdate-configure.ac.patch
+	0003-remove-git-dependency.patch
+	"
+# No tests
+options="!check"
+
+build() {
+	./autogen.sh \
+	  --build=$CBUILD \
+	  --host=$CHOST \
+		--target=$CHOST \
+	  --prefix=/usr \
+	  --mandir=/usr/share/man \
+	  --sysconfdir=/etc \
+	  --docdir=/usr/share/doc/procps \
+	  --datarootdir=/usr/share
+	make	
+
+	# Consequences of not using git
+	sed -i -e "s/@VERSION_COMMIT_COUNT@/${pkgver}/g" $pkgname.pc
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+3078f640bee86fcf82ba892e73fbf9b6af7813ecfa15f4e84a8b7103a49324e70e105be0e8f3a6c450a0a79567768a397d00c3729e1c7bf61ae460ed7902dec1  76.zip
+512e932eb2db3be9bec2bf596908efc514b0a62538f1204a4c189581961800b7de4c7342a157106b8d93f589c6356c541d252fabf507cd07fae785cf5fc29042  0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+6b6016682f555b0a9946dbbd2d00a6521918bae0d2c4d3b340c79baf7c04a374ae8fb1b8bc97b3602abd304547731758faf4610058e301374318c0bd13244582  0002-autoupdate-configure.ac.patch
+e09c3187d5fe6f23e648743c03a24bab16ef2c53eb92ea5c2f5a4b3516de916e8d8be6830f661fd8f74423bd1b1c4840dac102dd10d3044754e7e557e8d5472a  0003-remove-git-dependency.patch
+"

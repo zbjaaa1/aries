@@ -1,0 +1,64 @@
+maintainer="Aster Boese <asterboese@mailbox.org>"
+pkgname=tsschecker
+pkgver=440_git20250306
+_commit="0a600083bcec3243cd76450895f3de93ec0d53d9"
+# Version submodule
+_jssy_commit="6de3dc6b853d9338b971c1bea0c41465276e640a"
+pkgrel=0
+pkgdesc="A powerful tool to check tss signing status of various devices and firmware"
+url="https://github.com/1Conan/tsschecker"
+arch="all"
+license="LGPL-3.0-or-later"
+makedepends="
+	autoconf
+	autoconf-archive
+	automake
+	curl-dev
+	libfragmentzip-dev
+	libirecovery-dev
+	libplist-dev
+	libtatsu-dev
+	libtool
+	libzip-dev
+	m4
+	openssl-dev
+	zlib-dev
+"
+subpackages="$pkgname-dev"
+source="https://github.com/1Conan/tsschecker/archive/$_commit.tar.gz
+	https://github.com/tihmstar/jssy/archive/$_jssy_commit.tar.gz
+	0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+	"
+builddir="$srcdir/$pkgname-$_commit"
+# No tests
+options="!check"
+
+prepare() {
+	default_prepare
+
+	mv $srcdir/jssy-$_jssy_commit/* \
+		$builddir/external/jssy/
+}
+
+build() {
+	CFLAGS="-Wno-error" \
+		./autogen.sh \
+			--build=$CBUILD \
+			--host=$CHOST \
+			--prefix=/usr \
+			--mandir=/usr/share/man \
+			--sysconfdir=/etc \
+			--docdir=/usr/share/doc/procps \
+			--datarootdir=/usr/share \
+		make
+}
+
+package() {
+	make DESTDIR="$pkgdir" install
+}
+
+sha512sums="
+d9ef2a9fd889653d63c539032df78def27a5ef4782fe31db03f11a0889c436636b73851994774dc79b94cfa3cdd96188cc282722b15b07c0ffb138321775f843  0a600083bcec3243cd76450895f3de93ec0d53d9.tar.gz
+7b929798882bd2e1d75e1d5485aab7bd8e72627ad3611ecab40133baada0397ef2e4e5dd36a655843e91a2764642c511f9a173381e1de25295fa2910baf07f9d  6de3dc6b853d9338b971c1bea0c41465276e640a.tar.gz
+778417cdf6a8aa337b0d8355ce22611f143f9a6d9ddb8be58a3bb42aa129c017fbe9ff6681a3a44b3aa9615853f3309b8bee340774f019ea7792084d9e3917f6  0001-move-autogen-to-use-env-sh-instead-of-hardcoded-bash.patch
+"

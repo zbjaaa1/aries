@@ -1,0 +1,29 @@
+From 8faf8512182de76d68bae4cca366fdc4441789c9 Mon Sep 17 00:00:00 2001
+From: Aster Boese <asterboese@mailbox.org>
+Date: Thu, 20 Mar 2025 02:14:40 -0400
+Subject: [PATCH] remove git dependency
+
+---
+ configure.ac | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/configure.ac b/configure.ac
+index 2eccdb8..51581b3 100644
+--- a/configure.ac
++++ b/configure.ac
+@@ -9,12 +9,6 @@ AM_INIT_AUTOMAKE([subdir-objects])
+ AC_CONFIG_HEADERS([config.h])
+ AC_CONFIG_MACRO_DIRS([m4])
+ 
+-AC_DEFINE([VERSION_COMMIT_COUNT], "m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])", [Git commit count])
+-AC_DEFINE([VERSION_COMMIT_SHA], "m4_esyscmd([git rev-parse HEAD | tr -d '\n'])", [Git commit sha])
+-AC_SUBST([VERSION_COMMIT_COUNT], ["m4_esyscmd([git rev-list --count HEAD | tr -d '\n'])"])
+-AC_SUBST([VERSION_COMMIT_SHA], ["m4_esyscmd([git rev-parse HEAD | tr -d '\n'])"])
+-
+-
+ # Checks for programs.
+ AC_PROG_CXX
+ AC_PROG_CC
+-- 
+2.48.1
+

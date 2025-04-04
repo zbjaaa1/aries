@@ -1,0 +1,33 @@
+# Reference: <https://postmarketos.org/devicepkg>
+pkgname=device-amlogic-tvbox-s8xx
+pkgdesc="Amlogic TV Box (S8xx SoCs)"
+pkgver=1
+pkgrel=13
+url="https://postmarketos.org"
+license="MIT"
+arch="armv7"
+options="!check !archcheck"
+depends="
+	soc-amlogic-s905-boot
+	linux-postmarketos-amlogic
+	postmarketos-base
+	u-boot-tools
+"
+makedepends="devicepkg-dev"
+source="
+	deviceinfo
+	modules-initfs
+"
+
+build() {
+	devicepkg_build $startdir $pkgname
+}
+
+package() {
+	devicepkg_package $startdir $pkgname
+}
+
+sha512sums="
+820233240f78d37b0e379156c7da07c8fb179188cd50bb7f3eb766075566c346084658d81552ab2c98cb89b4a4671ebb21d63e4038803d62124bdcf5c4ed42bf  deviceinfo
+e70bae17df23dcaaaea0e2d3616556f04baa23f8ee1357785c0f539bf97282d8ddff53953e155b72689bb73beb38c2da3d08de2a61e866684edfa10a6593885d  modules-initfs
+"

@@ -3,7 +3,7 @@
 pkgname=mutter
 pkgver=99948.0
 _pkgver=48.0
-pkgrel=0
+pkgrel=1
 pkgdesc="clutter-based window manager and compositor"
 url="https://wiki.gnome.org/Projects/Mutter/"
 arch="all !s390x" # no libei-dev for s390x
@@ -76,6 +76,7 @@ source="https://download.gnome.org/sources/mutter/${_pkgver%.*}/mutter-$_pkgver.
 	fix-freeze.patch
 	"
 builddir="$srcdir/$pkgname-$_pkgver"
+provider_priority=100
 
 build() {
 	abuild-meson \

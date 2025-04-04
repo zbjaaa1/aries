@@ -3,7 +3,7 @@
 pkgname=mutter-mobile
 pkgver=99948.0
 _pkgver=48.0
-pkgrel=0
+pkgrel=1
 pkgdesc="clutter-based window manager and compositor"
 url="https://wiki.gnome.org/Projects/Mutter/"
 # ricsv64: doesn't build currently:
@@ -70,6 +70,7 @@ makedepends="
 	"
 options="!check" # Can't be run with release builds
 provides="mutter=$pkgver-r$pkgrel"
+provider_priority=10
 subpackages="$pkgname-dbg $pkgname-dev $pkgname-doc $pkgname-lang $pkgname-schemas::noarch"
 _commit="48.mobile.0"
 _gvdb_commit="b54bc5da25127ef416858a3ad92e57159ff565b3"

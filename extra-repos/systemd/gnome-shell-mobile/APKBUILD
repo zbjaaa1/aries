@@ -3,7 +3,7 @@
 pkgname=gnome-shell-mobile
 pkgver=99948.0
 _pkgver=48.0
-pkgrel=2
+pkgrel=3
 pkgdesc="GNOME shell mobile"
 url="https://wiki.gnome.org/Projects/GnomeShell"
 # gjs / riscv64: mutter-mobile
@@ -67,6 +67,7 @@ checkdepends="
 	"
 	# gdm is also needed but introduces circular dep
 provides="gnome-shell=$pkgver-r$pkgrel"
+provider_priority=10
 subpackages="
 	$pkgname-dbg
 	$pkgname-doc
